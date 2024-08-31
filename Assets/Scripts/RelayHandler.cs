@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
@@ -7,12 +8,14 @@ using UnityEngine;
 
 public class RelayHandler : MonoBehaviour
 {
-    private void Start()
+    public static RelayHandler Instance { get; private set; }
+
+    private void Awake()
     {
-        
+        Instance = this;
     }
 
-    public async void CreateRelay()
+    public async Task<string> CreateRelay()
     {
         try
         {
@@ -23,13 +26,17 @@ public class RelayHandler : MonoBehaviour
             Debug.Log(joinCode);
 
             RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
+
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
             NetworkManager.Singleton.StartHost();
+
+            return joinCode;
         }
         catch (RelayServiceException e)
         {
             Debug.LogException(e);
+            return null;
         }
     }
 

@@ -17,6 +17,8 @@ public class NetworkManagerUI : MonoBehaviour
     [SerializeField] private Button createRelayBtn;
     [SerializeField] private Button joinRelayBtn;
 
+    [SerializeField] private Button startGameBtn;
+
     [SerializeField]private Button printPlayersBtn;
 
     [SerializeField] private string lobbyCode;
@@ -68,6 +70,10 @@ public class NetworkManagerUI : MonoBehaviour
         joinRelayBtn.onClick.AddListener(() =>
         {
             GameObject.Find("Relay").GetComponent<RelayHandler>().JoinRelay(relayCode);
+        });
+        startGameBtn.onClick.AddListener(() =>
+        {
+            LobbyHandler.Instance.StartGame();
         });
     }
 }
