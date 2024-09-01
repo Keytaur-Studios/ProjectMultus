@@ -41,7 +41,7 @@ public class NetworkManagerUI : MonoBehaviour
         });
         createLobbyBtn.onClick.AddListener(() =>
         {
-            GameObject.Find("Lobby").GetComponent<LobbyHandler>().CreateLobby();
+            GameObject.Find("Lobby").GetComponent<LobbyHandler>().CreateLobby("Lobby");
         });
         listLobbyBtn.onClick.AddListener(() =>
         {

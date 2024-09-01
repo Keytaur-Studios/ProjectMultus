@@ -70,7 +70,7 @@ public class LobbyListUI : MonoBehaviour {
     }
 
     private void CreateLobbyButtonClick() {
-        LobbyCreateUI.Instance.Show();
+        //LobbyCreateUI.Instance.Show();
     }
 
     private void Hide() {
