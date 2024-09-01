@@ -19,13 +19,13 @@ public class LobbyHandler : MonoBehaviour
     public event EventHandler<LobbyEventArgs> OnJoinedLobby;
     public event EventHandler<LobbyEventArgs> OnJoinedLobbyUpdate;
     public event EventHandler<LobbyEventArgs> OnKickedFromLobby;
-    public event EventHandler<LobbyEventArgs> OnLeftLobby;
+
+    public event EventHandler OnLeftLobby;
 
     public class LobbyEventArgs : EventArgs
     {
         public Lobby lobby;
     }
-    //public event EventHandler<LobbyEventArgs> OnLobbyGameModeChanged;
 
     private Lobby hostLobby;
     private Lobby joinedLobby;
@@ -214,13 +214,20 @@ public class LobbyHandler : MonoBehaviour
 
     public async void LeaveLobby()
     {
-        try
+        if (joinedLobby != null)
         {
-            await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
-        }
-        catch (LobbyServiceException e)
-        {
-            Debug.Log(e);
+            try
+            {
+                await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
+
+                joinedLobby = null;
+
+                OnLeftLobby?.Invoke(this, EventArgs.Empty);
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
         }
     }
 

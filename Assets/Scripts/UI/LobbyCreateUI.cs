@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +38,10 @@ public class LobbyCreateUI : MonoBehaviour {
             );
             //Hide();
         });
+
+        GameObject.Find("AuthenticateUI").GetComponent<AuthenticateUI>().OnAuthenticated += ShowOnEvent;
+        LobbyHandler.Instance.OnJoinedLobby += HideOnEvent;
+        LobbyHandler.Instance.OnLeftLobby += ShowOnEvent;
 
         /*
         lobbyNameButton.onClick.AddListener(() => {
@@ -80,7 +85,7 @@ public class LobbyCreateUI : MonoBehaviour {
         });
         */
 
-        //Hide();
+        Hide();
     }
 
     /*private void UpdateText() {
@@ -90,7 +95,18 @@ public class LobbyCreateUI : MonoBehaviour {
         gameModeText.text = gameMode.ToString();
     }*/
 
-    private void Hide() {
+    private void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
+    private void ShowOnEvent(object sender, System.EventArgs e)
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void HideOnEvent(object sender, System.EventArgs e)
+    {
         gameObject.SetActive(false);
     }
 
