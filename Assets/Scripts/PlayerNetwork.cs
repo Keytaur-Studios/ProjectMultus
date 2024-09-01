@@ -9,6 +9,7 @@ public class PlayerNetwork : NetworkBehaviour
     public void MoveServerRpc(Vector3 direction)
     {
         transform.position += direction;
+        MoveClientRpc(direction);
     }
 
     [ClientRpc]
@@ -35,10 +36,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (IsHost)
             MoveClientRpc(direction);
         else if (IsClient)
-        {
             MoveServerRpc(direction);
-            MoveClientRpc(direction);
-        }
 
     }
 }
