@@ -59,6 +59,7 @@ public class InputWindowUI : MonoBehaviour
         {
             Hide();
             onOk(inputField.text);
+            okBtn.onClick.RemoveAllListeners();
         });
 
         cancelBtn.onClick.AddListener(() =>
