@@ -79,6 +79,8 @@ public class LobbyUI : MonoBehaviour {
         lobbyCodeText.text = lobby.LobbyCode;
         playerCountText.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
 
+        LobbyHandler.Instance.PrintPlayers();
+
         Show();
     }
 

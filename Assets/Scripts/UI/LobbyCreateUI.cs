@@ -39,7 +39,7 @@ public class LobbyCreateUI : MonoBehaviour {
             //Hide();
         });
 
-        GameObject.Find("AuthenticateUI").GetComponent<AuthenticateUI>().OnAuthenticated += ShowOnEvent;
+        AuthenticateUI.Instance.OnAuthenticated += ShowOnEvent;
         LobbyHandler.Instance.OnJoinedLobby += HideOnEvent;
         LobbyHandler.Instance.OnLeftLobby += ShowOnEvent;
 
@@ -97,17 +97,17 @@ public class LobbyCreateUI : MonoBehaviour {
 
     private void Hide()
     {
-        gameObject.SetActive(false);
+        gameObject.transform.localScale = Vector3.zero;
     }
 
     private void ShowOnEvent(object sender, System.EventArgs e)
     {
-        gameObject.SetActive(true);
+        gameObject.transform.localScale = Vector3.one;
     }
 
     private void HideOnEvent(object sender, System.EventArgs e)
     {
-        gameObject.SetActive(false);
+        gameObject.transform.localScale = Vector3.zero;
     }
 
     /*

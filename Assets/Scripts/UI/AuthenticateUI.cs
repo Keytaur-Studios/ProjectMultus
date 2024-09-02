@@ -6,12 +6,15 @@ using UnityEngine.UI;
 
 public class AuthenticateUI : MonoBehaviour
 {
+    public static AuthenticateUI Instance { get; private set; }
+
     public event EventHandler OnAuthenticated;
 
     [SerializeField] private Button authenticateButton;
 
     private void Awake()
     {
+        Instance = this;
         authenticateButton.onClick.AddListener(() =>
         {
             LobbyHandler.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
@@ -22,6 +25,7 @@ public class AuthenticateUI : MonoBehaviour
 
     private void Hide()
     {
-        gameObject.SetActive(false);
+        gameObject.transform.localScale = Vector3.zero;
+        //gameObject.SetActive(false);
     }
 }

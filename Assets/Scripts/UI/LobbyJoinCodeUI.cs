@@ -21,8 +21,8 @@ public class LobbyJoinCodeUI : MonoBehaviour
             });
         });
 
-        GameObject.Find("AuthenticateUI").GetComponent<AuthenticateUI>().OnAuthenticated += Show;
-        Hide();
+        //AuthenticateUI.Instance.OnAuthenticated += Show;
+        //Hide();
     }
 
     private void Hide()

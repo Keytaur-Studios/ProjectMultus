@@ -173,6 +173,8 @@ public class LobbyHandler : MonoBehaviour
 
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
 
+            PrintPlayers(joinedLobby);
+
             Debug.Log("Created Lobby! " + lobby.Name + " " + lobby.MaxPlayers + " " + lobby.Id + " " + lobby.LobbyCode);
             //PrintPlayers(hostLobby);
         }
@@ -208,6 +210,8 @@ public class LobbyHandler : MonoBehaviour
         });
 
         joinedLobby = lobby;
+
+        PrintPlayers(joinedLobby);
 
         OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
     }
@@ -270,11 +274,11 @@ public class LobbyHandler : MonoBehaviour
         }
     }
 
-    public void UpdatePlayerName(string playerName)
+    public async void UpdatePlayerName(string playerName)
     {
         this.playerName = playerName;
 
-        /*if (joinedLobby != null)
+        if (joinedLobby != null)
         {
             try
             {
@@ -284,7 +288,7 @@ public class LobbyHandler : MonoBehaviour
                 {
                     {
                         KEY_PLAYER_NAME, new PlayerDataObject(
-                            visibility: PlayerDataObject.VisibilityOptions.Public,
+                            visibility: PlayerDataObject.VisibilityOptions.Member,
                             value: playerName)
                     }
                 };
@@ -300,7 +304,7 @@ public class LobbyHandler : MonoBehaviour
             {
                 Debug.Log(e);
             }
-        }*/
+        }
     }
 
     private Player GetPlayer()
