@@ -33,6 +33,7 @@ public class LobbyUI : MonoBehaviour {
         startGameButton.onClick.AddListener(() =>
         {
             LobbyHandler.Instance.StartGame("TestSceneSwitch");
+            //LobbyHandler.Instance.StartGame();
         });
     }
 
@@ -90,6 +91,7 @@ public class LobbyUI : MonoBehaviour {
     }
 
     private void ClearLobby() {
+        if (this.gameObject.active == true)
         foreach (Transform child in container) {
             if (child == playerSingleTemplate) continue;
             Destroy(child.gameObject);
@@ -98,6 +100,14 @@ public class LobbyUI : MonoBehaviour {
 
     private void Hide() {
         gameObject.SetActive(false);
+    }
+
+    public void UnsubscribeUI()
+    {
+        LobbyHandler.Instance.OnJoinedLobby -= UpdateLobby_Event;
+        LobbyHandler.Instance.OnJoinedLobbyUpdate -= UpdateLobby_Event;
+        LobbyHandler.Instance.OnLeftLobby -= LobbyHandler_OnLeftLobby;
+        LobbyHandler.Instance.OnKickedFromLobby -= LobbyHandler_OnLeftLobby;
     }
 
     private void Show() {

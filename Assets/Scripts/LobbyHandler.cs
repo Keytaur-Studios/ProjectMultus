@@ -40,7 +40,7 @@ public class LobbyHandler : MonoBehaviour
 
     private void Start()
     {
-        OnGameStarted += DisableUI_OnStartGame;
+        //OnGameStarted += DisableUI_OnStartGame;
     }
 
     private void DisableUI_OnStartGame(object sender, EventArgs e)
@@ -295,6 +295,8 @@ public class LobbyHandler : MonoBehaviour
                 });
 
                 joinedLobby = lobby;
+
+                LobbyUI.Instance.UnsubscribeUI();
 
                 SceneManager.Instance.
                     LoadScene(sceneName);
