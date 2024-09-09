@@ -40,7 +40,7 @@ public class LobbyHandler : MonoBehaviour
 
     private void Start()
     {
-        OnGameStarted += DisableUI_OnStartGame;
+        //OnGameStarted += DisableUI_OnStartGame;
     }
 
     private void DisableUI_OnStartGame(object sender, EventArgs e)
@@ -247,6 +247,7 @@ public class LobbyHandler : MonoBehaviour
         }
     }
 
+    // Starts game in same scene
     public async void StartGame()
     {
         if (IsLobbyHost())
@@ -266,6 +267,39 @@ public class LobbyHandler : MonoBehaviour
                 });
 
                 joinedLobby = lobby;
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
+    }
+
+    // Changes to specified scene and starts game
+    public async void StartGame(String sceneName)
+    {
+        if (IsLobbyHost())
+        {
+            try
+            {
+                Debug.Log("StartGame");
+
+                string relayCode = await RelayHandler.Instance.CreateRelay();
+
+                Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+                {
+                    Data = new Dictionary<string, DataObject>
+                    {
+                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode) }
+                    }
+                });
+
+                joinedLobby = lobby;
+
+                LobbyUI.Instance.UnsubscribeUI();
+
+                SceneManager.Instance.
+                    LoadScene(sceneName);
             }
             catch (LobbyServiceException e)
             {

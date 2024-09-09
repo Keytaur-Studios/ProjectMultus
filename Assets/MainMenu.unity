@@ -521,6 +521,7 @@ GameObject:
   - component: {fileID: 361720876}
   - component: {fileID: 361720875}
   - component: {fileID: 361720874}
+  - component: {fileID: 361720879}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -638,6 +639,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &361720879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361720873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c0257bc0a9f3d4fb9a811559e2eea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScene: 
 --- !u!1 &457832818
 GameObject:
   m_ObjectHideFlags: 0
@@ -3712,6 +3726,7 @@ MonoBehaviour:
   lobbyCodeText: {fileID: 2015180358}
   leaveLobbyButton: {fileID: 1323158103}
   startGameButton: {fileID: 1605420264}
+  newSceneName: TestSceneSwitch
 --- !u!1 &2128241818
 GameObject:
   m_ObjectHideFlags: 0
