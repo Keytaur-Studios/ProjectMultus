@@ -32,7 +32,7 @@ public class LobbyUI : MonoBehaviour {
         });
         startGameButton.onClick.AddListener(() =>
         {
-            LobbyHandler.Instance.StartGame();
+            LobbyHandler.Instance.StartGame("TestSceneSwitch");
         });
     }
 
