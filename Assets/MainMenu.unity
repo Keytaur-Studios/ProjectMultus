@@ -3726,6 +3726,7 @@ MonoBehaviour:
   lobbyCodeText: {fileID: 2015180358}
   leaveLobbyButton: {fileID: 1323158103}
   startGameButton: {fileID: 1605420264}
+  newSceneName: TestSceneSwitch
 --- !u!1 &2128241818
 GameObject:
   m_ObjectHideFlags: 0

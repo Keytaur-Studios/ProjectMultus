@@ -20,6 +20,7 @@ public class LobbyUI : MonoBehaviour {
     [SerializeField] private Button leaveLobbyButton;
     [SerializeField] private Button startGameButton;
 
+    [SerializeField] private string newSceneName;
 
     private void Awake() {
         Instance = this;
@@ -32,7 +33,7 @@ public class LobbyUI : MonoBehaviour {
         });
         startGameButton.onClick.AddListener(() =>
         {
-            LobbyHandler.Instance.StartGame("TestSceneSwitch");
+            LobbyHandler.Instance.StartGame(newSceneName);
             //LobbyHandler.Instance.StartGame();
         });
     }
