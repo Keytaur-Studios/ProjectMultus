@@ -33,10 +33,10 @@ public class PlayerNetwork : NetworkBehaviour
         direction = speed * Time.deltaTime * direction;
         transform.position += direction;
 
-        if (IsHost)
-            MoveClientRpc(direction);
-        else if (IsClient)
-            MoveServerRpc(direction);
+        //if (IsHost)
+        //    MoveClientRpc(direction);
+        //else if (IsClient)
+        //    MoveServerRpc(direction);
 
     }
 }
