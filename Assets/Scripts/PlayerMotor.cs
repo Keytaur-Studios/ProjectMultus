@@ -5,6 +5,14 @@ public class PlayerMotor : MonoBehaviour
 
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
+    public MovementState state;
+    public enum MovementState
+    {
+        walking,
+        sprinting,
+        crouch,
+        air
+    }
 
     [Header("Look")]
     //public Camera cam;
@@ -42,6 +50,29 @@ public class PlayerMotor : MonoBehaviour
     void Awake() {
         network = GetComponent<PlayerNetwork>();
         playerRigidbody = GetComponent<Rigidbody>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Grounded Check
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+
+        // Modulate gravity
+        if(playerRigidbody.useGravity)
+            playerRigidbody.AddForce(Vector3.down * (-1*gravity-9.8f), ForceMode.Force);
+
+        // Apply the appropriate drag value
+        if (isGrounded)
+            playerRigidbody.linearDamping = groundDrag;
+        else
+            playerRigidbody.linearDamping = airDrag;
+
+        // Limit velocity to speed variable
+        SpeedControl();
+
+        // Change the state and speed to the appropriate value
+        StateHandler();
     }
     
     public void ProcessLook(Vector2 input)
@@ -101,6 +132,37 @@ public class PlayerMotor : MonoBehaviour
         {
             playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0f, playerRigidbody.linearVelocity.z);
             playerRigidbody.AddForce(10f * jumpHeight * transform.up, ForceMode.Impulse);
+        }
+    }
+
+    private void StateHandler()
+    {
+        // // Crouching
+        // if (crouching)
+        // {
+        //     state = MovementState.crouch;
+        //     speed = crouchSpeed;
+        // }
+
+        // // Sprinting
+        // else if(isGrounded && sprinting)
+        // {
+        //     state = MovementState.sprinting;
+        //     speed = sprintSpeed;
+        // }
+
+        // // Walking
+        // else 
+        if (isGrounded)
+        {
+            state = MovementState.walking;
+            speed = walkspeed;
+        }
+
+        // Air
+        else
+        {
+            state = MovementState.air;
         }
     }
 
