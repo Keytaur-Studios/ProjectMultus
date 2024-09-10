@@ -124,6 +124,8 @@ GameObject:
   - component: {fileID: 6828058199637455450}
   - component: {fileID: 65387957943248200}
   - component: {fileID: 7620905680924757271}
+  - component: {fileID: 1892351004561654650}
+  - component: {fileID: 4034084136765484005}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -251,9 +253,53 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5812724167370053064}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 924f0b77729f57844b5ad3ddc8df1519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+--- !u!114 &1892351004561654650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812724167370053064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6edceda90889fb9429cd4fe3e250f22d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObject: {fileID: 5812724167370053064}
+--- !u!114 &4034084136765484005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812724167370053064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f8863a26d03f54d84e68671ea05be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xSensitivity: 30
+  ySensitivity: 30
+  yRotationLimit: 88
+  maxSlopeAngle: 0
+  playerHeight: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  isGrounded: 0
+  walkspeed: 5
+  sprintSpeed: 0
+  groundDrag: 0.5
+  sprintSpeedPercent: 0.5
+  acceleration: 10
+  airDrag: 1
+  airMultiplier: 0.25
+  jumpHeight: 0.75
+  gravity: -9.8
+  airAccel: 10
