@@ -1,8 +1,6 @@
 using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
-    private PlayerNetwork network;
-
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
     public MovementState state;
@@ -26,14 +24,14 @@ public class PlayerMotor : MonoBehaviour
     private RaycastHit slopeHit; // Raycast for detecting when on a slope
 
     [Header("Grounded Check")]
-    public float playerHeight = 2f; // How tall the player is. Important for the ground check raycast
+    //public float playerHeight = 0; // How tall the player is. Important for the ground check raycast // removing orientation defeats the need of this var
     public LayerMask whatIsGround; // The layermask for the raycast to use for detecting the ground
     public bool isGrounded; // True when player is on a surface recognized as ground
 
     [Header("Ground Control")]
     public float walkspeed; // The speed the player goes when grounded
     public float sprintSpeed; // The speed the player goes when sprinting
-    public float groundDrag = 0.5f; // Drag applied to the player when on the ground
+    public float groundDrag = 10f; // Drag applied to the player when on the ground // was 0.5f
     public float sprintSpeedPercent = 0.5f; // What percent to increase speed by when sprinting
     public float acceleration = 10f; // How much to accelerate the player by. Does not affect max speed
     private float speed; // Also acts as the max speed for the player
@@ -43,20 +41,19 @@ public class PlayerMotor : MonoBehaviour
     public float airDrag = 1; // Drag applied to the player when in the air
     public float airMultiplier = 0.25f; // Affects how strong the player's control is in the air (lower means less control)
     public float jumpHeight = 0.75f; // How powerful or high the player's jumps are
-    public float gravity = -9.8f; // Gravity
+    public float gravity = -15f; // Gravity
     public float airAccel = 10f; // How much to accelerate the player by when in the air. Does not affect max speed
 
-
     void Awake() {
-        network = GetComponent<PlayerNetwork>();
         playerRigidbody = GetComponent<Rigidbody>();
+        playerRigidbody.maxAngularVelocity = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Grounded Check
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        //isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.1f, whatIsGround);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f, whatIsGround);
 
         // Modulate gravity
         if(playerRigidbody.useGravity)
@@ -116,7 +113,7 @@ public class PlayerMotor : MonoBehaviour
 
         
         // Turn off gravity when on a slope
-        playerRigidbody.useGravity = !OnSlope();
+        playerRigidbody.useGravity = !OnSlope() && !isGrounded;
 
 
         //network.MoveServerRpc(transform.position);
@@ -192,12 +189,12 @@ public class PlayerMotor : MonoBehaviour
 
     private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        //if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
-
         return false;
     }
 

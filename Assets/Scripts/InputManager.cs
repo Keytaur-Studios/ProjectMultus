@@ -1,4 +1,3 @@
-using Unity.Netcode;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -6,10 +5,7 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
     public PlayerInput.PlayerControlsActions player;
 
-    public GameObject playerObject;
-
     private PlayerMotor motor;
-    private NetworkManager network;
 
     void Awake()
     {
@@ -19,12 +15,12 @@ public class InputManager : MonoBehaviour
         player = playerInput.PlayerControls;
 
         motor = GetComponent<PlayerMotor>();
-        network = GetComponent<NetworkManager>();
 
         player.Click.performed += ctx => motor.Click();
         player.Jump.performed += ctx => motor.Jump();
 
-        player.Enable();
+        
+        EnablePlayerControls();
 
     }
 
@@ -38,5 +34,11 @@ public class InputManager : MonoBehaviour
         motor.ProcessLook(player.Look.ReadValue<Vector2>());
     }
 
+
+    // Enables the controls to move the player
+    void EnablePlayerControls()
+    {
+        player.Enable();
+    }
 
 }
