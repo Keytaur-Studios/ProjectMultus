@@ -1,5 +1,7 @@
 using UnityEngine;
-public class PlayerMotor : MonoBehaviour
+using Unity.Netcode;
+
+public class PlayerMotor : NetworkBehaviour
 {
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
@@ -13,7 +15,7 @@ public class PlayerMotor : MonoBehaviour
     }
 
     [Header("Look")]
-    //public Camera cam;
+    public Camera cam;
     private Vector2 rotation = Vector2.zero;
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
@@ -47,6 +49,16 @@ public class PlayerMotor : MonoBehaviour
     void Awake() {
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.maxAngularVelocity = 0;
+
+        
+        
+    }
+
+    void Start()
+    {
+        // IsOwner does not get set to True in Awake for some reason
+        if (IsOwner) 
+            cam.gameObject.SetActive(true);
     }
 
     void FixedUpdate()
