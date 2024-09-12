@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using TMPro;
 
 public class PlayerMotor : NetworkBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerMotor : NetworkBehaviour
         crouch,
         air
     }
+    public TextMeshProUGUI nametag;
 
     [Header("Look")]
     public Camera cam;
@@ -49,9 +51,6 @@ public class PlayerMotor : NetworkBehaviour
     void Awake() {
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.maxAngularVelocity = 0;
-
-        
-        
     }
 
     void Start()
@@ -59,6 +58,11 @@ public class PlayerMotor : NetworkBehaviour
         // IsOwner does not get set to True in Awake for some reason
         if (IsOwner) 
             cam.gameObject.SetActive(true);
+
+        
+        // Works for single player. Does not work when 2+
+        // string name = EditPlayerName.Instance.GetPlayerName();
+        // nametag.text = name;
     }
 
     void FixedUpdate()
