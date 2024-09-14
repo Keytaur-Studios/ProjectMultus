@@ -1,9 +1,15 @@
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
+using UnityEngine.Networking;
+using Unity.Collections;
+using System.Collections.Generic;
+using System;
 
 public class PlayerMotor : NetworkBehaviour
 {
+    private static GameObject me = null;
+
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
     public MovementState state;
@@ -14,6 +20,9 @@ public class PlayerMotor : NetworkBehaviour
         crouch,
         air
     }
+
+    public NetworkVariable<FixedString32Bytes> playerName = new(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public Canvas canvas;
     public TextMeshProUGUI nametag;
 
     [Header("Look")]
@@ -48,21 +57,44 @@ public class PlayerMotor : NetworkBehaviour
     public float gravity = -15f; // Gravity
     public float airAccel = 10f; // How much to accelerate the player by when in the air. Does not affect max speed
 
-    void Awake() {
-        playerRigidbody = GetComponent<Rigidbody>();
-        playerRigidbody.maxAngularVelocity = 0;
+
+    [Rpc(SendTo.Server)]
+    public void SetNameServerRpc(string name)
+    {
+        playerName.Value = new FixedString32Bytes(name);
     }
 
-    void Start()
+    void UpdateNameTag(FixedString32Bytes oldName, FixedString32Bytes newName)
     {
+        Debug.Log($"Name changed on ${OwnerClientId} from {oldName} to {newName}");
+        nametag.text = newName.ToString();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        playerName.OnValueChanged += UpdateNameTag; 
+
+        playerRigidbody = GetComponent<Rigidbody>();
+        playerRigidbody.maxAngularVelocity = 0;
+
         // IsOwner does not get set to True in Awake for some reason
-        if (IsOwner) 
+        if (IsOwner)
+        {
+            me = gameObject;
             cam.gameObject.SetActive(true);
+        } 
+        else
+        {
+            if (me != null)
+                canvas.transform.SetPositionAndRotation(canvas.transform.position,
+                    me.GetComponent<PlayerMotor>().canvas.transform.rotation);
+        }
+
+        Debug.Log($"{IsOwner} {IsServer} {EditPlayerName.Instance.GetPlayerName()} {nametag.text} {playerName.Value}");
 
         
-        // Works for single player. Does not work when 2+
-        // string name = EditPlayerName.Instance.GetPlayerName();
-        // nametag.text = name;
     }
 
     void FixedUpdate()
@@ -136,7 +168,17 @@ public class PlayerMotor : NetworkBehaviour
     }
 
     public void Click() {
-
+        if (IsOwner) // necessary, otherwise it sets the name of all players 
+        {
+            if (IsServer) 
+            {
+                playerName.Value = new FixedString32Bytes(EditPlayerName.Instance.GetPlayerName());
+            }
+            else
+            {
+                SetNameServerRpc(EditPlayerName.Instance.GetPlayerName());
+            }
+        }
     }
 
     public void Jump() // Applies a force upwards to jump. Affected by jumpHeight and jumpCooldown
