@@ -66,6 +66,7 @@ public class InputWindowUI : MonoBehaviour
         {
             Hide();
             onCancel();
+            okBtn.onClick.RemoveAllListeners();
         });
 
     }
