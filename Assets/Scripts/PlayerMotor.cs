@@ -1,11 +1,15 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEditor.VersionControl;
 
 public class PlayerMotor : NetworkBehaviour
 {
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
+
+    [Header("States")]
     public MovementState state;
+    public OnlineState online;
     public enum MovementState
     {
         walking,
@@ -14,12 +18,22 @@ public class PlayerMotor : NetworkBehaviour
         air
     }
 
+    public enum OnlineState
+    {
+        online,
+        offline
+    }
+
+    [Header("Interaction")]
+    public InteractableObject target;
+    public LayerMask targetMask;
+
     [Header("Look")]
     public Camera cam;
     private Vector2 rotation = Vector2.zero;
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
-    [Range(0, 90f)][SerializeField] float yRotationLimit = 88f;
+    [Range(0, 90f)][SerializeField] float yRotationLimit = 60f;
 
     [Header("Slope Handler")]
     public float maxSlopeAngle; // Max angle of a slope the player can walk on
@@ -51,13 +65,12 @@ public class PlayerMotor : NetworkBehaviour
         playerRigidbody.maxAngularVelocity = 0;
 
         
-        
     }
 
     void Start()
     {
         // IsOwner does not get set to True in Awake for some reason
-        if (IsOwner) 
+        if (IsOwner && online == OnlineState.online) 
             cam.gameObject.SetActive(true);
     }
 
@@ -82,6 +95,8 @@ public class PlayerMotor : NetworkBehaviour
 
         // Change the state and speed to the appropriate value
         StateHandler();
+
+        CheckForTarget();
     }
     
     public void ProcessLook(Vector2 input)
@@ -89,10 +104,13 @@ public class PlayerMotor : NetworkBehaviour
         float mouseX = input.x;
         float mouseY = input.y;
 
+        if (!IsOwner && online == OnlineState.online)
+            return;
+
         rotation.x += mouseX * xSensitivity * Time.deltaTime;
         rotation.y += mouseY * ySensitivity * Time.deltaTime;
         rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
-        //cam.transform.localRotation = Quaternion.Euler(-rotation.y, 0, 0);
+        cam.transform.localRotation = Quaternion.Euler(-rotation.y, 0, 0);
         transform.localRotation = Quaternion.Euler(0, rotation.x, 0);
     }
 
@@ -107,21 +125,21 @@ public class PlayerMotor : NetworkBehaviour
         // On a slope
         if (OnSlope())
         {
-            playerRigidbody.AddForce(GetSlopeMoveDirection() * speed * acceleration * 2f, ForceMode.Force);
+            playerRigidbody.AddForce(2f * acceleration * speed * GetSlopeMoveDirection(), ForceMode.Force);
 
-            if(playerRigidbody.linearVelocity.y > 0)
+            if (playerRigidbody.linearVelocity.y > 0)
             {
                 playerRigidbody.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
         }
 
         // Grounded
-        else if(isGrounded)
-            playerRigidbody.AddForce(moveDirection.normalized * speed * acceleration, ForceMode.Force);
+        else if (isGrounded)
+            playerRigidbody.AddForce(acceleration * speed * moveDirection.normalized, ForceMode.Force);
 
         // In air use airMultiplier
-        else if(!isGrounded)
-            playerRigidbody.AddForce(moveDirection.normalized * speed * airMultiplier * airAccel, ForceMode.Force);
+        else if (!isGrounded)
+            playerRigidbody.AddForce(airAccel * airMultiplier * speed * moveDirection.normalized, ForceMode.Force);
 
         
         // Turn off gravity when on a slope
@@ -213,6 +231,36 @@ public class PlayerMotor : NetworkBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
+    public void Interact()
+    {
+        if (target == null)
+            return;
+
+        target.Interact();
+    }
+
+    public void CheckForTarget()
+    {
+        bool isHit = Physics.Raycast(cam.transform.position, cam.transform.rotation * Vector3.forward * 5f, out RaycastHit hitInfo, 5f, targetMask);
+
+        if (isHit)
+            Debug.DrawLine(cam.transform.position, hitInfo.point, Color.red);
+        else
+            Debug.DrawLine(cam.transform.position, cam.transform.position + (cam.transform.rotation * Vector3.forward * 5f), Color.red);
+
+
+        if (!isHit)
+        {
+            target = null;
+            return;
+        }
+
+        if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
+            return;
+
+        target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
     }
 
 }

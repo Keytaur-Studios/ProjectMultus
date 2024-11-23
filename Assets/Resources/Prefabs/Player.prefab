@@ -510,7 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseRigidBodyForMotion: 1
   AutoUpdateKinematicState: 1
-  AutoSetKinematicOnDespawn: 1
+  AutoSetKinematicOnDespawn: 0
 --- !u!114 &1892351004561654650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,11 +535,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f8863a26d03f54d84e68671ea05be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRigidbody: {fileID: 0}
   state: 0
+  online: 0
   cam: {fileID: 3393924870230017693}
   xSensitivity: 30
   ySensitivity: 30
-  yRotationLimit: 88
+  yRotationLimit: 45
   maxSlopeAngle: 60
   whatIsGround:
     serializedVersion: 2
