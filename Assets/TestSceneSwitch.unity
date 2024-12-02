@@ -2371,7 +2371,7 @@ GameObject:
   - component: {fileID: 109030987}
   - component: {fileID: 109030986}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: SceneInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2390,6 +2390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: TestSceneSwitch
+  player: {fileID: 0}
   spawnPoints:
   - {x: 0, y: 0.5, z: 0}
   - {x: -5, y: 0.5, z: 0}

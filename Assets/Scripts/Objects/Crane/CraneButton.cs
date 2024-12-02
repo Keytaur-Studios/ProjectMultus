@@ -34,7 +34,6 @@ public class CraneButton : InteractableObject
 
     public void ButtonCommands()
     {
-        Debug.Log("IN BUTTON COMMANDS");
         switch (buttonType)
         {
             case ButtonType.down:

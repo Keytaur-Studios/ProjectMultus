@@ -14,7 +14,6 @@ public class Crane : NetworkBehaviour
             return;
 
         chain.transform.localScale += new Vector3(0, .01f, 0);
-        Debug.Log("IN DOWN");
         magnet.transform.localPosition = new Vector3(magnet.transform.localPosition.x, magnet.transform.localPosition.y - .01f, magnet.transform.localPosition.z);
     }
 

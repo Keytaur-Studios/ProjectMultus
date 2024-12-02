@@ -102,17 +102,6 @@ public class PlayerMotor : NetworkBehaviour
             lastInteracted.StopInteract();
     }
 
-    public override void OnNetworkSpawn()
-    {
-        SceneInfo sceneInfo = GameObject.Find("SceneManager").GetComponent<SceneInfo>();
-
-        transform.position = sceneInfo.SpawnPlayer();
-        Debug.Log($"Player spawned in {sceneInfo.name} at {transform.position}");
-
-
-        base.OnNetworkSpawn();
-    }
-
     public void ProcessLook(Vector2 input)
     {
         float mouseX = input.x;
