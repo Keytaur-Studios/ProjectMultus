@@ -26,6 +26,7 @@ public class PlayerMotor : NetworkBehaviour
 
     [Header("Interaction")]
     public InteractableObject target;
+    public InteractableObject lastInteracted;
     public LayerMask targetMask;
 
     [Header("Look")]
@@ -63,12 +64,12 @@ public class PlayerMotor : NetworkBehaviour
     void Awake() {
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.maxAngularVelocity = 0;
-
-        
     }
 
     void Start()
     {
+        playerRigidbody.isKinematic = false;
+
         // IsOwner does not get set to True in Awake for some reason
         if (IsOwner && online == OnlineState.online) 
             cam.gameObject.SetActive(true);
@@ -97,8 +98,18 @@ public class PlayerMotor : NetworkBehaviour
         StateHandler();
 
         CheckForTarget();
+
+        if (target != lastInteracted && lastInteracted != null)
+            lastInteracted.StopInteract();
     }
-    
+
+    public override void OnNetworkSpawn()
+    {
+        Vector3 spawnpoint = new Vector3(0, 10, 0);
+        transform.position = spawnpoint;
+        base.OnNetworkSpawn();
+    }
+
     public void ProcessLook(Vector2 input)
     {
         float mouseX = input.x;
@@ -235,10 +246,19 @@ public class PlayerMotor : NetworkBehaviour
 
     public void Interact()
     {
-        if (target == null)
+        if (target == null || !IsOwner)
             return;
 
         target.Interact();
+        lastInteracted = target;
+    }
+
+    public void StopInteract()
+    {
+        if (target == null || !IsOwner)
+            return;
+
+        lastInteracted.StopInteract();
     }
 
     public void CheckForTarget()
@@ -261,6 +281,9 @@ public class PlayerMotor : NetworkBehaviour
             return;
 
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
+
+        if (target != lastInteracted && lastInteracted != null)
+            lastInteracted.StopInteract();
     }
 
 }

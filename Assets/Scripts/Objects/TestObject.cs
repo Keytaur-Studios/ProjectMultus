@@ -7,4 +7,9 @@ public class TestObject : InteractableObject
     {
         Debug.Log("Interaction successful");
     }
+
+    public override void StopInteract()
+    {
+        
+    }
 }

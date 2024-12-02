@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3393924870230017693}
   - component: {fileID: 6848472177371586921}
   - component: {fileID: 7971668193429254723}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8944144924423878492}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 4746386120787009336}
   - component: {fileID: 8355878326453780977}
   - component: {fileID: 4551664874342922388}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 65387957943248200}
   - component: {fileID: 1892351004561654650}
   - component: {fileID: 4034084136765484005}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 93437687
+  GlobalObjectIdHash: 230639843
   InScenePlacedSourceGlobalObjectIdHash: 93437687
   DeferredDespawnTick: 0
   Ownership: 1
@@ -535,9 +535,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f8863a26d03f54d84e68671ea05be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRigidbody: {fileID: 0}
   state: 0
   online: 0
+  target: {fileID: 0}
+  lastInteracted: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 51
   cam: {fileID: 3393924870230017693}
   xSensitivity: 30
   ySensitivity: 30
@@ -547,7 +551,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   isGrounded: 0
-  walkspeed: 5
+  walkspeed: 7
   sprintSpeed: 0
   groundDrag: 10
   sprintSpeedPercent: 0.5
@@ -569,7 +573,7 @@ GameObject:
   - component: {fileID: 2270555555133794053}
   - component: {fileID: 2102181524783015082}
   - component: {fileID: 8362447895361012102}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: eyeleft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -677,7 +681,7 @@ GameObject:
   - component: {fileID: 1298666162320245536}
   - component: {fileID: 6453168548885581578}
   - component: {fileID: 7240143111478233696}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: eyeright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -782,7 +786,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5172680885821918793}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}

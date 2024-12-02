@@ -10,22 +10,44 @@ public class CraneButton : InteractableObject
         down, up, left, right
     }
 
+    void Start()
+    {
+        isPressed = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (isPressed)
+            ButtonCommands();
+    }
+
     override public void Interact()
     {
+        isPressed = true;
         Debug.Log("Hit button");
+    }
+
+    public override void StopInteract()
+    {
+        isPressed = false;
+    }
+
+    public void ButtonCommands()
+    {
+        Debug.Log("IN BUTTON COMMANDS");
         switch (buttonType)
         {
             case ButtonType.down:
                 crane.Down();
                 break;
             case ButtonType.up:
-                crane.Up();
+                crane.UpServerRpc();
                 break;
             case ButtonType.left:
-                crane.Left();
+                crane.LeftServerRpc();
                 break;
             case ButtonType.right:
-                crane.Right();
+                crane.RightServerRpc();
                 break;
         }
     }
