@@ -104,8 +104,12 @@ public class PlayerMotor : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        Vector3 spawnpoint = new Vector3(0, 10, 0);
-        transform.position = spawnpoint;
+        SceneInfo sceneInfo = GameObject.Find("SceneManager").GetComponent<SceneInfo>();
+
+        transform.position = sceneInfo.SpawnPlayer();
+        Debug.Log($"Player spawned in {sceneInfo.name} at {transform.position}");
+
+
         base.OnNetworkSpawn();
     }
 

@@ -2360,6 +2360,57 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &109030985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 109030987}
+  - component: {fileID: 109030986}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &109030986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109030985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16fe40f0f7da814791f0bd639b5b0a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: TestSceneSwitch
+  spawnPoints:
+  - {x: 0, y: 0.5, z: 0}
+  - {x: -5, y: 0.5, z: 0}
+  - {x: -5, y: 0.5, z: 5}
+  - {x: 0, y: 0.5, z: 5}
+  playersSpawned: 0
+--- !u!4 &109030987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109030985}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &110225503
 Mesh:
   m_ObjectHideFlags: 0
@@ -6894,7 +6945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5361555969162388134, guid: 9415043899cb2cf43ac80fc05fb335bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.1319795
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5361555969162388134, guid: 9415043899cb2cf43ac80fc05fb335bf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6902,7 +6953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5361555969162388134, guid: 9415043899cb2cf43ac80fc05fb335bf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.68888
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5361555969162388134, guid: 9415043899cb2cf43ac80fc05fb335bf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -45925,3 +45976,4 @@ SceneRoots:
   - {fileID: 927744650}
   - {fileID: 1424346429}
   - {fileID: 22128976}
+  - {fileID: 109030987}
