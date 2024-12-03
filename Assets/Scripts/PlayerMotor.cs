@@ -164,6 +164,11 @@ public class PlayerMotor : NetworkBehaviour
             anim.ResetTrigger("Idle");
             anim.SetTrigger("Walk");
         }
+        else if (state == MovementState.walking && anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+        {
+            anim.ResetTrigger("Jump");
+            anim.SetTrigger("Walk");
+        }
         else if (state == MovementState.idle && !anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             anim.ResetTrigger("Walk");
@@ -211,6 +216,8 @@ public class PlayerMotor : NetworkBehaviour
     {
         if(isGrounded && IsOwner) 
         {
+            anim.ResetTrigger("Idle");
+            anim.ResetTrigger("Walk");
             anim.SetTrigger("Jump");
             playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0f, playerRigidbody.linearVelocity.z);
             playerRigidbody.AddForce(10f * jumpHeight * transform.up, ForceMode.Impulse);
