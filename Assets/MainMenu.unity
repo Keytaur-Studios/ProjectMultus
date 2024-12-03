@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScene: 
-  playerPrefab: {fileID: 5812724167370053064, guid: 9415043899cb2cf43ac80fc05fb335bf, type: 3}
+  playerPrefab: {fileID: 5812724167370053064, guid: 34642b165bf51bb41875c29e0c223c6c, type: 3}
   sceneInfo: {fileID: 0}
 --- !u!1 &457832818
 GameObject:
@@ -3822,7 +3822,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Main Menu
-  player: {fileID: 0}
   spawnPoints: []
   playersSpawned: 0
 --- !u!4 &2132790503

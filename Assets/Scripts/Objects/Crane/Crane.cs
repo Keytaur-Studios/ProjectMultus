@@ -1,3 +1,5 @@
+using Mono.Cecil.Cil;
+using TMPro;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +11,7 @@ public class Crane : NetworkBehaviour
     public GameObject chain;
     public GameObject magnet;
     public GameObject mech;
+    public GameObject magnetTarget;
 
     [Header("Grabbing")]
     public LayerMask targetMask;
@@ -130,6 +133,9 @@ public class Crane : NetworkBehaviour
         {
             case MagnetMode.attached:
                 magnetMode = MagnetMode.detached;
+                target.transform.SetParent(null);
+                targetRB.useGravity = true;
+                targetRB.isKinematic = false;
                 break;
             case MagnetMode.detached:
                 magnetMode = MagnetMode.attached;
@@ -139,8 +145,35 @@ public class Crane : NetworkBehaviour
 
     private void Attach()
     {
+        //Vector3 direction = (magnet.transform.position - target.transform.position).normalized;
+        //targetRB.AddForce(direction * pullForce * Time.deltaTime, ForceMode.Acceleration);
+
         Vector3 direction = (magnet.transform.position - target.transform.position).normalized;
-        targetRB.AddForce(direction * pullForce * Time.deltaTime, ForceMode.Acceleration);
+        float distance = Vector3.Distance(magnet.transform.position, target.transform.position);
+        float gravitationalPull = pullForce / (distance * distance); // Gravity decreases with distance
+
+        if (target.transform.parent == null)
+            targetRB.AddForce(direction * gravitationalPull);
+
+
+        bool isHit = Physics.Raycast(magnet.transform.position, Vector3.down, out RaycastHit hitInfo, .4f, targetMask);
+
+        if (!isHit)
+        {
+            target.transform.SetParent(null);
+            targetRB.useGravity = true;
+            targetRB.isKinematic = false;
+            return;
+        }
+
+        if (!hitInfo.transform.gameObject.CompareTag("Crane Object"))
+            return;
+
+        target.transform.SetParent(magnet.transform);
+        targetRB.useGravity = false;
+        targetRB.isKinematic = true;
+
+
     }
 
     public void MagnetSearchForTarget()
@@ -150,10 +183,11 @@ public class Crane : NetworkBehaviour
         if (isHit)
             Debug.DrawLine(magnet.transform.position, hitInfo.point, Color.red);
         else
-            Debug.DrawLine(magnet.transform.position, magnet.transform.position + (Vector3.down * 1f), Color.red);
+            Debug.DrawLine(magnet.transform.position, magnet.transform.position + (Vector3.down * .4f), Color.red);
 
         if (!isHit)
         {
+            target.transform.SetParent(null);
             target = null;
             targetRB = null;
             magnetMode = MagnetMode.detached;
