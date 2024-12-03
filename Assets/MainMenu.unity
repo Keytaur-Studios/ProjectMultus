@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScene: 
-  playerPrefab: {fileID: 5812724167370053064, guid: 34642b165bf51bb41875c29e0c223c6c, type: 3}
+  playerPrefab: {fileID: 5812724167370053064, guid: bc4f30bd235fae247919bf84b82705a2, type: 3}
   sceneInfo: {fileID: 0}
 --- !u!1 &457832818
 GameObject:

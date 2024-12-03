@@ -1,9 +1,5 @@
-using Mono.Cecil.Cil;
-using TMPro;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Crane : NetworkBehaviour
 {
@@ -11,7 +7,6 @@ public class Crane : NetworkBehaviour
     public GameObject chain;
     public GameObject magnet;
     public GameObject mech;
-    public GameObject magnetTarget;
 
     [Header("Grabbing")]
     public LayerMask targetMask;
@@ -187,7 +182,8 @@ public class Crane : NetworkBehaviour
 
         if (!isHit)
         {
-            target.transform.SetParent(null);
+            if (target != null)
+                target.transform.SetParent(null);
             target = null;
             targetRB = null;
             magnetMode = MagnetMode.detached;

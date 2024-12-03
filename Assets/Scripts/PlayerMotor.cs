@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 
 public class PlayerMotor : NetworkBehaviour
 {
@@ -14,7 +15,8 @@ public class PlayerMotor : NetworkBehaviour
         walking,
         sprinting,
         crouch,
-        air
+        air,
+        idle
     }
 
     public enum OnlineState
@@ -22,6 +24,10 @@ public class PlayerMotor : NetworkBehaviour
         online,
         offline
     }
+
+    [Header("Animation")]
+    public NetworkAnimator anim;
+    public GameObject playerModel;
 
     [Header("Interaction")]
     public InteractableObject target;
@@ -94,12 +100,38 @@ public class PlayerMotor : NetworkBehaviour
         SpeedControl();
 
         // Change the state and speed to the appropriate value
-        StateHandler();
+
 
         CheckForTarget();
 
         if (target != lastInteracted && lastInteracted != null)
             lastInteracted.StopInteract();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        if (IsOwner)
+        {
+            // This is the local player
+            SetLayerRecursively(playerModel, LayerMask.NameToLayer("Local Player"));
+
+            // Adjust the camera culling mask to ignore the LocalPlayer layer
+            if (cam != null)
+            {
+                cam.cullingMask &= ~(1 << LayerMask.NameToLayer("Local Player"));
+            }
+        }
+
+    }
+
+    private void SetLayerRecursively(GameObject obj, int layer)
+    {
+        obj.layer = layer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
+        }
     }
 
     public void ProcessLook(Vector2 input)
@@ -124,6 +156,22 @@ public class PlayerMotor : NetworkBehaviour
 
         if (!IsOwner && online == OnlineState.online)
             return;
+
+        StateHandler(input);
+
+        if (state == MovementState.walking && anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            anim.ResetTrigger("Idle");
+            anim.SetTrigger("Walk");
+        }
+        else if (state == MovementState.idle && !anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            anim.ResetTrigger("Walk");
+            anim.SetTrigger("Idle");
+            //anim.ResetTrigger("Idle");
+        }
+
+        
 
         // Find the movement direction from input
         moveDirection = transform.forward * input.y + transform.right * input.x;
@@ -161,14 +209,15 @@ public class PlayerMotor : NetworkBehaviour
 
     public void Jump() // Applies a force upwards to jump. Affected by jumpHeight and jumpCooldown
     {
-        if(isGrounded) 
+        if(isGrounded && IsOwner) 
         {
+            anim.SetTrigger("Jump");
             playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0f, playerRigidbody.linearVelocity.z);
             playerRigidbody.AddForce(10f * jumpHeight * transform.up, ForceMode.Impulse);
         }
     }
 
-    private void StateHandler()
+    private void StateHandler(Vector2 input)
     {
         // // Crouching
         // if (crouching)
@@ -184,14 +233,16 @@ public class PlayerMotor : NetworkBehaviour
         //     speed = sprintSpeed;
         // }
 
+
+
         // // Walking
-        // else 
-        if (isGrounded)
+        if (isGrounded && (input.x > 0 || input.y > 0))
         {
             state = MovementState.walking;
             speed = walkspeed;
         }
-
+        else if (isGrounded)
+            state = MovementState.idle;
         // Air
         else
         {
