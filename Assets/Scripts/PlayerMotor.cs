@@ -122,6 +122,9 @@ public class PlayerMotor : NetworkBehaviour
         // Vector3 moveDirection = transform.forward * input.y + transform.right * input.x;
         // transform.position += movementSpeed * Time.deltaTime * moveDirection;
 
+        if (!IsOwner && online == OnlineState.online)
+            return;
+
         // Find the movement direction from input
         moveDirection = transform.forward * input.y + transform.right * input.x;
 
@@ -238,7 +241,7 @@ public class PlayerMotor : NetworkBehaviour
 
     public void Interact()
     {
-        if (target == null || !IsOwner)
+        if (target == null || (!IsOwner && online == OnlineState.online))
             return;
 
         target.Interact();
@@ -247,7 +250,7 @@ public class PlayerMotor : NetworkBehaviour
 
     public void StopInteract()
     {
-        if (target == null || !IsOwner)
+        if (target == null || (!IsOwner && online == OnlineState.online))
             return;
 
         lastInteracted.StopInteract();
@@ -255,7 +258,7 @@ public class PlayerMotor : NetworkBehaviour
 
     public void CheckForTarget()
     {
-        bool isHit = Physics.Raycast(cam.transform.position, cam.transform.rotation * Vector3.forward * 5f, out RaycastHit hitInfo, 5f, targetMask);
+        bool isHit = Physics.Raycast(cam.transform.position, cam.transform.rotation * Vector3.forward, out RaycastHit hitInfo, 5f, targetMask);
 
         if (isHit)
             Debug.DrawLine(cam.transform.position, hitInfo.point, Color.red);

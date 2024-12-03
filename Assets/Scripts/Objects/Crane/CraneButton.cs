@@ -7,7 +7,7 @@ public class CraneButton : InteractableObject
 
     public enum ButtonType
     {
-        down, up, left, right
+        down, up, left, right, in_, out_, magnetToggle
     }
 
     void Start()
@@ -47,6 +47,15 @@ public class CraneButton : InteractableObject
                 break;
             case ButtonType.right:
                 crane.RightServerRpc();
+                break;
+            case ButtonType.in_:
+                crane.InServerRpc();
+                break;
+            case ButtonType.out_:
+                crane.OutServerRpc();
+                break;
+            case ButtonType.magnetToggle:
+                crane.MagnetToggleServerRpc();
                 break;
         }
     }
