@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
@@ -51,6 +52,8 @@ public class RelayHandler : MonoBehaviour
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
             NetworkManager.Singleton.StartClient();
+
+            PlayerNameManager.Instance.thisPlayerId2 = NetworkManager.Singleton.LocalClientId;
         }
         catch (RelayServiceException e)
         {

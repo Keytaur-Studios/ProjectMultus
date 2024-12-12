@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using static LobbyManager;
 using NUnit.Framework.Internal;
+using Unity.Netcode;
 
 public class LobbyHandler : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class LobbyHandler : MonoBehaviour
     }
 
     private Lobby hostLobby;
-    private Lobby joinedLobby;
+    public Lobby joinedLobby;
     private float heartbeatTimer;
     private float lobbyPollTimer;
     private string playerName;
@@ -59,7 +60,7 @@ public class LobbyHandler : MonoBehaviour
         AuthenticationService.Instance.SignedIn += () => {
             // do nothing
             Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId + " " + playerName);
-
+            PlayerNameManager.Instance.thisPlayerId = AuthenticationService.Instance.PlayerId;
             //RefreshLobbyList();
         };
 
@@ -117,8 +118,6 @@ public class LobbyHandler : MonoBehaviour
                     {
                         RelayHandler.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
-
-                    joinedLobby = null;
 
                     OnGameStarted?.Invoke(this, EventArgs.Empty);
                 }

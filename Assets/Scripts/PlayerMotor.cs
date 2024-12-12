@@ -1,15 +1,26 @@
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Components;
+using Unity.Collections;
+using UnityEngine.Experimental.AI;
+using UnityEngine.SceneManagement;
+using System;
+using TMPro;
 
 public class PlayerMotor : NetworkBehaviour
 {
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
 
+    [Header("Default Info")]
+    public new string name;
+    public string id;
+    public ulong id2;
+    
     [Header("States")]
     public MovementState state;
     public OnlineState online;
+
     public enum MovementState
     {
         walking,
@@ -24,6 +35,9 @@ public class PlayerMotor : NetworkBehaviour
         online,
         offline
     }
+
+    [Header("NameTag")]
+    public GameObject nameTag;
 
     [Header("Animation")]
     public NetworkAnimator anim;
@@ -69,6 +83,7 @@ public class PlayerMotor : NetworkBehaviour
     void Awake() {
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.maxAngularVelocity = 0;
+        gameObject.tag = "Player";
     }
 
     void Start()
@@ -78,6 +93,8 @@ public class PlayerMotor : NetworkBehaviour
         // IsOwner does not get set to True in Awake for some reason
         if (IsOwner && online == OnlineState.online) 
             cam.gameObject.SetActive(true);
+
+        NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLoadComplete;
     }
 
     void FixedUpdate()
@@ -101,7 +118,6 @@ public class PlayerMotor : NetworkBehaviour
 
         // Change the state and speed to the appropriate value
 
-
         CheckForTarget();
 
         if (target != lastInteracted && lastInteracted != null)
@@ -121,17 +137,24 @@ public class PlayerMotor : NetworkBehaviour
             {
                 cam.cullingMask &= ~(1 << LayerMask.NameToLayer("Local Player"));
             }
-        }
 
+            PlayerNameManager.Instance.UpdateNames(LobbyHandler.Instance.joinedLobby);
+
+            id = PlayerNameManager.Instance.thisPlayerId;
+            id2 = NetworkManager.Singleton.LocalClientId;
+            name = PlayerNameManager.Instance.playerNames[PlayerNameManager.Instance.thisPlayerId];
+            nameTag.GetComponent<TextMeshProUGUI>().text = name;
+
+            UpdateNamesServerRpc(name);
+            UpdateNamesClientRpc(name);
+        }
     }
 
     private void SetLayerRecursively(GameObject obj, int layer)
     {
         obj.layer = layer;
         foreach (Transform child in obj.transform)
-        {
             SetLayerRecursively(child.gameObject, layer);
-        }
     }
 
     public void ProcessLook(Vector2 input)
@@ -151,9 +174,6 @@ public class PlayerMotor : NetworkBehaviour
 
     public void ProcessMove(Vector2 input)
     {
-        // Vector3 moveDirection = transform.forward * input.y + transform.right * input.x;
-        // transform.position += movementSpeed * Time.deltaTime * moveDirection;
-
         if (!IsOwner && online == OnlineState.online)
             return;
 
@@ -175,8 +195,6 @@ public class PlayerMotor : NetworkBehaviour
             anim.SetTrigger("Idle");
             //anim.ResetTrigger("Idle");
         }
-
-        
 
         // Find the movement direction from input
         moveDirection = transform.forward * input.y + transform.right * input.x;
@@ -200,10 +218,8 @@ public class PlayerMotor : NetworkBehaviour
         else if (!isGrounded)
             playerRigidbody.AddForce(airAccel * airMultiplier * speed * moveDirection.normalized, ForceMode.Force);
 
-        
         // Turn off gravity when on a slope
         playerRigidbody.useGravity = !OnSlope() && !isGrounded;
-
 
         //network.MoveServerRpc(transform.position);
     }
@@ -239,8 +255,6 @@ public class PlayerMotor : NetworkBehaviour
         //     state = MovementState.sprinting;
         //     speed = sprintSpeed;
         // }
-
-
 
         // // Walking
         if (isGrounded && (input.x > 0 || input.y > 0))
@@ -323,7 +337,6 @@ public class PlayerMotor : NetworkBehaviour
         else
             Debug.DrawLine(cam.transform.position, cam.transform.position + (cam.transform.rotation * Vector3.forward * 5f), Color.red);
 
-
         if (!isHit)
         {
             target = null;
@@ -339,4 +352,26 @@ public class PlayerMotor : NetworkBehaviour
             lastInteracted.StopInteract();
     }
 
+    [ServerRpc]
+    public void UpdateNamesServerRpc(string name)
+    {
+        Debug.Log("RPC REACHED");
+        Debug.Log("New name = " + name);
+        this.name = name;
+        nameTag.GetComponent<TextMeshProUGUI>().text = name;
+    }
+
+    [ClientRpc]
+    public void UpdateNamesClientRpc(string name)
+    {
+        Debug.Log("RPC REACHED");
+        Debug.Log("New name = " + name);
+        this.name = name;
+        nameTag.GetComponent<TextMeshProUGUI>().text = name;
+    }
+
+    private void OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
+    {
+        UpdateNamesClientRpc(name);
+    }
 }
