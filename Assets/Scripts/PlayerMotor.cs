@@ -355,6 +355,7 @@ public class PlayerMotor : NetworkBehaviour
     [ServerRpc]
     public void UpdateNamesServerRpc(string name)
     {
+        gameObject.tag = "Player";
         Debug.Log("RPC REACHED");
         Debug.Log("New name = " + name);
         this.name = name;
@@ -364,6 +365,7 @@ public class PlayerMotor : NetworkBehaviour
     [ClientRpc]
     public void UpdateNamesClientRpc(string name)
     {
+        gameObject.tag = "Player";
         Debug.Log("RPC REACHED");
         Debug.Log("New name = " + name);
         this.name = name;
@@ -372,6 +374,12 @@ public class PlayerMotor : NetworkBehaviour
 
     private void OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
     {
-        UpdateNamesClientRpc(name);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject p in players)
+        {
+            Debug.Log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+            p.GetComponent<PlayerMotor>().UpdateNamesClientRpc(p.GetComponent<PlayerMotor>().name);
+        }
     }
 }
