@@ -6,6 +6,7 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using Unity.Services.Multiplayer;
 
 public class RelayHandler : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class RelayHandler : MonoBehaviour
 
             Debug.Log(joinCode);
 
-            RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
+            RelayServerData relayServerData = allocation.ToRelayServerData("dtls");
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
@@ -48,7 +49,7 @@ public class RelayHandler : MonoBehaviour
             Debug.Log("Joining relay with " + joinCode);
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-            RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
+            RelayServerData relayServerData = joinAllocation.ToRelayServerData("dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
             NetworkManager.Singleton.StartClient();
