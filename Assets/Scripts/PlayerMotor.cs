@@ -339,14 +339,21 @@ public class PlayerMotor : NetworkBehaviour
 
         if (!isHit)
         {
+            if (target != null)
+                target.DisableText();
+                
             target = null;
             return;
         }
 
-        if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
+        if (!hitInfo.transform.gameObject.CompareTag("Interactable Object")) {
+            if (target != null)
+                target.DisableText();
             return;
+        }
 
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
+        target.EnableText();
 
         if (target != lastInteracted && lastInteracted != null)
             lastInteracted.StopInteract();
