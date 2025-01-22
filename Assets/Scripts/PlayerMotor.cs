@@ -360,10 +360,22 @@ public class PlayerMotor : NetworkBehaviour
         Debug.Log("New name = " + name);
         this.name = name;
         nameTag.GetComponent<TextMeshProUGUI>().text = name;
+        UpdateNames2ClientRpc(name);
     }
 
     [ClientRpc]
     public void UpdateNamesClientRpc(string name)
+    {
+        gameObject.tag = "Player";
+        Debug.Log("RPC REACHED");
+        Debug.Log("New name = " + name);
+        this.name = name;
+        nameTag.GetComponent<TextMeshProUGUI>().text = name;
+        UpdateNames2ClientRpc(name);
+    }
+
+    [ClientRpc]
+    public void UpdateNames2ClientRpc(string name)
     {
         gameObject.tag = "Player";
         Debug.Log("RPC REACHED");
