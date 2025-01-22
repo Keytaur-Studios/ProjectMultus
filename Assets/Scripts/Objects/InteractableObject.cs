@@ -9,4 +9,7 @@ abstract public class InteractableObject : NetworkBehaviour
     
     abstract public void StopInteract();
 
+    abstract public void EnableText();
+
+    abstract public void DisableText();
 }
