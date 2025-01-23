@@ -39,6 +39,9 @@ public class PlayerMotor : NetworkBehaviour
     [Header("NameTag")]
     public GameObject nameTag;
 
+    [Header("Camera")]
+    public GameObject cameraObj;
+
     [Header("Animation")]
     public NetworkAnimator anim;
     public GameObject playerModel;
