@@ -4399,6 +4399,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &156628533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4411,7 +4413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
   AuthorityMode: 1
+  TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -4429,6 +4434,7 @@ MonoBehaviour:
   UseQuaternionCompression: 0
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
 --- !u!114 &156628534
@@ -4443,6 +4449,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkRigidbodyBaseExpanded: 0
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
@@ -8913,6 +8921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4007e625dc9d6204396fe98000103287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
   buttonType: 6
   crane: {fileID: 927744651}
@@ -11047,6 +11056,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &514516137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11059,6 +11070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0559d13a7409de4e8f4309ee4089fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
 --- !u!65 &514516138
 BoxCollider:
@@ -13148,6 +13160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4007e625dc9d6204396fe98000103287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
   buttonType: 3
   crane: {fileID: 927744651}
@@ -13882,6 +13895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4007e625dc9d6204396fe98000103287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
   buttonType: 2
   crane: {fileID: 927744651}
@@ -18889,6 +18903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4007e625dc9d6204396fe98000103287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
   buttonType: 4
   crane: {fileID: 927744651}
@@ -20723,6 +20738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e656e100ce2cf434ba2d4579c574efca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   chain: {fileID: 1724205182}
   magnet: {fileID: 2008595433}
   mech: {fileID: 1280398104}
@@ -20752,7 +20768,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
   AuthorityMode: 0
+  TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -20770,6 +20789,7 @@ MonoBehaviour:
   UseQuaternionCompression: 0
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
 --- !u!114 &927744654
@@ -20795,6 +20815,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!43 &937253114
 Mesh:
   m_ObjectHideFlags: 0
@@ -23344,6 +23366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4007e625dc9d6204396fe98000103287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
   buttonType: 1
   crane: {fileID: 927744651}
@@ -32629,6 +32652,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &1280398107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32641,7 +32666,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
   AuthorityMode: 0
+  TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -32659,6 +32687,7 @@ MonoBehaviour:
   UseQuaternionCompression: 0
   UseHalfFloatPrecision: 0
   InLocalSpace: 1
+  SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
 --- !u!1 &1289562730
@@ -37593,6 +37622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4007e625dc9d6204396fe98000103287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
   buttonType: 5
   crane: {fileID: 927744651}
@@ -44187,7 +44217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
   AuthorityMode: 0
+  TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -44205,6 +44238,7 @@ MonoBehaviour:
   UseQuaternionCompression: 0
   UseHalfFloatPrecision: 0
   InLocalSpace: 1
+  SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
 --- !u!114 &1724205190
@@ -44230,6 +44264,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1738634326
 GameObject:
   m_ObjectHideFlags: 0
@@ -47279,6 +47315,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &1891969436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47291,6 +47329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4007e625dc9d6204396fe98000103287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
   buttonType: 0
   crane: {fileID: 927744651}
@@ -51077,7 +51116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
   AuthorityMode: 0
+  TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -51095,6 +51137,7 @@ MonoBehaviour:
   UseQuaternionCompression: 0
   UseHalfFloatPrecision: 0
   InLocalSpace: 1
+  SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
 --- !u!114 &2008595441
@@ -51120,6 +51163,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!43 &2038296356
 Mesh:
   m_ObjectHideFlags: 0
@@ -86477,7 +86522,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
   AuthorityMode: 1
+  TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -86495,6 +86543,7 @@ MonoBehaviour:
   UseQuaternionCompression: 0
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
 --- !u!114 &2068353842
@@ -86509,6 +86558,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkRigidbodyBaseExpanded: 0
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
@@ -88156,6 +88207,67 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &7811972852504789192
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2735688791699117214, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3408711449
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3275387779887221747, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5268564417882328913, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
+      propertyPath: m_Name
+      value: PLAYER REAL
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9a7ad60a9ce5b5b45a2daec39140943a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -88175,3 +88287,4 @@ SceneRoots:
   - {fileID: 1759792108}
   - {fileID: 258092540}
   - {fileID: 2113387640}
+  - {fileID: 7811972852504789192}

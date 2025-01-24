@@ -12,6 +12,8 @@ public class PlayerMotor : NetworkBehaviour
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
 
+    public event Action OnInteractableObjectHover; // triggers when player cursor hovers over an interactable object
+
     [Header("Default Info")]
     public new string name;
     public string id;
@@ -118,6 +120,7 @@ public class PlayerMotor : NetworkBehaviour
 
         // Change the state and speed to the appropriate value
 
+        // Check if looking at Interactable Object
         CheckForTarget();
 
         if (target != lastInteracted && lastInteracted != null)
@@ -346,14 +349,23 @@ public class PlayerMotor : NetworkBehaviour
             return;
         }
 
+        
         if (!hitInfo.transform.gameObject.CompareTag("Interactable Object")) {
             if (target != null)
                 target.DisableText();
-            return;
+            return; // Player is not hovering over an Interactable Object, so return
         }
 
+        Debug.Log(GetInstanceID());
+
+        // If player is hovering over an Interactable Object, then trigger event
+        Debug.Log("hovering rn");
+        OnInteractableObjectHover?.Invoke();
+        Debug.Log("hovering rn2");
+
+
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
-        target.EnableText();
+        target.EnableText(); 
 
         if (target != lastInteracted && lastInteracted != null)
             lastInteracted.StopInteract();
