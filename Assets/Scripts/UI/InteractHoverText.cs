@@ -35,10 +35,11 @@ public class InteractHoverText : MonoBehaviour
     }
  
     // name holds the name of the interactable GameObject that the player is looking at
-    public void ShowHoverText(string objectName) 
+    public void ShowHoverText(string hoverText) 
     {
-        hoverTextLabel.text = objectName; 
+        hoverTextLabel.text = hoverText; 
         hoverTextLabel.style.visibility = Visibility.Visible;
+
 
     }
 

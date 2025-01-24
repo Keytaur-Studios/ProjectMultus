@@ -52,7 +52,7 @@ public class PlayerMotor : NetworkBehaviour
     public InteractableObject target;
     public InteractableObject lastInteracted;
     public LayerMask targetMask;
-    public string interactableObjectName;
+    public string interactableObjectHoverText;
 
     [Header("Look")]
     public Camera cam;
@@ -362,10 +362,11 @@ public class PlayerMotor : NetworkBehaviour
             return; 
         }
 
-        interactableObjectName = hitInfo.transform.gameObject.name;
+        interactableObjectHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().hoverText;
+
 
         // If player is hovering over an Interactable Object, then trigger event
-        OnInteractableObjectHover?.Invoke(interactableObjectName);
+        OnInteractableObjectHover?.Invoke(interactableObjectHoverText);
 
 
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
