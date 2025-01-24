@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class TestGame : MinigameBase
 {
-    private void Start()
+    override public void InteractGame()
     {
-        minigame = "Test";
-        hoverText = "Test the Game";
-        cameraTransform.position = new Vector3();
-        cameraTransform.rotation = new Quaternion(0, 0, 0, 0);
+
     }
 
-
+    public override void StopInteract()
+    {
+        throw new System.NotImplementedException();
+    }
 }
