@@ -6,12 +6,13 @@ public class InteractHoverText : MonoBehaviour
     void Awake()
     {
         motor = gameObject.GetComponent<PlayerMotor>();
-        Debug.Log(motor.GetInstanceID());
         Debug.Log("interacthovertext.cs is awake");
         if (motor != null)
         {
             motor.OnInteractableObjectHover += ShowHoverText;
             Debug.Log("event subscribed!");
+            Debug.Log(motor.GetInstanceID());
+
         }
         else
         {
