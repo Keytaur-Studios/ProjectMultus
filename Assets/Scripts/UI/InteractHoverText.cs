@@ -1,17 +1,27 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
+// This class handles how to display labels when hovering on Interactable Objects
 public class InteractHoverText : MonoBehaviour
 {
-    PlayerMotor motor;
+    private PlayerMotor motor;
+    [SerializeField] GameObject hoverText;
+
+
     void Awake()
     {
         motor = gameObject.GetComponent<PlayerMotor>();
-        Debug.Log("interacthovertext.cs is awake");
+
+        //hoverTextUI = hoverText.GetComponent<UIDocument>();
+
+        hoverText.SetActive(false); // ensures hovertext does not show when first spawning in
+
+        //Debug.Log("interacthovertext.cs is awake");
         if (motor != null)
         {
+            motor.OnInteractableObjectAway += HideHoverText;
             motor.OnInteractableObjectHover += ShowHoverText;
-            Debug.Log("event subscribed!");
-            Debug.Log(motor.GetInstanceID());
+            Debug.Log("events subscribed!");
 
         }
         else
@@ -24,9 +34,21 @@ public class InteractHoverText : MonoBehaviour
     {
         motor.OnInteractableObjectHover -= ShowHoverText;
     }
+ 
     public void ShowHoverText()
     {
-        Debug.Log("hover Event Triggered");
+        Debug.Log("showing");
+        hoverText.SetActive(true);
+        // display hovertext
+
+
+    }
+
+    public void HideHoverText()
+    {
+        //Debug.Log("hiding");
+        hoverText.SetActive(false);
+        // display hovertext
     }
 }
 

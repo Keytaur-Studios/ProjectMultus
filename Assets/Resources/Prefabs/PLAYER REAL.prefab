@@ -672,6 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abcc6f58c6d2d27458344db088b94b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverText: {fileID: 6991695761684451325}
 --- !u!1 &6468448134106812343
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: 12eb884d73b890b4fa9e03df936a3d4c, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 2547bb5877f6a714aa2fe78ed448802d, type: 3}
   m_SortingOrder: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
