@@ -523,6 +523,7 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 51
+  interactableObjectName: 
   cam: {fileID: 3393924870230017693}
   xSensitivity: 30
   ySensitivity: 30
@@ -672,7 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abcc6f58c6d2d27458344db088b94b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverText: {fileID: 6991695761684451325}
+  hoverTextGameObject: {fileID: 6991695761684451325}
 --- !u!1 &6468448134106812343
 GameObject:
   m_ObjectHideFlags: 0

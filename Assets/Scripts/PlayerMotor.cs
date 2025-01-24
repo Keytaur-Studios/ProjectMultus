@@ -12,8 +12,10 @@ public class PlayerMotor : NetworkBehaviour
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
 
-    public event Action OnInteractableObjectHover; // triggers when player cursor hovers over an interactable object
-    public event Action OnInteractableObjectAway;
+    // events to trigger when cursor is or isn't on an interactable object
+    public delegate void OnInteractableObjectHoverDelegate(string objectName); // 
+    public event OnInteractableObjectHoverDelegate OnInteractableObjectHover; // triggers when player cursor is over an interactable object
+    public event Action OnInteractableObjectAway; // triggers when player cursor is NOT over an interactable object
 
     [Header("Default Info")]
     public new string name;
@@ -50,6 +52,7 @@ public class PlayerMotor : NetworkBehaviour
     public InteractableObject target;
     public InteractableObject lastInteracted;
     public LayerMask targetMask;
+    public string interactableObjectName;
 
     [Header("Look")]
     public Camera cam;
@@ -354,12 +357,15 @@ public class PlayerMotor : NetworkBehaviour
         if (!hitInfo.transform.gameObject.CompareTag("Interactable Object")) {
             if (target != null)
                 target.DisableText();
-            OnInteractableObjectAway?.Invoke();
-            return; // Player is not hovering over an Interactable Object, so return
+            // Player is not hovering over an Interactable Object
+            OnInteractableObjectAway?.Invoke(); 
+            return; 
         }
 
+        interactableObjectName = hitInfo.transform.gameObject.name;
+
         // If player is hovering over an Interactable Object, then trigger event
-        OnInteractableObjectHover?.Invoke();
+        OnInteractableObjectHover?.Invoke(interactableObjectName);
 
 
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
