@@ -1,9 +1,11 @@
 using UnityEngine;
+using TMPro;
 
 public class CraneButton : InteractableObject
 {
     public ButtonType buttonType;
     public Crane crane;
+    public TextMeshProUGUI buttonText;
 
     public enum ButtonType
     {
@@ -13,6 +15,8 @@ public class CraneButton : InteractableObject
     void Start()
     {
         isPressed = false;
+        buttonText.text = buttonType.ToString();
+        DisableText();
     }
 
     private void FixedUpdate()
@@ -58,5 +62,15 @@ public class CraneButton : InteractableObject
                 crane.MagnetToggleServerRpc();
                 break;
         }
+    }
+
+    public override void EnableText() 
+    {
+        buttonText.enabled = true;
+    }
+
+    public override void DisableText()
+    {
+        buttonText.enabled = false;
     }
 }
