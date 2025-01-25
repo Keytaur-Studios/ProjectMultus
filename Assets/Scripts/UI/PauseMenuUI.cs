@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -9,15 +10,23 @@ public class PauseMenuUI : MonoBehaviour
     private VisualElement pauseMenuContainer; // Container in Visual Tree Asset
     public PlayerInput playerInput;
     private InputAction pauseAction;
+    
+    private Button resumeButton;
+    private Button settingsButton;
+    private Button exitButton;
 
     public static bool isGamePaused = false;
+
 
     private void Awake()
     {
         Debug.Log("entered pausemenuui");
 
-        // get pause menu UI document
+        // initialize UI elements
         pauseMenuUIDocument = pauseMenuGameObject.GetComponent<UIDocument>();
+        resumeButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("ResumeButton");
+        settingsButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("SettingsButton");
+        exitButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("ExitButton");
 
         if (pauseMenuUIDocument == null)
             Debug.Log("PauseMenuUIDocument is null");
@@ -33,56 +42,37 @@ public class PauseMenuUI : MonoBehaviour
         // ensure Pause Menu is hidden by default
         pauseMenuContainer.style.visibility = Visibility.Hidden; // must not setActive(false), this will break the UI
 
-
+        // Register a callback on a pointer down event
+        resumeButton.RegisterCallback<ClickEvent>(OnResumeButtonClick);
     }
 
+    
+
+    private void OnResumeButtonClick(ClickEvent evt) 
+    {
+        Debug.Log("Pressed resume button!");
+        TogglePauseMenu();
+    }
 
     public void TogglePauseMenu()
     {
-        // if game is not paused
         if (!isGamePaused)
         {
-            // freeze player movement and unlock cursor
-            DisableMovement();
             // display pause menu
             OpenPauseMenu();
             isGamePaused = true;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
         }
         else
         {
-            // else if game is already paused
+            // hides pause menu
             ClosePauseMenu();
-            EnableMovement();
             isGamePaused = false;
-            // if player is not in pause menu
-
-            // go back to pause menu
-
-            // else player is in pause menu
-
-            // hide pause menu and resume game
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
-    // Stops player movement and unlocks cursor
-    public void DisableMovement()
-    {
-        Debug.Log("disabling movement");
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-
-        // disable player movement
-
-    }
-
-    // Resumes player movement and locks cursor
-    public void EnableMovement()
-    {
-        Debug.Log("enabling movement");
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-
-        // enable player movement
-
-    }
+    
 
     // Displays Pause Menu UI
     public void OpenPauseMenu()
