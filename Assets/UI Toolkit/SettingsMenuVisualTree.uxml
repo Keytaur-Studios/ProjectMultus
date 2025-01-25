@@ -1,0 +1,19 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/SettingsMenuStyle.uss?fileID=7433441132597879392&amp;guid=6508e6ea046267d48889cf1a25a27c71&amp;type=3#SettingsMenuStyle" />
+    <engine:VisualElement name="Container" style="flex-grow: 1; padding-top: 156px; padding-right: 250px; padding-bottom: 156px; padding-left: 250px;">
+        <engine:VisualElement name="MainControls" style="flex-grow: 1; -unity-text-align: middle-left;">
+            <engine:Label text="Label" class="heading1" />
+            <engine:Label text="Label" class="heading2" />
+            <engine:Slider label="Slider" value="42" high-value="100" class="settingControl" />
+            <engine:Label text="Label" class="heading2" />
+            <engine:Slider label="Slider" value="42" high-value="100" class="settingControl" />
+            <engine:Slider label="Slider" value="42" high-value="100" class="settingControl" />
+            <engine:Slider label="Slider" value="42" high-value="100" class="settingControl" />
+            <engine:Label text="Label" class="heading2" />
+            <engine:Toggle label="Toggle" class="settingControl" />
+            <engine:DropdownField label="Dropdown" class="settingControl" />
+            <engine:Button text="Button" class="applyButton" />
+        </engine:VisualElement>
+        <engine:Button text="Button" class="backButton" />
+    </engine:VisualElement>
+</engine:UXML>
