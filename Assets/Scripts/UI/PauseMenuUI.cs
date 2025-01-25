@@ -72,7 +72,6 @@ public class PauseMenuUI : MonoBehaviour
 
         // disable player movement
 
-        // pause camera movement
     }
 
     // Resumes player movement and locks cursor
@@ -83,7 +82,6 @@ public class PauseMenuUI : MonoBehaviour
 
         // enable player movement
 
-        // resume camera movement
     }
 
     // Displays Pause Menu UI
