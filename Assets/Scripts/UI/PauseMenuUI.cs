@@ -10,6 +10,7 @@ public class PauseMenuUI : MonoBehaviour
     private VisualElement pauseMenuContainer; // Container in Visual Tree Asset
     public PlayerInput playerInput;
     private InputAction pauseAction;
+    private SceneManager sceneManager;
     
     private Button resumeButton;
     private Button settingsButton;
@@ -20,6 +21,8 @@ public class PauseMenuUI : MonoBehaviour
 
     private void Awake()
     {
+        sceneManager = new SceneManager();
+        
         Debug.Log("entered pausemenuui");
 
         // initialize UI elements
@@ -44,6 +47,7 @@ public class PauseMenuUI : MonoBehaviour
 
         // Register a callback on a pointer down event
         resumeButton.RegisterCallback<ClickEvent>(OnResumeButtonClick);
+        exitButton.RegisterCallback<ClickEvent>(OnExitButtonClick);
     }
 
     
@@ -52,6 +56,14 @@ public class PauseMenuUI : MonoBehaviour
     {
         Debug.Log("Pressed resume button!");
         TogglePauseMenu();
+    }
+
+    // Exits the application entirely
+    private void OnExitButtonClick(ClickEvent evt)
+    {
+        //sceneManager.LoadScene("MainMenu"); // for now, should only exit to application
+        Application.Quit(); // note this command has no effect inside the editor
+        Debug.Log("Pressed Exit Button!");
     }
 
     public void TogglePauseMenu()
