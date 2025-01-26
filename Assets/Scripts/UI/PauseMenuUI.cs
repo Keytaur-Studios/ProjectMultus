@@ -34,30 +34,9 @@ public class PauseMenuUI : MonoBehaviour
         pauseMenuContainer.style.visibility = Visibility.Hidden; // must not setActive(false), this will break the UI
 
         // Register a callback on a pointer down event
-        resumeButton.RegisterCallback<ClickEvent>(OnResumeButtonClick);
-        settingsButton.RegisterCallback<ClickEvent>(OnSettingsButtonClick);
-        exitButton.RegisterCallback<ClickEvent>(OnExitButtonClick);
-    }
-
-    private void OnSettingsButtonClick(ClickEvent evt)
-    {
-        Debug.Log("Pressed settings button!");
-
-        settings.OpenSettingsMenu();
-    }
-
-    private void OnResumeButtonClick(ClickEvent evt) 
-    {
-        Debug.Log("Pressed resume button!");
-        TogglePauseMenu();
-    }
-
-    // Exits the application entirely
-    private void OnExitButtonClick(ClickEvent evt)
-    {
-        // for now, should only exit to application 
-        Application.Quit(); // note this command has no effect inside the editor
-        Debug.Log("Pressed Exit Button!");
+        resumeButton.clicked += OnResumeButtonClick;
+        settingsButton.clicked += OnSettingsButtonClick;
+        exitButton.clicked += OnExitButtonClick;
     }
 
     public void TogglePauseMenu()
@@ -72,7 +51,13 @@ public class PauseMenuUI : MonoBehaviour
         }
     }
 
-    
+    private void OnDisable()
+    {
+        resumeButton.clicked -= OnResumeButtonClick;
+        settingsButton.clicked -= OnSettingsButtonClick;
+        exitButton.clicked -= OnExitButtonClick;
+    }
+
 
     // Displays Pause Menu UI
     public void Pause()
@@ -91,5 +76,26 @@ public class PauseMenuUI : MonoBehaviour
         settings.CloseSettingsMenu();
         isGamePaused = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void OnSettingsButtonClick()
+    {
+        Debug.Log("Pressed settings button!");
+
+        settings.OpenSettingsMenu();
+    }
+
+    private void OnResumeButtonClick()
+    {
+        Debug.Log("Pressed resume button!");
+        TogglePauseMenu();
+    }
+
+    // Exits the application entirely
+    private void OnExitButtonClick()
+    {
+        // for now, should only exit to application 
+        Application.Quit(); // note this command has no effect inside the editor
+        Debug.Log("Pressed Exit Button!");
     }
 }

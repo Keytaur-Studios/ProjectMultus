@@ -4,14 +4,15 @@
         <engine:VisualElement name="MainControls" style="flex-grow: 1; -unity-text-align: middle-left;">
             <engine:Label text="Settings" name="SettingsHeader" class="heading1" />
             <engine:Label text="Controls" name="ControlsLabel" class="heading2" />
-            <engine:Slider label="Mouse Sensitivity" value="42" high-value="100" name="MouseSensitivitySlider" class="settingControl" />
+            <engine:Slider label="Look Sensitivity" value="42" high-value="100" name="LookSensitivitySlider" class="settingControl" />
             <engine:Label text="Audio" name="AudioHeader" class="heading2" />
             <engine:Slider label="Master" value="42" high-value="100" name="MasterVolumeSlider" class="settingControl" />
-            <engine:Slider label="Music" value="42" high-value="100" name="MusicSlider" class="settingControl" />
-            <engine:Slider label="Sound Effects" value="42" high-value="100" name="SFXSlider" class="settingControl" />
+            <engine:Slider label="Music" value="42" high-value="100" name="MusicVolumeSlider" class="settingControl" />
+            <engine:Slider label="Sound Effects" value="42" high-value="100" name="SFXVolumeSlider" class="settingControl" />
             <engine:Label text="Graphics" name="GraphicsHeader" class="heading2" />
             <engine:Toggle label="Fullscreen" name="FullscreenToggle" class="settingControl" />
-            <engine:DropdownField label="Resolution" name="ResolutionDropdown" class="settingControl" />
+            <engine:DropdownField label="Resolution" name="ResolutionDropdown" class="settingControl" style="width: 895px;" />
+            <engine:DropdownField label="Quality" name="GraphicsQualityDropdown" class="settingControl" style="width: 895px;" />
             <engine:Button text="Apply" name="ApplyButton" class="applyButton" />
         </engine:VisualElement>
         <engine:Button text="Back" name="BackButton" class="backButton" />
