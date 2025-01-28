@@ -25,7 +25,7 @@ public class CraneButton : InteractableObject
             ButtonCommands();
     }
 
-    override public void Interact()
+    override public void Interact(GameObject player)
     {
         isPressed = true;
         Debug.Log("Hit button");
@@ -64,13 +64,15 @@ public class CraneButton : InteractableObject
         }
     }
 
-    public override void EnableText() 
-    {
-        buttonText.enabled = true;
-    }
+    // Defunct Code
+    
+    //public override void EnableText() 
+    //{
+    //    buttonText.enabled = true;
+    //}
 
-    public override void DisableText()
-    {
-        buttonText.enabled = false;
-    }
+    //public override void DisableText()
+    //{
+    //    buttonText.enabled = false;
+    //}
 }

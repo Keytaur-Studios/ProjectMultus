@@ -319,7 +319,7 @@ public class PlayerMotor : NetworkBehaviour
         if (target == null || (!IsOwner && online == OnlineState.online))
             return;
 
-        target.Interact();
+        target.Interact(this.gameObject);
         lastInteracted = target;
     }
 

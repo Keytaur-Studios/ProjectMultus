@@ -3,11 +3,10 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-abstract public class MinigameBase : MonoBehaviour
+abstract public class MinigameBase : InteractableObject
 {
     [Header("Info")]
     public string minigame;
-    public string hoverText;
     public bool occupied;
 
     [Header("Camera")]
@@ -18,12 +17,13 @@ abstract public class MinigameBase : MonoBehaviour
     public Transform playerCameraStorage;
 
     // Enter minigame state, move player camera.
-    public void Interact(GameObject player)
+    override public void Interact(GameObject player)
     {
         attachedPlayer = player;
         occupied = true;
         playerCameraStorage = player.GetComponent<PlayerMotor>().cameraObj.transform;
         MoveCamera(player.GetComponent<PlayerMotor>().cameraObj.transform, cameraTransform);
+        InteractGame();
     }
 
     // Leave the minigame state. Reset minigame status to prepare for next use.
