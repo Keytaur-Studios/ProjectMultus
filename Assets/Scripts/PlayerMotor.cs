@@ -365,7 +365,9 @@ public class PlayerMotor : NetworkBehaviour
             return;
         }
 
-        interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().GetText();
+        interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObject>().GetText();
+        //interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().GetText();
+
 
         // If player is hovering over an Interactable Object, then trigger event
         OnInteractableHoverEnter?.Invoke(interactableHoverText);
