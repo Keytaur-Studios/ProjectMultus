@@ -21,15 +21,15 @@ abstract public class MinigameBase : InteractableObject
     {
         attachedPlayer = player;
         occupied = true;
-        playerCameraStorage = player.GetComponent<PlayerMotor>().cameraObj.transform;
-        MoveCamera(player.GetComponent<PlayerMotor>().cameraObj.transform, cameraTransform);
+        //playerCameraStorage = player.GetComponent<PlayerMotor>().cameraObj.transform;
+        //MoveCamera(player.GetComponent<PlayerMotor>().cameraObj.transform, cameraTransform);
         InteractGame();
     }
 
     // Leave the minigame state. Reset minigame status to prepare for next use.
     public void Leave()
     {
-        MoveCamera(attachedPlayer.GetComponent<PlayerMotor>().cameraObj.transform, playerCameraStorage);
+        //MoveCamera(attachedPlayer.GetComponent<PlayerMotor>().cameraObj.transform, playerCameraStorage);
 
         // Prepare the minigame for the next player to use
         occupied = false; attachedPlayer = null; playerCameraStorage = null;

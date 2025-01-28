@@ -16,7 +16,6 @@ public class CraneButton : InteractableObject
     {
         isPressed = false;
         buttonText.text = buttonType.ToString();
-        DisableText();
     }
 
     private void FixedUpdate()
