@@ -44,9 +44,6 @@ public class PlayerMotor : NetworkBehaviour
     [Header("NameTag")]
     public GameObject nameTag;
 
-    [Header("Camera")]
-    public GameObject cameraObj;
-
     [Header("Animation")]
     public NetworkAnimator anim;
     public GameObject playerModel;
@@ -352,7 +349,7 @@ public class PlayerMotor : NetworkBehaviour
         if (!isHit)
         {
             if (target != null)
-                target.DisableText();
+                //target.DisableText();
 
             target = null;
             return;
@@ -362,21 +359,20 @@ public class PlayerMotor : NetworkBehaviour
         if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
         {
             if (target != null)
-                target.DisableText();
+                //target.DisableText();
             // Player is not hovering over an Interactable Object
             OnInteractableHoverExit?.Invoke();
             return;
         }
 
-        interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().hoverText;
-
+        interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().GetText();
 
         // If player is hovering over an Interactable Object, then trigger event
         OnInteractableHoverEnter?.Invoke(interactableHoverText);
 
 
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
-        target.EnableText();
+        //target.EnableText();
 
         if (target != lastInteracted && lastInteracted != null)
             lastInteracted.StopInteract();

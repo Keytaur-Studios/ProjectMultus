@@ -10,17 +10,4 @@ abstract public class InteractableObject : NetworkBehaviour
     abstract public void Interact(GameObject player);
 
     abstract public void StopInteract();
-
-    public void EnableText()
-    {
-        GameObject.Find("InteractText").GetComponent<TextMeshProUGUI>().text = hoverText;
-        // FINALIZE THIS GAMEOBJECT NAME
-        GameObject.Find("InteractText").gameObject.SetActive(true);
-    }
-
-    public void DisableText()
-    {
-        GameObject.Find("InteractText").gameObject.SetActive(false);
-    }
-
 }
