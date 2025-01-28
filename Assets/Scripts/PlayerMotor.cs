@@ -12,11 +12,16 @@ public class PlayerMotor : NetworkBehaviour
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
 
+    // events to trigger when cursor is or isn't on an interactable object
+    public delegate void OnInteractableHoverEnterDelegate(string objectName); // 
+    public event OnInteractableHoverEnterDelegate OnInteractableHoverEnter; // triggers when player cursor is over an interactable object
+    public event Action OnInteractableHoverExit; // triggers when player cursor is NOT over an interactable object
+
     [Header("Default Info")]
     public new string name;
     public string id;
     public ulong id2;
-    
+
     [Header("States")]
     public MovementState state;
     public OnlineState online;
@@ -47,6 +52,7 @@ public class PlayerMotor : NetworkBehaviour
     public InteractableObject target;
     public InteractableObject lastInteracted;
     public LayerMask targetMask;
+    public string interactableHoverText;
 
     [Header("Look")]
     public Camera cam;
@@ -80,7 +86,8 @@ public class PlayerMotor : NetworkBehaviour
     public float gravity = -15f; // Gravity
     public float airAccel = 10f; // How much to accelerate the player by when in the air. Does not affect max speed
 
-    void Awake() {
+    void Awake()
+    {
         playerRigidbody = GetComponent<Rigidbody>();
         playerRigidbody.maxAngularVelocity = 0;
         gameObject.tag = "Player";
@@ -91,7 +98,7 @@ public class PlayerMotor : NetworkBehaviour
         playerRigidbody.isKinematic = false;
 
         // IsOwner does not get set to True in Awake for some reason
-        if (IsOwner && online == OnlineState.online) 
+        if (IsOwner && online == OnlineState.online)
             cam.gameObject.SetActive(true);
 
         NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLoadComplete;
@@ -104,8 +111,8 @@ public class PlayerMotor : NetworkBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f, whatIsGround);
 
         // Modulate gravity
-        if(playerRigidbody.useGravity)
-            playerRigidbody.AddForce(Vector3.down * (-1*gravity-9.8f), ForceMode.Force);
+        if (playerRigidbody.useGravity)
+            playerRigidbody.AddForce(Vector3.down * (-1 * gravity - 9.8f), ForceMode.Force);
 
         // Apply the appropriate drag value
         if (isGrounded)
@@ -118,6 +125,7 @@ public class PlayerMotor : NetworkBehaviour
 
         // Change the state and speed to the appropriate value
 
+        // Check if looking at Interactable Object
         CheckForTarget();
 
         if (target != lastInteracted && lastInteracted != null)
@@ -224,13 +232,14 @@ public class PlayerMotor : NetworkBehaviour
         //network.MoveServerRpc(transform.position);
     }
 
-    public void Click() {
+    public void Click()
+    {
 
     }
 
     public void Jump() // Applies a force upwards to jump. Affected by jumpHeight and jumpCooldown
     {
-        if(isGrounded && IsOwner) 
+        if (isGrounded && IsOwner)
         {
             anim.ResetTrigger("Idle");
             anim.ResetTrigger("Walk");
@@ -298,7 +307,7 @@ public class PlayerMotor : NetworkBehaviour
     private bool OnSlope()
     {
         //if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 0.3f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
@@ -341,16 +350,27 @@ public class PlayerMotor : NetworkBehaviour
         {
             if (target != null)
                 target.DisableText();
-                
+
             target = null;
             return;
         }
 
-        if (!hitInfo.transform.gameObject.CompareTag("Interactable Object")) {
+
+        if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
+        {
             if (target != null)
                 target.DisableText();
+            // Player is not hovering over an Interactable Object
+            OnInteractableHoverExit?.Invoke();
             return;
         }
+
+        interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().hoverText;
+
+
+        // If player is hovering over an Interactable Object, then trigger event
+        OnInteractableHoverEnter?.Invoke(interactableHoverText);
+
 
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
         target.EnableText();
