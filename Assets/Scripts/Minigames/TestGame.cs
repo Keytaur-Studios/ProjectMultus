@@ -10,5 +10,8 @@ public class TestGame : MinigameBase
         cameraTransform.rotation = new Quaternion(0, 0, 0, 0);
     }
 
-
+    public override void InteractGame()
+    {
+        throw new System.NotImplementedException();
+    }
 }
