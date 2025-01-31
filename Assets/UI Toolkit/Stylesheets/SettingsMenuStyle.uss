@@ -8,11 +8,6 @@
     -unity-font-style: bold;
 }
 
-.settingControl {
-    font-size: 26px;
-    -unity-text-align: middle-right;
-}
-
 .applyButton {
     width: 371px;
     height: 50px;
@@ -45,4 +40,9 @@
     border-bottom-right-radius: 14px;
     border-bottom-left-radius: 14px;
     width: 187px;
+}
+
+.settingControl {
+    font-size: 26px;
+    -unity-text-align: middle-right;
 }

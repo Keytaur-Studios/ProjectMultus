@@ -1,5 +1,6 @@
 .header {
     font-size: 69px;
+    color: rgb(255, 255, 255);
 }
 
 .button {

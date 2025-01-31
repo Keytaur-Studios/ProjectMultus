@@ -10,16 +10,20 @@ public class SettingsMenuUI : MonoBehaviour
     private PlayerMotor motor; 
 
     // Settings controls
-    private Slider lookSensitivitySlider;
+    private SliderInt mouseSensitivitySlider;
     private Slider masterVolumeSlider;
     private Slider musicVolumeSlider;
     private Slider sfxVolumeSlider;
     private Toggle fullscreenToggle;
     private DropdownField resolutionDropdown;
-    private DropdownField qualityDropdown;
+    private DropdownField graphicsQualityDropdown;
     private Button applyButton;
     private Button backButton;
     private Button resetButton;
+
+    // Default graphics (set when player loads into scene, used to reset changes back to default)
+    private int graphicsQualityDefault;
+    private int resolutionDefault;
 
     private void Awake()
     {
@@ -28,13 +32,13 @@ public class SettingsMenuUI : MonoBehaviour
         // initialize all variables
         settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
         settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("Container");
-        lookSensitivitySlider = settingsMenuContainer.Q<Slider>("LookSensitivitySlider");
+        mouseSensitivitySlider = settingsMenuContainer.Q<SliderInt>("MouseSensitivitySlider");
         masterVolumeSlider = settingsMenuContainer.Q<Slider>("MasterVolumeSlider");
         musicVolumeSlider = settingsMenuContainer.Q<Slider>("MusicVolumeSlider");
         sfxVolumeSlider = settingsMenuContainer.Q<Slider>("SFXVolumeSlider");
         fullscreenToggle = settingsMenuContainer.Q<Toggle>("FullscreenToggle");
         resolutionDropdown = settingsMenuContainer.Q<DropdownField>("ResolutionDropdown");
-        qualityDropdown = settingsMenuContainer.Q<DropdownField>("GraphicsQualityDropdown");
+        graphicsQualityDropdown = settingsMenuContainer.Q<DropdownField>("GraphicsQualityDropdown");
         applyButton = settingsMenuContainer.Q<Button>("ApplyButton");
         backButton = settingsMenuContainer.Q<Button>("BackButton");
         resetButton = settingsMenuContainer.Q<Button>("ResetButton");
@@ -42,6 +46,7 @@ public class SettingsMenuUI : MonoBehaviour
         // subscribe to events
         backButton.clicked += OnBack;
         applyButton.clicked += OnApply;
+        resetButton.clicked += OnReset;
         
 
         // initialize graphics settings
@@ -66,7 +71,7 @@ public class SettingsMenuUI : MonoBehaviour
         Screen.SetResolution(newResolution.width, newResolution.height, true);
         
         // set graphics quality
-        QualitySettings.SetQualityLevel(qualityDropdown.index, true);
+        QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true);
 
         // set fullscreen mode
         ToggleFullscreen();
@@ -77,15 +82,22 @@ public class SettingsMenuUI : MonoBehaviour
 
     }
 
-    private void onReset()
+    private void OnReset()
     {
-
+        mouseSensitivitySlider.value = 30; // 30f is the value initialized in PlayerMotor.cs 
+        masterVolumeSlider.value = 100; // full volumes are default
+        sfxVolumeSlider.value = 100;
+        musicVolumeSlider.value = 100;
+        fullscreenToggle.value = false;
+        resolutionDropdown.index = resolutionDefault;
+        graphicsQualityDropdown.index = graphicsQualityDefault; 
+        OnApply(); // apply reset changes
     }
 
     private void setLookSensitivity()
     {
-        motor.xSensitivity = lookSensitivitySlider.value;
-        motor.ySensitivity = lookSensitivitySlider.value;
+        motor.xSensitivity = mouseSensitivitySlider.value;
+        motor.ySensitivity = mouseSensitivitySlider.value;
     }
 
     // Applies the current fullscreen setting
@@ -110,14 +122,19 @@ public class SettingsMenuUI : MonoBehaviour
                 .Select((resolution, index) => (resolution, index))
                 .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height) 
                 .index; 
+        // save this as the default setting
+        resolutionDefault = resolutionDropdown.index;
+        
     }
 
     private void InitQualitySettings()
     {
         // initialize the graphics dropdown options with UnityEngine presets (Performant, Balanced, High Fidelity) 
-        qualityDropdown.choices = QualitySettings.names.ToList();
+        graphicsQualityDropdown.choices = QualitySettings.names.ToList();
         // display the player's current quality level as the selected value
-        qualityDropdown.index = QualitySettings.GetQualityLevel();
+        graphicsQualityDropdown.index = QualitySettings.GetQualityLevel();
+        // save this as the default setting
+        graphicsQualityDefault = graphicsQualityDropdown.index;
     }
 
     public void OpenSettingsMenu()
@@ -128,5 +145,14 @@ public class SettingsMenuUI : MonoBehaviour
     public void CloseSettingsMenu() 
     {
         settingsMenuContainer.style.visibility = Visibility.Hidden;
+    }
+
+    private void OnDisable()
+    {
+        // unsubscribe
+        backButton.clicked -= OnBack;
+        applyButton.clicked -= OnApply;
+        resetButton.clicked -= OnReset;
+
     }
 }
