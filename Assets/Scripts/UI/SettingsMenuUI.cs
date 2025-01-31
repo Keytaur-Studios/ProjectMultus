@@ -7,7 +7,7 @@ public class SettingsMenuUI : MonoBehaviour
     [SerializeField] GameObject settingsMenu; // SettingsMenuUI object on Player
     private UIDocument settingsMenuUIDocument; // UI Document component on SettingsMenuUI
     private VisualElement settingsMenuContainer; // Container in Visual Tree Asset
-    private PlayerMotor motor; 
+    private PlayerMotor motor; // For mouse sensitivity
 
     // Settings controls
     private SliderInt mouseSensitivitySlider;
@@ -21,14 +21,14 @@ public class SettingsMenuUI : MonoBehaviour
     private Button backButton;
     private Button resetButton;
 
-    // current values, so settings only change when applied
-    private int currentMouseSens;
-    private float currentMasterVol;
-    private float currentMusicVol;
-    private float currentSfxVolume;
-    private bool currentFullscreen;
-    private int currentResolution;
-    private int currentGraphicsQuality;
+    // Most recently applied values
+    private int savedMouseSens;
+    private float savedMasterVol;
+    private float savedMusicVol;
+    private float savedSfxVolume;
+    private bool savedFullscreen;
+    private int savedResolution;
+    private int savedGraphicsQuality;
 
     // Default graphics (set when player loads into scene, used to reset changes back to default)
     private int graphicsQualityDefault;
@@ -42,7 +42,7 @@ public class SettingsMenuUI : MonoBehaviour
 
         // Initialize all variables
         settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
-        settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("Container");
+        settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("SettingsMenu");
         mouseSensitivitySlider = settingsMenuContainer.Q<SliderInt>("MouseSensitivitySlider");
         masterVolumeSlider = settingsMenuContainer.Q<Slider>("MasterVolumeSlider");
         musicVolumeSlider = settingsMenuContainer.Q<Slider>("MusicVolumeSlider");
@@ -64,8 +64,8 @@ public class SettingsMenuUI : MonoBehaviour
         InitDisplayResolutions();
         InitQualitySettings();
 
-        // Current applied settings
-        SetCurrentSettings();
+        // Initialize saved settings values
+        SaveSettings();
 
         // ensure Settings Menu is hidden by default
         settingsMenuContainer.style.visibility = Visibility.Hidden; // must not setActive(false), this can break the UI
@@ -77,23 +77,19 @@ public class SettingsMenuUI : MonoBehaviour
     }
 
 
-    // Applies all configured settings
+    // Applies all changes
     private void OnApply()
     {
-        // set resolution
+        // apply resolution
         var newResolution = Screen.resolutions[resolutionDropdown.index];
         Screen.SetResolution(newResolution.width, newResolution.height, true);
-        
-        // set graphics quality
+
+        // apply graphics quality
         QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true);
 
-        // set fullscreen mode
         ToggleFullscreen();
-
-        // set look sensitivity
         SetLookSensitivity();
-
-        SetCurrentSettings();
+        SaveSettings();
 
     }
 
@@ -115,7 +111,7 @@ public class SettingsMenuUI : MonoBehaviour
         motor.ySensitivity = mouseSensitivitySlider.value;
     }
 
-    // Applies the current fullscreen setting
+    // Applies the saved fullscreen setting
     private void ToggleFullscreen()
     {
         if (fullscreenToggle.value == true)
@@ -132,7 +128,7 @@ public class SettingsMenuUI : MonoBehaviour
     {
         // initialize the resolution drop down menu options
         resolutionDropdown.choices = Screen.resolutions.Select(resolution => $"{resolution.width}x{resolution.height}").ToList();
-        // display the player's current resolution as the selected value
+        // display the player's default resolution as the selected value
         resolutionDropdown.index = Screen.resolutions
                 .Select((resolution, index) => (resolution, index))
                 .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height) 
@@ -146,7 +142,7 @@ public class SettingsMenuUI : MonoBehaviour
     {
         // initialize the graphics dropdown options with UnityEngine presets (Performant, Balanced, High Fidelity) 
         graphicsQualityDropdown.choices = QualitySettings.names.ToList();
-        // display the player's current quality level as the selected value
+        // display the player's saved quality level as the selected value
         graphicsQualityDropdown.index = QualitySettings.GetQualityLevel();
         // save this as the default setting
         graphicsQualityDefault = graphicsQualityDropdown.index;
@@ -158,55 +154,57 @@ public class SettingsMenuUI : MonoBehaviour
     }
 
     public void CloseSettingsMenu() 
-    {        
+    {
+        settingsMenuContainer.style.visibility = Visibility.Hidden;
+
         if (!IsChangesApplied())
         {
-            CancelChanges();
+            DiscardChanges();
         }
-
-        settingsMenuContainer.style.visibility = Visibility.Hidden;
 
     }
 
-    private void CancelChanges()
+    // Reverts changes to most recently saved settings
+    private void DiscardChanges()
     {
-        mouseSensitivitySlider.value = currentMouseSens;
-        masterVolumeSlider.value = currentMasterVol;
-        musicVolumeSlider.value = currentMusicVol;
-        sfxVolumeSlider.value = currentSfxVolume;
-        fullscreenToggle.value = currentFullscreen;
+        mouseSensitivitySlider.value = savedMouseSens;
+        masterVolumeSlider.value = savedMasterVol;
+        musicVolumeSlider.value = savedMusicVol;
+        sfxVolumeSlider.value = savedSfxVolume;
+        fullscreenToggle.value = savedFullscreen;
 
-        resolutionDropdown.index = currentResolution;
+        resolutionDropdown.index = savedResolution;
         var oldResolution = Screen.resolutions[resolutionDropdown.index];
         Screen.SetResolution(oldResolution.width, oldResolution.height, true);
 
-        graphicsQualityDropdown.index = currentGraphicsQuality;
+        graphicsQualityDropdown.index = savedGraphicsQuality;
         QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true);
 
 
     }
 
-    private void SetCurrentSettings()
+    // Saves all settings values
+    private void SaveSettings()
     {
-        currentMouseSens = mouseSensitivitySlider.value;
-        currentMasterVol = masterVolumeSlider.value;
-        currentMusicVol = musicVolumeSlider.value;
-        currentSfxVolume = sfxVolumeSlider.value;
-        currentFullscreen = fullscreenToggle.value;
-        currentResolution = resolutionDropdown.index;
-        currentGraphicsQuality = graphicsQualityDropdown.index;
+        savedMouseSens = mouseSensitivitySlider.value;
+        savedMasterVol = masterVolumeSlider.value;
+        savedMusicVol = musicVolumeSlider.value;
+        savedSfxVolume = sfxVolumeSlider.value;
+        savedFullscreen = fullscreenToggle.value;
+        savedResolution = resolutionDropdown.index;
+        savedGraphicsQuality = graphicsQualityDropdown.index;
     }
 
     // returns true if any settings have been modified without applying
     private bool IsChangesApplied()
     {
-        if (currentMouseSens != mouseSensitivitySlider.value ||
-            currentMasterVol != masterVolumeSlider.value ||
-            currentMusicVol != musicVolumeSlider.value ||
-            currentSfxVolume != sfxVolumeSlider.value ||
-            currentFullscreen != fullscreenToggle.value ||
-            currentResolution != resolutionDropdown.index ||
-            currentGraphicsQuality != graphicsQualityDropdown.index)
+        if (savedMouseSens != mouseSensitivitySlider.value ||
+            savedMasterVol != masterVolumeSlider.value ||
+            savedMusicVol != musicVolumeSlider.value ||
+            savedSfxVolume != sfxVolumeSlider.value ||
+            savedFullscreen != fullscreenToggle.value ||
+            savedResolution != resolutionDropdown.index ||
+            savedGraphicsQuality != graphicsQualityDropdown.index)
             return false;
         else
             return true;

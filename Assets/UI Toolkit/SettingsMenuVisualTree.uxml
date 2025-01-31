@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/SettingsMenuStyle.uss?fileID=7433441132597879392&amp;guid=6508e6ea046267d48889cf1a25a27c71&amp;type=3#SettingsMenuStyle" />
-    <engine:VisualElement name="Container" style="flex-grow: 1; padding-top: 45px; padding-right: 45px; padding-bottom: 45px; padding-left: 45px; margin-top: 129px; margin-right: 250px; margin-bottom: 129px; margin-left: 250px; background-color: rgb(111, 111, 111);">
+    <engine:VisualElement name="SettingsMenu" enabled="true" style="flex-grow: 1; padding-top: 45px; padding-right: 45px; padding-bottom: 45px; padding-left: 45px; margin-top: 129px; margin-right: 250px; margin-bottom: 129px; margin-left: 250px; background-color: rgb(111, 111, 111);">
         <engine:VisualElement name="MainControls" style="flex-grow: 1; -unity-text-align: middle-left; padding-right: 55px; padding-top: 0; padding-left: 55px; padding-bottom: 0;">
             <engine:Label text="Settings" name="SettingsHeader" class="heading1" />
             <engine:GroupBox name="Graphics" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
@@ -16,8 +16,8 @@
             <engine:GroupBox name="Audio" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
                 <engine:Label text="Audio" name="AudioHeader" class="heading2" />
                 <engine:Slider label="Master" value="100.3" high-value="100" name="MasterVolumeSlider" fill="true" class="settingControl" />
-                <engine:Slider label="Music" value="50" high-value="100" name="MusicVolumeSlider" low-value="100" fill="true" class="settingControl" />
-                <engine:Slider label="Sound Effects" value="100" high-value="100" name="SFXVolumeSlider" fill="true" class="settingControl" />
+                <engine:Slider label="Music" value="50" high-value="100" name="MusicVolumeSlider" low-value="0" fill="true" class="settingControl" />
+                <engine:Slider label="Sound Effects" value="100" high-value="100" name="SFXVolumeSlider" fill="true" show-input-field="false" class="settingControl" />
             </engine:GroupBox>
             <engine:GroupBox name="ResetApply" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row; align-items: center; justify-content: center;">
                 <engine:Button text="RESET TO DEFAULT" name="ResetButton" class="applyButton buttonRow" />
