@@ -21,15 +21,26 @@ public class SettingsMenuUI : MonoBehaviour
     private Button backButton;
     private Button resetButton;
 
+    // current values, so settings only change when applied
+    private int currentMouseSens;
+    private float currentMasterVol;
+    private float currentMusicVol;
+    private float currentSfxVolume;
+    private bool currentFullscreen;
+    private int currentResolution;
+    private int currentGraphicsQuality;
+
     // Default graphics (set when player loads into scene, used to reset changes back to default)
     private int graphicsQualityDefault;
     private int resolutionDefault;
+
+    private bool isApplied;
 
     private void Awake()
     {
         motor = GetComponent<PlayerMotor>();
 
-        // initialize all variables
+        // Initialize all variables
         settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
         settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("Container");
         mouseSensitivitySlider = settingsMenuContainer.Q<SliderInt>("MouseSensitivitySlider");
@@ -52,6 +63,9 @@ public class SettingsMenuUI : MonoBehaviour
         // initialize graphics settings
         InitDisplayResolutions();
         InitQualitySettings();
+
+        // Current applied settings
+        SetCurrentSettings();
 
         // ensure Settings Menu is hidden by default
         settingsMenuContainer.style.visibility = Visibility.Hidden; // must not setActive(false), this can break the UI
@@ -77,11 +91,13 @@ public class SettingsMenuUI : MonoBehaviour
         ToggleFullscreen();
 
         // set look sensitivity
-        setLookSensitivity();
-        
+        SetLookSensitivity();
+
+        SetCurrentSettings();
 
     }
 
+    // Resets all settings to default states
     private void OnReset()
     {
         mouseSensitivitySlider.value = 30; // 30f is the value initialized in PlayerMotor.cs 
@@ -91,10 +107,9 @@ public class SettingsMenuUI : MonoBehaviour
         fullscreenToggle.value = false;
         resolutionDropdown.index = resolutionDefault;
         graphicsQualityDropdown.index = graphicsQualityDefault; 
-        OnApply(); // apply reset changes
     }
 
-    private void setLookSensitivity()
+    private void SetLookSensitivity()
     {
         motor.xSensitivity = mouseSensitivitySlider.value;
         motor.ySensitivity = mouseSensitivitySlider.value;
@@ -143,9 +158,60 @@ public class SettingsMenuUI : MonoBehaviour
     }
 
     public void CloseSettingsMenu() 
-    {
+    {        
+        if (!IsChangesApplied())
+        {
+            CancelChanges();
+        }
+
         settingsMenuContainer.style.visibility = Visibility.Hidden;
+
     }
+
+    private void CancelChanges()
+    {
+        mouseSensitivitySlider.value = currentMouseSens;
+        masterVolumeSlider.value = currentMasterVol;
+        musicVolumeSlider.value = currentMusicVol;
+        sfxVolumeSlider.value = currentSfxVolume;
+        fullscreenToggle.value = currentFullscreen;
+
+        resolutionDropdown.index = currentResolution;
+        var oldResolution = Screen.resolutions[resolutionDropdown.index];
+        Screen.SetResolution(oldResolution.width, oldResolution.height, true);
+
+        graphicsQualityDropdown.index = currentGraphicsQuality;
+        QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true);
+
+
+    }
+
+    private void SetCurrentSettings()
+    {
+        currentMouseSens = mouseSensitivitySlider.value;
+        currentMasterVol = masterVolumeSlider.value;
+        currentMusicVol = musicVolumeSlider.value;
+        currentSfxVolume = sfxVolumeSlider.value;
+        currentFullscreen = fullscreenToggle.value;
+        currentResolution = resolutionDropdown.index;
+        currentGraphicsQuality = graphicsQualityDropdown.index;
+    }
+
+    // returns true if any settings have been modified without applying
+    private bool IsChangesApplied()
+    {
+        if (currentMouseSens != mouseSensitivitySlider.value ||
+            currentMasterVol != masterVolumeSlider.value ||
+            currentMusicVol != musicVolumeSlider.value ||
+            currentSfxVolume != sfxVolumeSlider.value ||
+            currentFullscreen != fullscreenToggle.value ||
+            currentResolution != resolutionDropdown.index ||
+            currentGraphicsQuality != graphicsQualityDropdown.index)
+            return false;
+        else
+            return true;
+    }
+
 
     private void OnDisable()
     {
