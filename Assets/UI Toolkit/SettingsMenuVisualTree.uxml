@@ -3,17 +3,26 @@
     <engine:VisualElement name="Container" style="flex-grow: 1; padding-top: 45px; padding-right: 45px; padding-bottom: 45px; padding-left: 45px; margin-top: 129px; margin-right: 250px; margin-bottom: 129px; margin-left: 250px; background-color: rgb(111, 111, 111);">
         <engine:VisualElement name="MainControls" style="flex-grow: 1; -unity-text-align: middle-left;">
             <engine:Label text="Settings" name="SettingsHeader" class="heading1" />
-            <engine:Label text="Controls" name="ControlsLabel" class="heading2" />
-            <engine:Slider label="Look Sensitivity" value="42" high-value="100" name="LookSensitivitySlider" class="settingControl" />
-            <engine:Label text="Audio" name="AudioHeader" class="heading2" />
-            <engine:Slider label="Master" value="42" high-value="100" name="MasterVolumeSlider" class="settingControl" />
-            <engine:Slider label="Music" value="42" high-value="100" name="MusicVolumeSlider" class="settingControl" />
-            <engine:Slider label="Sound Effects" value="42" high-value="100" name="SFXVolumeSlider" class="settingControl" />
-            <engine:Label text="Graphics" name="GraphicsHeader" class="heading2" />
-            <engine:Toggle label="Fullscreen" name="FullscreenToggle" class="settingControl" />
-            <engine:DropdownField label="Resolution" name="ResolutionDropdown" class="settingControl" style="width: 895px;" />
-            <engine:DropdownField label="Quality" name="GraphicsQualityDropdown" class="settingControl" style="width: 895px;" />
-            <engine:Button text="Apply" name="ApplyButton" class="applyButton" />
+            <engine:GroupBox name="Controls" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                <engine:Label text="Controls" name="ControlsLabel" class="heading2" />
+                <engine:Slider label="Look Sensitivity" value="42" high-value="100" name="LookSensitivitySlider" class="settingControl" />
+            </engine:GroupBox>
+            <engine:GroupBox name="Audio" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                <engine:Label text="Audio" name="AudioHeader" class="heading2" />
+                <engine:Slider label="Master" value="42" high-value="100" name="MasterVolumeSlider" class="settingControl" />
+                <engine:Slider label="Music" value="42" high-value="100" name="MusicVolumeSlider" class="settingControl" />
+                <engine:Slider label="Sound Effects" value="42" high-value="100" name="SFXVolumeSlider" class="settingControl" />
+            </engine:GroupBox>
+            <engine:GroupBox name="Graphics" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                <engine:Label text="Graphics" name="GraphicsHeader" class="heading2" />
+                <engine:Toggle label="Fullscreen" name="FullscreenToggle" class="settingControl" />
+                <engine:DropdownField label="Resolution" name="ResolutionDropdown" class="settingControl" style="width: 895px;" />
+                <engine:DropdownField label="Quality" name="GraphicsQualityDropdown" class="settingControl" style="width: 895px;" />
+            </engine:GroupBox>
+            <engine:GroupBox name="ResetApply" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row; align-items: center; justify-content: center;">
+                <engine:Button text="RESET TO DEFAULT" name="ResetButton" class="applyButton buttonRow" />
+                <engine:Button text="APPLY" name="ApplyButton" class="applyButton buttonRow" />
+            </engine:GroupBox>
         </engine:VisualElement>
         <engine:Button text="Back" name="BackButton" class="backButton" />
     </engine:VisualElement>

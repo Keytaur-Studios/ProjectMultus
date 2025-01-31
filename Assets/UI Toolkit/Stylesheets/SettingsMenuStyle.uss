@@ -16,10 +16,10 @@
 .applyButton {
     width: 371px;
     height: 50px;
-    margin-top: 25px;
-    margin-right: 25px;
-    margin-bottom: 25px;
-    margin-left: 25px;
+    margin-top: 17px;
+    margin-right: 17px;
+    margin-bottom: 17px;
+    margin-left: 17px;
     align-items: auto;
     align-self: center;
     border-top-left-radius: 7px;
@@ -28,6 +28,9 @@
     border-bottom-left-radius: 7px;
     font-size: 26px;
     -unity-font-style: normal;
+    flex-direction: row;
+    align-content: auto;
+    justify-content: flex-start;
 }
 
 .backButton {
