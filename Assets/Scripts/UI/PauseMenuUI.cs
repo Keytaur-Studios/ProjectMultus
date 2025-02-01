@@ -62,7 +62,6 @@ public class PauseMenuUI : MonoBehaviour
     // Displays Pause Menu UI
     public void Pause()
     {
-        Debug.Log("opened pause menu!");
         pauseMenuContainer.style.visibility = Visibility.Visible;
         isGamePaused = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -71,7 +70,6 @@ public class PauseMenuUI : MonoBehaviour
     // Hides Pause Menu UI
     public void Resume()
     {
-        Debug.Log("closed pause menu!");
         pauseMenuContainer.style.visibility = Visibility.Hidden;
         settings.CloseSettingsMenu();
         isGamePaused = false;
@@ -80,15 +78,12 @@ public class PauseMenuUI : MonoBehaviour
 
     private void OnSettingsButtonClick()
     {
-        Debug.Log("Pressed settings button!");
-
         settings.OpenSettingsMenu();
     }
 
     private void OnResumeButtonClick()
     {
-        Debug.Log("Pressed resume button!");
-        TogglePauseMenu();
+        Resume();
     }
 
     // Exits the application entirely

@@ -1,10 +1,12 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 
 public class SettingsMenuUI : MonoBehaviour
 {
     [SerializeField] GameObject settingsMenu; // SettingsMenuUI object on Player
+    [SerializeField] AudioMixer audioMixer;
     private UIDocument settingsMenuUIDocument; // UI Document component on SettingsMenuUI
     private VisualElement settingsMenuContainer; // Container in Visual Tree Asset
     private PlayerMotor motor; // For mouse sensitivity
@@ -39,17 +41,21 @@ public class SettingsMenuUI : MonoBehaviour
     private void Awake()
     {
         motor = GetComponent<PlayerMotor>();
-
+        // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
+        
         // Initialize all variables
         settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
         settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("SettingsMenu");
         mouseSensitivitySlider = settingsMenuContainer.Q<SliderInt>("MouseSensitivitySlider");
+
         masterVolumeSlider = settingsMenuContainer.Q<Slider>("MasterVolumeSlider");
         musicVolumeSlider = settingsMenuContainer.Q<Slider>("MusicVolumeSlider");
         sfxVolumeSlider = settingsMenuContainer.Q<Slider>("SFXVolumeSlider");
+
         fullscreenToggle = settingsMenuContainer.Q<Toggle>("FullscreenToggle");
         resolutionDropdown = settingsMenuContainer.Q<DropdownField>("ResolutionDropdown");
         graphicsQualityDropdown = settingsMenuContainer.Q<DropdownField>("GraphicsQualityDropdown");
+
         applyButton = settingsMenuContainer.Q<Button>("ApplyButton");
         backButton = settingsMenuContainer.Q<Button>("BackButton");
         resetButton = settingsMenuContainer.Q<Button>("ResetButton");
