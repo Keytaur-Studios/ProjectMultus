@@ -173,6 +173,10 @@ public class PlayerMotor : NetworkBehaviour
         if (!IsOwner && online == OnlineState.online)
             return;
 
+        // Stop camera movement while in pause menu
+        if (PauseMenuUI.isGamePaused)
+            return;
+
         rotation.x += mouseX * xSensitivity * Time.deltaTime;
         rotation.y += mouseY * ySensitivity * Time.deltaTime;
         rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
@@ -183,6 +187,10 @@ public class PlayerMotor : NetworkBehaviour
     public void ProcessMove(Vector2 input)
     {
         if (!IsOwner && online == OnlineState.online)
+            return;
+
+        // Stop player movement while in pause menu
+        if (PauseMenuUI.isGamePaused)
             return;
 
         StateHandler(input);

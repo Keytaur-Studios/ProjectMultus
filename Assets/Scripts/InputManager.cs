@@ -7,6 +7,8 @@ public class InputManager : MonoBehaviour
 
     private PlayerMotor motor;
 
+    private PauseMenuUI pauseMenu;
+
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -16,10 +18,13 @@ public class InputManager : MonoBehaviour
 
         motor = GetComponent<PlayerMotor>();
 
+        pauseMenu = GetComponent<PauseMenuUI>();
+
         player.Click.performed += ctx => motor.Click();
         player.Jump.performed += ctx => motor.Jump();
         player.Interact.performed += ctx => motor.Interact();
         player.Interact.canceled += ctx => motor.StopInteract();
+        player.Pause.performed += ctx => pauseMenu.TogglePauseMenu();
 
         EnablePlayerControls();
     }
