@@ -11071,7 +11071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0559d13a7409de4e8f4309ee4089fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
 --- !u!65 &514516138
 BoxCollider:
