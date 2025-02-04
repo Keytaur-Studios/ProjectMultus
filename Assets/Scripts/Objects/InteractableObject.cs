@@ -1,15 +1,19 @@
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
 abstract public class InteractableObject : NetworkBehaviour
 {
     public bool isPressed;
+    [SerializeField]
+    private string hoverText;
 
-    abstract public void Interact();
-    
+    abstract public void Interact(GameObject player);
+
     abstract public void StopInteract();
 
-    abstract public void EnableText();
-
-    abstract public void DisableText();
+    public string GetText()
+    {
+        return hoverText;
+    }
 }
