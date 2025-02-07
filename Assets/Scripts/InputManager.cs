@@ -8,9 +8,11 @@ public class InputManager : MonoBehaviour
     private PlayerMotor motor;
     private PlayerLook look;
 
+    private bool cameraFreeze;
+
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        UnfreezeCamera();
 
         playerInput = new PlayerInput();
         player = playerInput.PlayerControls;
@@ -24,6 +26,35 @@ public class InputManager : MonoBehaviour
         player.Interact.canceled += ctx => look.StopInteract();
 
         EnablePlayerControls();
+
+        MinigameBase.EnterMiniGame += MinigameEnter;
+        MinigameBase.ExitMiniGame += MinigameExit;
+    }
+
+    void MinigameEnter(GameObject minigame)
+    {
+        FreezeCamera();
+        DisableAllControls();
+        EnableMinigameControls();
+    }
+
+    void MinigameExit()
+    {
+        UnfreezeCamera();
+        DisableAllControls();
+        EnablePlayerControls();
+    }
+
+    void FreezeCamera()
+    {
+        cameraFreeze = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    void UnfreezeCamera()
+    {
+        cameraFreeze = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate() 
@@ -33,9 +64,15 @@ public class InputManager : MonoBehaviour
 
     void LateUpdate()
     {
-        look.ProcessLook(player.Look.ReadValue<Vector2>());
+        if (!cameraFreeze)
+            look.ProcessLook(player.Look.ReadValue<Vector2>());
     }
 
+    void DisableAllControls()
+    {
+        player.Disable();
+        // mingame here
+    }
 
     // Enables the controls to move the player
     void EnablePlayerControls()
@@ -43,4 +80,8 @@ public class InputManager : MonoBehaviour
         player.Enable();
     }
 
+    void EnableMinigameControls()
+    {
+        // minigame here
+    }
 }

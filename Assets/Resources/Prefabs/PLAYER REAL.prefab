@@ -516,7 +516,6 @@ MonoBehaviour:
   id2: 0
   state: 0
   online: 0
-  cameraObj: {fileID: 5046076675878525231}
   nameTag: {fileID: 6468448134106812343}
   anim: {fileID: 3140132478477676370}
   playerModel: {fileID: 1121029904447358389}
@@ -679,8 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  motor: {fileID: 0}
-  cameraObj: {fileID: 0}
+  cameraObj: {fileID: 5046076675878525231}
   cam: {fileID: 3393924870230017693}
   xSensitivity: 30
   ySensitivity: 30

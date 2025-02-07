@@ -16,7 +16,7 @@ abstract public class MinigameBase : InteractableObject
     public GameObject attachedPlayer;
     public Transform playerCameraStorage;
 
-    public static event Action EnterMiniGame;
+    public static event Action<GameObject> EnterMiniGame;
     public static event Action ExitMiniGame;
 
     // Enter minigame state, move player camera.
@@ -24,16 +24,16 @@ abstract public class MinigameBase : InteractableObject
     {
         attachedPlayer = player;
         occupied = true;
-        playerCameraStorage = player.GetComponent<PlayerMotor>().cameraObj.transform;
-        MoveCamera(player.GetComponent<PlayerMotor>().cameraObj.transform, cameraTransform);
+        playerCameraStorage = player.GetComponent<PlayerLook>().cameraObj.transform;
+        MoveCamera(player.GetComponent<PlayerLook>().cameraObj.transform, cameraTransform);
         InteractGame();
-        EnterMiniGame?.Invoke();
+        EnterMiniGame?.Invoke(gameObject);
     }
 
     // Leave the minigame state. Reset minigame status to prepare for next use.
     public void Leave()
     {
-        MoveCamera(attachedPlayer.GetComponent<PlayerMotor>().cameraObj.transform, playerCameraStorage);
+        MoveCamera(attachedPlayer.GetComponent<PlayerLook>().cameraObj.transform, playerCameraStorage);
 
         // Prepare the minigame for the next player to use
         occupied = false; attachedPlayer = null; playerCameraStorage = null;

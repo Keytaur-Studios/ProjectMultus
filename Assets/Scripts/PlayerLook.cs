@@ -83,9 +83,7 @@ public class PlayerLook : NetworkBehaviour
 
         if (!isHit)
         {
-            if (target != null)
-                //target.DisableText();
-
+            OnInteractableHoverExit?.Invoke();
             target = null;
             return;
         }
@@ -93,8 +91,6 @@ public class PlayerLook : NetworkBehaviour
 
         if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
         {
-            if (target != null)
-                //target.DisableText();
             // Player is not hovering over an Interactable Object
             OnInteractableHoverExit?.Invoke();
             return;

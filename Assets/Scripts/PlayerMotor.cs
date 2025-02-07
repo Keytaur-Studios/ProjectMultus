@@ -18,9 +18,6 @@ public class PlayerMotor : NetworkBehaviour
     public MovementState state;
     public OnlineState online;
 
-    [Header("Camera")]
-    public GameObject cameraObj;
-
     public enum MovementState
     {
         walking,
