@@ -12,9 +12,12 @@ abstract public class MinigameBase : InteractableObject
     [Header("Camera")]
     public Transform cameraTransform;
 
-    [Header("Attached Plater")]
+    [Header("Attached Player")]
     public GameObject attachedPlayer;
     public Transform playerCameraStorage;
+
+    public static event Action EnterMiniGame;
+    public static event Action ExitMiniGame;
 
     // Enter minigame state, move player camera.
     override public void Interact(GameObject player)
@@ -24,6 +27,7 @@ abstract public class MinigameBase : InteractableObject
         playerCameraStorage = player.GetComponent<PlayerMotor>().cameraObj.transform;
         MoveCamera(player.GetComponent<PlayerMotor>().cameraObj.transform, cameraTransform);
         InteractGame();
+        EnterMiniGame?.Invoke();
     }
 
     // Leave the minigame state. Reset minigame status to prepare for next use.
@@ -33,6 +37,8 @@ abstract public class MinigameBase : InteractableObject
 
         // Prepare the minigame for the next player to use
         occupied = false; attachedPlayer = null; playerCameraStorage = null;
+
+        ExitMiniGame?.Invoke();
     }
 
     // Specific interaction implementation for each minigame.
