@@ -49,10 +49,8 @@ public class PlayerLook : NetworkBehaviour
         }
     }
 
-    void FixedUpdate() {
-        // Check if looking at Interactable Object
-        CheckForTarget();
-
+    void FixedUpdate()
+    {
         if (target != lastInteracted && lastInteracted != null)
             lastInteracted.StopInteract();
     }
@@ -70,6 +68,9 @@ public class PlayerLook : NetworkBehaviour
         rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
         cam.transform.localRotation = Quaternion.Euler(-rotation.y, 0, 0);
         transform.localRotation = Quaternion.Euler(0, rotation.x, 0);
+
+        // Check if looking at Interactable Object
+        CheckForTarget();
     }
 
     public void CheckForTarget()
@@ -87,7 +88,6 @@ public class PlayerLook : NetworkBehaviour
             target = null;
             return;
         }
-
 
         if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
         {
