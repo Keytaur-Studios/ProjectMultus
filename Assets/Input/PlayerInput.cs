@@ -174,7 +174,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9b25f849-a791-43bf-aa67-2fbb72622181"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -225,6 +225,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Leave"",
+                    ""type"": ""Button"",
+                    ""id"": ""070b9af0-3fe2-41db-af6e-bf76d00fe3f7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -260,6 +269,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8dc0743d-97ff-4e26-88a3-f0382ad45e12"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Leave"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -279,6 +299,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MinigameControls_Look = m_MinigameControls.FindAction("Look", throwIfNotFound: true);
         m_MinigameControls_LMB = m_MinigameControls.FindAction("LMB", throwIfNotFound: true);
         m_MinigameControls_Pause = m_MinigameControls.FindAction("Pause", throwIfNotFound: true);
+        m_MinigameControls_Leave = m_MinigameControls.FindAction("Leave", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -435,6 +456,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_MinigameControls_Look;
     private readonly InputAction m_MinigameControls_LMB;
     private readonly InputAction m_MinigameControls_Pause;
+    private readonly InputAction m_MinigameControls_Leave;
     public struct MinigameControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -442,6 +464,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_MinigameControls_Look;
         public InputAction @LMB => m_Wrapper.m_MinigameControls_LMB;
         public InputAction @Pause => m_Wrapper.m_MinigameControls_Pause;
+        public InputAction @Leave => m_Wrapper.m_MinigameControls_Leave;
         public InputActionMap Get() { return m_Wrapper.m_MinigameControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -460,6 +483,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Leave.started += instance.OnLeave;
+            @Leave.performed += instance.OnLeave;
+            @Leave.canceled += instance.OnLeave;
         }
 
         private void UnregisterCallbacks(IMinigameControlsActions instance)
@@ -473,6 +499,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Leave.started -= instance.OnLeave;
+            @Leave.performed -= instance.OnLeave;
+            @Leave.canceled -= instance.OnLeave;
         }
 
         public void RemoveCallbacks(IMinigameControlsActions instance)
@@ -504,5 +533,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnLMB(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnLeave(InputAction.CallbackContext context);
     }
 }

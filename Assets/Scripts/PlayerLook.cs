@@ -99,16 +99,14 @@ public class PlayerLook : NetworkBehaviour
         interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObject>().GetText();
         //interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().GetText();
 
-
         // If player is hovering over an Interactable Object, then trigger event
         OnInteractableHoverEnter?.Invoke(interactableHoverText);
-
 
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
         //target.EnableText();
 
-        if (target != lastInteracted && lastInteracted != null)
-            lastInteracted.StopInteract();
+        //if (target != lastInteracted && lastInteracted != null)
+            //lastInteracted.StopInteract();
     }
 
     public void Interact()
@@ -120,11 +118,11 @@ public class PlayerLook : NetworkBehaviour
         lastInteracted = target;
     }
 
-    public void StopInteract()
-    {
-        if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
-            return;
+    //public void StopInteract()
+    //{
+    //    if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
+    //        return;
 
-        lastInteracted.StopInteract();
-    }
+    //    lastInteracted.StopInteract();
+    //}
 }

@@ -4,6 +4,7 @@ public class InputManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     public PlayerInput.PlayerControlsActions player;
+    public PlayerInput.MinigameControlsActions mini;
 
     private PlayerMotor motor;
     private PlayerLook look;
@@ -16,14 +17,16 @@ public class InputManager : MonoBehaviour
 
         playerInput = new PlayerInput();
         player = playerInput.PlayerControls;
+        mini = playerInput.MinigameControls;
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
+        
 
         player.Click.performed += ctx => motor.Click();
         player.Jump.performed += ctx => motor.Jump();
         player.Interact.performed += ctx => look.Interact();
-        player.Interact.canceled += ctx => look.StopInteract();
+        //player.Interact.canceled += ctx => look.StopInteract();
 
         EnablePlayerControls();
 
@@ -31,11 +34,15 @@ public class InputManager : MonoBehaviour
         MinigameBase.ExitMiniGame += MinigameExit;
     }
 
+    private GameObject currentMinigame;
+
     void MinigameEnter(GameObject minigame)
     {
         FreezeCamera();
         DisableAllControls();
         EnableMinigameControls();
+        currentMinigame = minigame;
+        mini.Leave.performed += ctx => currentMinigame.GetComponent<MinigameBase>().Leave();
     }
 
     void MinigameExit()
@@ -43,6 +50,7 @@ public class InputManager : MonoBehaviour
         UnfreezeCamera();
         DisableAllControls();
         EnablePlayerControls();
+        currentMinigame = null;
     }
 
     void FreezeCamera()
@@ -71,7 +79,7 @@ public class InputManager : MonoBehaviour
     void DisableAllControls()
     {
         player.Disable();
-        // mingame here
+        mini.Disable();
     }
 
     // Enables the controls to move the player
@@ -82,6 +90,6 @@ public class InputManager : MonoBehaviour
 
     void EnableMinigameControls()
     {
-        // minigame here
+        mini.Enable();
     }
 }
