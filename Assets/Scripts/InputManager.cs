@@ -21,7 +21,6 @@ public class InputManager : MonoBehaviour
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
-        
 
         player.Click.performed += ctx => motor.Click();
         player.Jump.performed += ctx => motor.Jump();
@@ -42,7 +41,7 @@ public class InputManager : MonoBehaviour
         DisableAllControls();
         EnableMinigameControls();
         currentMinigame = minigame;
-        mini.Leave.performed += ctx => currentMinigame.GetComponent<MinigameBase>().Leave();
+        mini.Leave.performed += ctx => minigame.GetComponent<MinigameBase>().Leave();
     }
 
     void MinigameExit()
