@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
     public PlayerInput.PlayerControlsActions player;
 
     private PlayerMotor motor;
+    private PlayerLook look;
 
     void Awake()
     {
@@ -15,11 +16,12 @@ public class InputManager : MonoBehaviour
         player = playerInput.PlayerControls;
 
         motor = GetComponent<PlayerMotor>();
+        look = GetComponent<PlayerLook>();
 
         player.Click.performed += ctx => motor.Click();
         player.Jump.performed += ctx => motor.Jump();
-        player.Interact.performed += ctx => motor.Interact();
-        player.Interact.canceled += ctx => motor.StopInteract();
+        player.Interact.performed += ctx => look.Interact();
+        player.Interact.canceled += ctx => look.StopInteract();
 
         EnablePlayerControls();
     }
@@ -31,7 +33,7 @@ public class InputManager : MonoBehaviour
 
     void LateUpdate()
     {
-        motor.ProcessLook(player.Look.ReadValue<Vector2>());
+        look.ProcessLook(player.Look.ReadValue<Vector2>());
     }
 
 

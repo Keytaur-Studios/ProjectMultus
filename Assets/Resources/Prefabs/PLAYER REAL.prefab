@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 2108749360660447125}
   - component: {fileID: 5095314101922867222}
   - component: {fileID: 140572342165377693}
+  - component: {fileID: 6677325033411155452}
   m_Layer: 2
   m_Name: PLAYER REAL
   m_TagString: Player
@@ -519,16 +520,6 @@ MonoBehaviour:
   nameTag: {fileID: 6468448134106812343}
   anim: {fileID: 3140132478477676370}
   playerModel: {fileID: 1121029904447358389}
-  target: {fileID: 0}
-  lastInteracted: {fileID: 0}
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 51
-  interactableHoverText: 
-  cam: {fileID: 3393924870230017693}
-  xSensitivity: 30
-  ySensitivity: 30
-  yRotationLimit: 45
   maxSlopeAngle: 60
   whatIsGround:
     serializedVersion: 2
@@ -675,6 +666,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverTextGameObject: {fileID: 4201116414663312967}
+--- !u!114 &6677325033411155452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812724167370053064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a69f90763c01c1044a1670fb4611263d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  motor: {fileID: 0}
+  cameraObj: {fileID: 0}
+  cam: {fileID: 3393924870230017693}
+  xSensitivity: 30
+  ySensitivity: 30
+  yRotationLimit: 60
+  target: {fileID: 0}
+  lastInteracted: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  interactableHoverText: 
 --- !u!1 &6468448134106812343
 GameObject:
   m_ObjectHideFlags: 0
