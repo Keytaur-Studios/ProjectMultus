@@ -678,7 +678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  motor: {fileID: 0}
   cameraObj: {fileID: 0}
   cam: {fileID: 3393924870230017693}
   xSensitivity: 30
@@ -688,7 +687,7 @@ MonoBehaviour:
   lastInteracted: {fileID: 0}
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   interactableHoverText: 
 --- !u!1 &6468448134106812343
 GameObject:
