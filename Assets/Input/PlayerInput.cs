@@ -194,6 +194,74 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""MinigameControls"",
+            ""id"": ""e0034e5f-022e-414e-b3cc-800a3921566e"",
+            ""actions"": [
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""a7434a88-41d0-40be-999c-2594cb85f5b1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LMB"",
+                    ""type"": ""Button"",
+                    ""id"": ""c529ec78-428c-4c1c-bb8b-8300cde2695e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""70d4d7f7-3c2d-4ff0-a698-add8f61b90be"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0ad16b9c-e858-4835-b7fb-340e40b92a58"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5acbdc3-8f40-4906-837b-bd6824170b0a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LMB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17e46e11-607c-473a-9b57-87380ab6fdd1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -206,11 +274,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerControls_Click = m_PlayerControls.FindAction("Click", throwIfNotFound: true);
         m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
         m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
+        // MinigameControls
+        m_MinigameControls = asset.FindActionMap("MinigameControls", throwIfNotFound: true);
+        m_MinigameControls_Look = m_MinigameControls.FindAction("Look", throwIfNotFound: true);
+        m_MinigameControls_LMB = m_MinigameControls.FindAction("LMB", throwIfNotFound: true);
+        m_MinigameControls_Pause = m_MinigameControls.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_PlayerControls.enabled, "This will cause a leak and performance issues, PlayerInput.PlayerControls.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_MinigameControls.enabled, "This will cause a leak and performance issues, PlayerInput.MinigameControls.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -354,6 +428,68 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
+
+    // MinigameControls
+    private readonly InputActionMap m_MinigameControls;
+    private List<IMinigameControlsActions> m_MinigameControlsActionsCallbackInterfaces = new List<IMinigameControlsActions>();
+    private readonly InputAction m_MinigameControls_Look;
+    private readonly InputAction m_MinigameControls_LMB;
+    private readonly InputAction m_MinigameControls_Pause;
+    public struct MinigameControlsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public MinigameControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Look => m_Wrapper.m_MinigameControls_Look;
+        public InputAction @LMB => m_Wrapper.m_MinigameControls_LMB;
+        public InputAction @Pause => m_Wrapper.m_MinigameControls_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_MinigameControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MinigameControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IMinigameControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MinigameControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MinigameControlsActionsCallbackInterfaces.Add(instance);
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+            @LMB.started += instance.OnLMB;
+            @LMB.performed += instance.OnLMB;
+            @LMB.canceled += instance.OnLMB;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IMinigameControlsActions instance)
+        {
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+            @LMB.started -= instance.OnLMB;
+            @LMB.performed -= instance.OnLMB;
+            @LMB.canceled -= instance.OnLMB;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IMinigameControlsActions instance)
+        {
+            if (m_Wrapper.m_MinigameControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMinigameControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MinigameControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MinigameControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MinigameControlsActions @MinigameControls => new MinigameControlsActions(this);
     public interface IPlayerControlsActions
     {
         void OnLook(InputAction.CallbackContext context);
@@ -361,6 +497,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IMinigameControlsActions
+    {
+        void OnLook(InputAction.CallbackContext context);
+        void OnLMB(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
 }
