@@ -1,21 +1,13 @@
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Components;
-using Unity.Collections;
-using UnityEngine.Experimental.AI;
 using UnityEngine.SceneManagement;
-using System;
 using TMPro;
 
 public class PlayerMotor : NetworkBehaviour
 {
     private Rigidbody playerRigidbody;
     private Vector3 moveDirection;
-
-    // events to trigger when cursor is or isn't on an interactable object
-    public delegate void OnInteractableHoverEnterDelegate(string objectName); // 
-    public event OnInteractableHoverEnterDelegate OnInteractableHoverEnter; // triggers when player cursor is over an interactable object
-    public event Action OnInteractableHoverExit; // triggers when player cursor is NOT over an interactable object
 
     [Header("Default Info")]
     public new string name;
@@ -47,19 +39,6 @@ public class PlayerMotor : NetworkBehaviour
     [Header("Animation")]
     public NetworkAnimator anim;
     public GameObject playerModel;
-
-    [Header("Interaction")]
-    public InteractableObject target;
-    public InteractableObject lastInteracted;
-    public LayerMask targetMask;
-    public string interactableHoverText;
-
-    [Header("Look")]
-    public Camera cam;
-    private Vector2 rotation = Vector2.zero;
-    public float xSensitivity = 30f;
-    public float ySensitivity = 30f;
-    [Range(0, 90f)][SerializeField] float yRotationLimit = 60f;
 
     [Header("Slope Handler")]
     public float maxSlopeAngle; // Max angle of a slope the player can walk on
@@ -97,10 +76,6 @@ public class PlayerMotor : NetworkBehaviour
     {
         playerRigidbody.isKinematic = false;
 
-        // IsOwner does not get set to True in Awake for some reason
-        if (IsOwner && online == OnlineState.online)
-            cam.gameObject.SetActive(true);
-
         NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLoadComplete;
     }
 
@@ -125,11 +100,6 @@ public class PlayerMotor : NetworkBehaviour
 
         // Change the state and speed to the appropriate value
 
-        // Check if looking at Interactable Object
-        CheckForTarget();
-
-        if (target != lastInteracted && lastInteracted != null)
-            lastInteracted.StopInteract();
     }
 
     public override void OnNetworkSpawn()
@@ -139,12 +109,6 @@ public class PlayerMotor : NetworkBehaviour
         {
             // This is the local player
             SetLayerRecursively(playerModel, LayerMask.NameToLayer("Local Player"));
-
-            // Adjust the camera culling mask to ignore the LocalPlayer layer
-            if (cam != null)
-            {
-                cam.cullingMask &= ~(1 << LayerMask.NameToLayer("Local Player"));
-            }
 
             PlayerNameManager.Instance.UpdateNames(LobbyHandler.Instance.joinedLobby);
 
@@ -163,25 +127,6 @@ public class PlayerMotor : NetworkBehaviour
         obj.layer = layer;
         foreach (Transform child in obj.transform)
             SetLayerRecursively(child.gameObject, layer);
-    }
-
-    public void ProcessLook(Vector2 input)
-    {
-        float mouseX = input.x;
-        float mouseY = input.y;
-
-        if (!IsOwner && online == OnlineState.online)
-            return;
-
-        // Stop camera movement while in pause menu
-        if (PauseMenuUI.isGamePaused)
-            return;
-
-        rotation.x += mouseX * xSensitivity * Time.deltaTime;
-        rotation.y += mouseY * ySensitivity * Time.deltaTime;
-        rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
-        cam.transform.localRotation = Quaternion.Euler(-rotation.y, 0, 0);
-        transform.localRotation = Quaternion.Euler(0, rotation.x, 0);
     }
 
     public void ProcessMove(Vector2 input)
@@ -326,66 +271,6 @@ public class PlayerMotor : NetworkBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-    }
-
-    public void Interact()
-    {
-        if (target == null || (!IsOwner && online == OnlineState.online))
-            return;
-
-        target.Interact(this.gameObject);
-        lastInteracted = target;
-    }
-
-    public void StopInteract()
-    {
-        if (target == null || (!IsOwner && online == OnlineState.online))
-            return;
-
-        lastInteracted.StopInteract();
-    }
-
-    public void CheckForTarget()
-    {
-        bool isHit = Physics.Raycast(cam.transform.position, cam.transform.rotation * Vector3.forward, out RaycastHit hitInfo, 5f, targetMask);
-
-        if (isHit)
-            Debug.DrawLine(cam.transform.position, hitInfo.point, Color.red);
-        else
-            Debug.DrawLine(cam.transform.position, cam.transform.position + (cam.transform.rotation * Vector3.forward * 5f), Color.red);
-
-        if (!isHit)
-        {
-            if (target != null)
-                //target.DisableText();
-
-            target = null;
-            return;
-        }
-
-
-        if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
-        {
-            if (target != null)
-                //target.DisableText();
-            // Player is not hovering over an Interactable Object
-            OnInteractableHoverExit?.Invoke();
-            return;
-        }
-
-        interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObject>().GetText();
-        //interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().GetText();
-
-
-        // If player is hovering over an Interactable Object, then trigger event
-        OnInteractableHoverEnter?.Invoke(interactableHoverText);
-
-
-        target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
-        //target.EnableText();
-
-        if (target != lastInteracted && lastInteracted != null)
-            lastInteracted.StopInteract();
     }
 
     [ServerRpc]
