@@ -29,6 +29,7 @@ public class InputManager : MonoBehaviour
         player.Click.performed += ctx => motor.Click();
         player.Jump.performed += ctx => motor.Jump();
         player.Interact.performed += ctx => look.Interact();
+        player.Pause.performed += ctx => pauseMenu.TogglePauseMenu();
         //player.Interact.canceled += ctx => look.StopInteract();
 
         EnablePlayerControls();

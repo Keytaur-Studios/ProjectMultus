@@ -10,7 +10,7 @@ public class SettingsMenuUI : MonoBehaviour
     [SerializeField] AudioMixer audioMixer;
     private UIDocument settingsMenuUIDocument; // UI Document component on SettingsMenuUI
     private VisualElement settingsMenuContainer; // Container in Visual Tree Asset
-    private PlayerMotor motor; // For mouse sensitivity
+    private PlayerLook look; // For mouse sensitivity
 
     // Settings controls
     private SliderInt mouseSensitivitySlider;
@@ -35,7 +35,7 @@ public class SettingsMenuUI : MonoBehaviour
 
     private void Awake()
     {
-        motor = GetComponent<PlayerMotor>();
+        look = GetComponent<PlayerLook>();
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
         
         InitUIElements();
@@ -121,8 +121,8 @@ public class SettingsMenuUI : MonoBehaviour
 
     private void SetLookSensitivity()
     {
-        motor.xSensitivity = mouseSensitivitySlider.value;
-        motor.ySensitivity = mouseSensitivitySlider.value;
+        look.xSensitivity = mouseSensitivitySlider.value;
+        look.ySensitivity = mouseSensitivitySlider.value;
     }
 
     private void ToggleFullscreen()
