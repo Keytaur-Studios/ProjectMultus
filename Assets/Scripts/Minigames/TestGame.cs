@@ -9,6 +9,6 @@ public class TestGame : MinigameBase
 
     public override void StopInteract()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }

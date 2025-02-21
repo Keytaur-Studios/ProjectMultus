@@ -678,7 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  cameraObj: {fileID: 0}
+  cameraObj: {fileID: 5046076675878525231}
   cam: {fileID: 3393924870230017693}
   xSensitivity: 30
   ySensitivity: 30

@@ -49,10 +49,8 @@ public class PlayerLook : NetworkBehaviour
         }
     }
 
-    void FixedUpdate() {
-        // Check if looking at Interactable Object
-        CheckForTarget();
-
+    void FixedUpdate()
+    {
         if (target != lastInteracted && lastInteracted != null)
             lastInteracted.StopInteract();
     }
@@ -70,6 +68,9 @@ public class PlayerLook : NetworkBehaviour
         rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
         cam.transform.localRotation = Quaternion.Euler(-rotation.y, 0, 0);
         transform.localRotation = Quaternion.Euler(0, rotation.x, 0);
+
+        // Check if looking at Interactable Object
+        CheckForTarget();
     }
 
     public void CheckForTarget()
@@ -83,18 +84,13 @@ public class PlayerLook : NetworkBehaviour
 
         if (!isHit)
         {
-            if (target != null)
-                //target.DisableText();
-
+            OnInteractableHoverExit?.Invoke();
             target = null;
             return;
         }
 
-
         if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
         {
-            if (target != null)
-                //target.DisableText();
             // Player is not hovering over an Interactable Object
             OnInteractableHoverExit?.Invoke();
             return;
@@ -103,16 +99,14 @@ public class PlayerLook : NetworkBehaviour
         interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObject>().GetText();
         //interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().GetText();
 
-
         // If player is hovering over an Interactable Object, then trigger event
         OnInteractableHoverEnter?.Invoke(interactableHoverText);
-
 
         target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
         //target.EnableText();
 
-        if (target != lastInteracted && lastInteracted != null)
-            lastInteracted.StopInteract();
+        //if (target != lastInteracted && lastInteracted != null)
+            //lastInteracted.StopInteract();
     }
 
     public void Interact()
@@ -124,11 +118,11 @@ public class PlayerLook : NetworkBehaviour
         lastInteracted = target;
     }
 
-    public void StopInteract()
-    {
-        if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
-            return;
+    //public void StopInteract()
+    //{
+    //    if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
+    //        return;
 
-        lastInteracted.StopInteract();
-    }
+    //    lastInteracted.StopInteract();
+    //}
 }
