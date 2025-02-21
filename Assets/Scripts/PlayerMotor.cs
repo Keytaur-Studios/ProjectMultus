@@ -134,6 +134,10 @@ public class PlayerMotor : NetworkBehaviour
         if (!IsOwner && online == OnlineState.online)
             return;
 
+        // Stop player movement while in pause menu
+        if (PauseMenuUI.isGamePaused)
+            return;
+
         StateHandler(input);
 
         if (state == MovementState.walking && anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
