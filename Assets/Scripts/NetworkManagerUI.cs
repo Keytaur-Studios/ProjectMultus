@@ -65,7 +65,7 @@ public class NetworkManagerUI : MonoBehaviour
         });
         createRelayBtn.onClick.AddListener(() =>
         {
-            GameObject.Find("Relay").GetComponent<RelayHandler>().CreateRelay();
+            _ = GameObject.Find("Relay").GetComponent<RelayHandler>().CreateRelay();
         });
         joinRelayBtn.onClick.AddListener(() =>
         {

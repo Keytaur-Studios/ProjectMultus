@@ -92,7 +92,7 @@ public class LobbyUI : MonoBehaviour {
     }
 
     private void ClearLobby() {
-        if (this.gameObject.active == true)
+        if (this.gameObject.activeInHierarchy == true)
         foreach (Transform child in container) {
             if (child == playerSingleTemplate) continue;
             Destroy(child.gameObject);
