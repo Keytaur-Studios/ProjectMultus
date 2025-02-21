@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable Object
   - Crane Object
+  - Throwable Object
   layers:
   - Default
   - TransparentFX
