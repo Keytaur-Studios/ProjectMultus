@@ -63,6 +63,10 @@ public class PlayerLook : NetworkBehaviour
         if (!IsOwner && motor.online == PlayerMotor.OnlineState.online)
             return;
 
+        // Stop camera movement while in pause menu
+        if (PauseMenuUI.isGamePaused)
+            return;
+
         rotation.x += mouseX * xSensitivity * Time.deltaTime;
         rotation.y += mouseY * ySensitivity * Time.deltaTime;
         rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
