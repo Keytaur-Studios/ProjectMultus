@@ -22,12 +22,12 @@ public class PlayerLook : NetworkBehaviour
     [Range(0, 90f)][SerializeField] float yRotationLimit = 60f;
 
     [Header("Interaction")]
-    public InteractableObject target;
-    public InteractableObject lastInteracted;
+    public GameObject target;
+    public GameObject lastInteracted;
     public LayerMask targetMask;
     public string interactableHoverText;
 
-    
+    public GameObject hand;
     
     void Start() {
         motor = GetComponent<PlayerMotor>();
@@ -49,11 +49,11 @@ public class PlayerLook : NetworkBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
-        if (target != lastInteracted && lastInteracted != null)
-            lastInteracted.StopInteract();
-    }
+    //void FixedUpdate()
+    //{
+    //    if (target != lastInteracted && lastInteracted != null)
+    //        lastInteracted.GetComponent<StopInteract();
+    //}
 
     public void ProcessLook(Vector2 input)
     {
@@ -89,24 +89,43 @@ public class PlayerLook : NetworkBehaviour
             return;
         }
 
-        if (!hitInfo.transform.gameObject.CompareTag("Interactable Object"))
+        if (!(hitInfo.transform.gameObject.CompareTag("Interactable Object")
+            || hitInfo.transform.gameObject.CompareTag("Throwable Object")))
         {
             // Player is not hovering over an Interactable Object
             OnInteractableHoverExit?.Invoke();
             return;
         }
 
-        interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObject>().GetText();
+        if (hitInfo.transform.gameObject.CompareTag("Interactable Object"))
+            interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObject>().GetText();
+
+        if (hitInfo.transform.gameObject.CompareTag("Throwable Object"))
+            interactableHoverText = hitInfo.transform.gameObject.GetComponent<ThrowableObject>().GetText();
         //interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().GetText();
 
         // If player is hovering over an Interactable Object, then trigger event
         OnInteractableHoverEnter?.Invoke(interactableHoverText);
 
-        target = hitInfo.transform.gameObject.GetComponent<InteractableObject>();
+        target = hitInfo.transform.gameObject;
         //target.EnableText();
 
         //if (target != lastInteracted && lastInteracted != null)
             //lastInteracted.StopInteract();
+    }
+   
+    public void InteractHandler()
+    {
+        if (target.CompareTag("Interactable Object"))
+            Interact();
+
+        else if (target.CompareTag("Throwable Object"))
+        {
+            if (!target.GetComponent<ThrowableObject>().GetOwned())
+                Interact();
+            else
+                StopInteract();
+        }
     }
 
     public void Interact()
@@ -114,15 +133,21 @@ public class PlayerLook : NetworkBehaviour
         if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
             return;
 
-        target.Interact(gameObject);
+        if (target.CompareTag("Interactable Object"))
+            target.GetComponent<InteractableObject>().Interact(gameObject);
+
+        if (target.CompareTag("Throwable Object"))
+            target.GetComponent<ThrowableObject>().Interact(gameObject);
+
         lastInteracted = target;
     }
 
-    //public void StopInteract()
-    //{
-    //    if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
-    //        return;
+    public void StopInteract()
+    {
+        if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
+            return;
 
-    //    lastInteracted.StopInteract();
-    //}
+        if (target.CompareTag("Throwable Object"))
+            target.GetComponent<ThrowableObject>().StopInteract();
+    }
 }
