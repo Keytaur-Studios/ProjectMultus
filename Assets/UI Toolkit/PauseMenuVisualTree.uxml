@@ -1,9 +1,16 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/PauseMenuStyle.uss?fileID=7433441132597879392&amp;guid=286dc420b29d32b48b553d4c0902931c&amp;type=3#PauseMenuStyle" />
-    <engine:VisualElement name="Container" style="flex-grow: 1; align-items: center; justify-content: center;">
-        <engine:Label text="Paused" name="PauseHeader" class="header" />
-        <engine:Button text="Resume" name="ResumeButton" class="button" />
-        <engine:Button text="Settings" name="SettingsButton" class="button" />
-        <engine:Button text="Exit" name="ExitButton" class="button" />
+    <engine:VisualElement name="Container" style="flex-grow: 1; align-items: center; justify-content: center; background-color: rgba(17, 17, 17, 0.8); background-image: none;">
+        <engine:VisualElement name="Buttons_GRP" style="justify-content: center; align-self: center; align-content: center; align-items: center;">
+            <engine:VisualElement style="flex-grow: 1;">
+                <engine:Button name="ResumeButton" enable-rich-text="true" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/resume%20button.png?fileID=21300000&amp;guid=234a4358162521346b94baf07996dca6&amp;type=3#resume button&quot;);" />
+            </engine:VisualElement>
+            <engine:VisualElement name="VisualElement" style="flex-grow: 1;">
+                <engine:Button name="SettingsButton" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/options%20button.png?fileID=2800000&amp;guid=5008d7d2d3635024880d24bf31502b35&amp;type=3#options button&quot;);" />
+            </engine:VisualElement>
+            <engine:VisualElement style="flex-grow: 1;">
+                <engine:Button name="ExitButton" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/exit%20button.png?fileID=2800000&amp;guid=f53a1a25aee559b459ad7403efafcc21&amp;type=3#exit button&quot;);" />
+            </engine:VisualElement>
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
