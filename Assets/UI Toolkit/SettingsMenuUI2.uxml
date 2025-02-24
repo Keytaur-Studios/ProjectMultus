@@ -1,0 +1,24 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/SettingsMenuStyle2.uss?fileID=7433441132597879392&amp;guid=0a9c3a7c90b80b14e8175fd64f654876&amp;type=3#SettingsMenuStyle2" />
+    <engine:VisualElement name="Container" style="flex-grow: 1; background-color: rgba(17, 17, 17, 0.8); align-items: center; justify-content: center; align-content: center;">
+        <engine:VisualElement name="SettingsModal" style="width: 1450px; height: 800px; color: rgba(13, 12, 8, 0.89); background-color: rgba(13, 12, 8, 0.91); padding-top: 35px; padding-right: 35px; padding-bottom: 35px; padding-left: 35px; align-items: center; border-top-left-radius: 55px; border-top-right-radius: 55px; border-bottom-right-radius: 55px; border-bottom-left-radius: 55px;">
+            <engine:VisualElement name="TabHeaderContainer" style="flex-grow: 1; height: 100px; flex-direction: row; max-height: 100px; justify-content: space-around; margin-bottom: 33px; width: 1267px;">
+                <engine:VisualElement name="GeneralTabHeaderContainer" class="tabHeaderContainer">
+                    <engine:Button name="GeneralTabHeader" class="tabHeader" style="width: 182px; height: 32px; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/generalTab%201.png?fileID=2800000&amp;guid=54dd34f9562b37646bff3479cec111bb&amp;type=3#generalTab 1&quot;); background-color: rgba(188, 188, 188, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="GraphicsTabHeaderContainer" class="tabHeaderContainer">
+                    <engine:Button name="GraphicsTabHeader" class="tabHeader" style="height: 32px; background-color: rgba(188, 188, 188, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/graphicsTab.png?fileID=2800000&amp;guid=eed398f3f9c6282449d2ad9759769f11&amp;type=3#graphicsTab&quot;); width: 200px;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="AudioTabHeaderContainer" class="tabHeaderContainer">
+                    <engine:Button name="AudioTabHeader" class="tabHeader" style="height: 32px; background-color: rgba(188, 188, 188, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/audioTab.png?fileID=2800000&amp;guid=c890657fa88168448aad1b108c235345&amp;type=3#audioTab&quot;); width: 125px;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="ControlsTabHeaderContainer" class="tabHeaderContainer">
+                    <engine:Button name="ControlsTabHeader" class="tabHeader" style="height: 32px; background-color: rgba(188, 188, 188, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/controlsTab.png?fileID=2800000&amp;guid=26090db36e433b043a74af5973467f33&amp;type=3#controlsTab&quot;); width: 205px;" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="TabContentContainer" style="flex-grow: 1; height: auto;">
+                <engine:VisualElement name="GeneralTabContent" style="flex-grow: 1;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

@@ -1,0 +1,30 @@
+.tabContent {
+}
+
+.tabHeaderContainer {
+    flex-grow: 1;
+    width: 309px;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabHeader {
+}
+
+.tabHeader:hover {
+    -unity-background-image-tint-color: rgba(219, 219, 219, 0.82);
+    transition-duration: 0.08s;
+    transition-timing-function: ease-in;
+}
+
+#GeneralTabHeader {
+}
+
+#GraphicsTabHeader {
+}
+
+#AudioTabHeader {
+}
+
+#ControlsTabHeader {
+}
