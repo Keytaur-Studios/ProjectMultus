@@ -117,9 +117,23 @@ public class PlayerLook : NetworkBehaviour
         //if (target != lastInteracted && lastInteracted != null)
             //lastInteracted.StopInteract();
     }
+
+    public void SecondaryInteractHandler()
+    {
+        if (!IsOwner) return;
+
+        lastInteracted = null;
+    }
    
     public void InteractHandler()
     {
+        if (!IsOwner) return;
+
+        if (lastInteracted != null)
+            StopInteract();
+
+        if (target == null) return;
+
         if (target.CompareTag("Interactable Object"))
             Interact();
 
@@ -141,17 +155,19 @@ public class PlayerLook : NetworkBehaviour
             target.GetComponent<InteractableObject>().Interact(gameObject);
 
         if (target.CompareTag("Throwable Object"))
-            target.GetComponent<ThrowableObject>().Interact(gameObject);
+            target.GetComponent<ThrowableObject>().PickUp(gameObject);
 
         lastInteracted = target;
     }
 
     public void StopInteract()
     {
-        if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
+        if (lastInteracted == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
             return;
 
-        if (target.CompareTag("Throwable Object"))
-            target.GetComponent<ThrowableObject>().StopInteract();
+        if (lastInteracted.CompareTag("Throwable Object"))
+            lastInteracted.GetComponent<ThrowableObject>().Drop();
+
+        lastInteracted = null;
     }
 }

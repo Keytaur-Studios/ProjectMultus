@@ -31,6 +31,7 @@ public class InputManager : MonoBehaviour
         player.Interact.performed += ctx => look.Interact();
         player.Pause.performed += ctx => pauseMenu.TogglePauseMenu();
         //player.Interact.canceled += ctx => look.StopInteract();
+        player.Interact.performed += ctx => look.InteractHandler();
 
         EnablePlayerControls();
 
