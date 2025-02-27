@@ -15,7 +15,7 @@ public class SettingsMenuUI : MonoBehaviour
     private PlayerLook look; // For mouse sensitivity
     private PauseMenuUI pauseMenuUI;
 
-    // Tab containers
+    // Tab elements
     private VisualElement graphicsTabContent, audioTabContent, controlsTabContent;
     private Button graphicsTabButton, audioTabButton, controlsTabButton;
     private VisualElement currentTabContent; // 1 Graphics 2 Audio 3 Controls
@@ -50,15 +50,14 @@ public class SettingsMenuUI : MonoBehaviour
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
 
         InitUIElements();
-        
         InitDisplayResolutions();
         InitQualitySettings();
         SaveSettings();
 
-        backButton.clicked += OnBack;
+        // Register Button Callbacks
+        backButton.clicked += OnBackToPause;
         applyButton.clicked += OnApply;
         resetButton.clicked += OnReset;
-
         graphicsTabButton.clicked += openGraphicsTab;
         audioTabButton.clicked += openAudioTab;
         controlsTabButton.clicked += openControlsTab;
@@ -68,7 +67,7 @@ public class SettingsMenuUI : MonoBehaviour
 
     private void OnDisable()
     {
-        backButton.clicked -= OnBack;
+        backButton.clicked -= OnBackToPause;
         applyButton.clicked -= OnApply;
         resetButton.clicked -= OnReset;
         graphicsTabButton.clicked -= openGraphicsTab;
@@ -142,10 +141,10 @@ public class SettingsMenuUI : MonoBehaviour
 
     }
 
-    private void OnBack()
+    private void OnBackToPause()
     {
         CloseSettingsMenu();
-        pauseMenuUI.Pause();
+        pauseMenuUI.DisplayPauseMenu();
 
     }
 

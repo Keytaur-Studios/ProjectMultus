@@ -43,7 +43,7 @@ public class PauseMenuUI : MonoBehaviour
     {
         if (!isGamePaused)
         {
-            Pause();
+            DisplayPauseMenu();
         }
         else
         {
@@ -60,7 +60,7 @@ public class PauseMenuUI : MonoBehaviour
 
 
     // Displays Pause Menu UI
-    public void Pause()
+    public void DisplayPauseMenu()
     {
         pauseMenuContainer.style.visibility = Visibility.Visible;
         isGamePaused = true;
