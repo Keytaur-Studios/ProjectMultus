@@ -122,6 +122,12 @@ public class PlayerLook : NetworkBehaviour
     {
         if (!IsOwner) return;
 
+        if (lastInteracted == null) return;
+
+        if (lastInteracted.CompareTag("Throwable Object"))
+            lastInteracted.GetComponent<ThrowableObject>().Throw();
+
+
         lastInteracted = null;
     }
    
