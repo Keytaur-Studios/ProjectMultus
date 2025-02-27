@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
 
-        player.Click.performed += ctx => motor.Click();
+        player.Click.performed += ctx => look.SecondaryInteractHandler();
         player.Jump.performed += ctx => motor.Jump();
         player.Interact.performed += ctx => look.InteractHandler();
         //player.Pause.performed += ctx => pauseMenu.TogglePauseMenu();

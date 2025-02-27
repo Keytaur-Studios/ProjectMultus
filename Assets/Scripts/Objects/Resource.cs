@@ -1,6 +1,6 @@
 using UnityEngine;
 
-abstract public class Resource : ThrowableObject
+public class Resource : ThrowableObject
 {
     [SerializeField]
     private string resourceName;

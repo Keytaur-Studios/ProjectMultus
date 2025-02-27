@@ -6,7 +6,6 @@ abstract public class ThrowableObject : NetworkBehaviour
 {
     [SerializeField] private string hoverText;
 
-    [SerializeField]
     private NetworkVariable<bool> owned = new(
         false,
         NetworkVariableReadPermission.Everyone,
@@ -14,8 +13,6 @@ abstract public class ThrowableObject : NetworkBehaviour
 
     private Rigidbody rb;
     private Collider col;
-
-    [SerializeField]
     private Transform handTransform;
 
     private void Start()
@@ -39,6 +36,11 @@ abstract public class ThrowableObject : NetworkBehaviour
             transform.SetPositionAndRotation(handTransform.position, handTransform.rotation);
             ForceNetworkTransformSyncServerRpc(transform.position, transform.rotation);
         }
+
+        if (IsOwner && (rb.linearVelocity != Vector3.zero || rb.angularVelocity != Vector3.zero))
+        {
+            ForceNetworkTransformSyncServerRpc(transform.position, transform.rotation);
+        }
     }
 
     public string GetText() => hoverText;
@@ -54,10 +56,7 @@ abstract public class ThrowableObject : NetworkBehaviour
     private void ForceNetworkTransformSyncClientRpc(Vector3 position, Quaternion rotation)
     {
         if (!IsOwner)
-        {
             transform.SetPositionAndRotation(position, rotation);
-            Debug.Log($"[Client] Network sync applied. Position: {transform.position}");
-        }
     }
 
     public void PickUp(GameObject player)
