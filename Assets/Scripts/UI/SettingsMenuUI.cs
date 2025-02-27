@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -12,11 +13,13 @@ public class SettingsMenuUI : MonoBehaviour
     private UIDocument settingsMenuUIDocument; // UI Document component on SettingsMenuUI
     private VisualElement settingsMenuContainer; // Container in Visual Tree Asset
     private PlayerLook look; // For mouse sensitivity
+    private PauseMenuUI pauseMenuUI;
 
     // Tab containers
     private VisualElement graphicsTabContent, audioTabContent, controlsTabContent;
     private Button graphicsTabButton, audioTabButton, controlsTabButton;
-    private VisualElement currentTab; // 1 Graphics 2 Audio 3 Controls
+    private VisualElement currentTabContent; // 1 Graphics 2 Audio 3 Controls
+    private VisualElement currentTabButton;
 
 
     // Settings controls
@@ -43,17 +46,14 @@ public class SettingsMenuUI : MonoBehaviour
     private void Awake()
     {
         look = GetComponent<PlayerLook>();
+        pauseMenuUI = GetComponent<PauseMenuUI>();
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
-
-        Debug.Log("settings 0");
 
         InitUIElements();
         
         InitDisplayResolutions();
         InitQualitySettings();
         SaveSettings();
-
-        Debug.Log("settings 1");
 
         backButton.clicked += OnBack;
         applyButton.clicked += OnApply;
@@ -62,15 +62,8 @@ public class SettingsMenuUI : MonoBehaviour
         graphicsTabButton.clicked += openGraphicsTab;
         audioTabButton.clicked += openAudioTab;
         controlsTabButton.clicked += openControlsTab;
-        
-        // ensure Settings Menu is hidden by default
-        settingsMenuContainer.style.visibility = Visibility.Hidden;
+       
 
-        // hide all tabs other than graphics (ensure only one tab content is showing at a time)
-        currentTab = graphicsTabContent;
-        audioTabContent.style.visibility = Visibility.Hidden;
-        controlsTabContent.style.visibility = Visibility.Hidden;
-        Debug.Log("settings 2");
     }
 
     private void OnDisable()
@@ -110,21 +103,36 @@ public class SettingsMenuUI : MonoBehaviour
         backButton = settingsMenuContainer.Q<Button>("BackButton");
         resetButton = settingsMenuContainer.Q<Button>("ResetButton");
 
+        // ensure Settings Menu is hidden by default
+        settingsMenuContainer.style.visibility = Visibility.Hidden;
+
+        // first tab is graphics, set up UI to display graphics tab opened
+        currentTabContent = graphicsTabContent;
+        currentTabButton = graphicsTabButton;
+        currentTabButton.style.minWidth = 309;
+        currentTabButton.style.minHeight = 95;
+        graphicsTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/UI Toolkit/Graphics/graphicsTabActive.png");
+
+        // hide all tabs other than graphics (ensure only one tab content is showing at a time)
+        audioTabContent.style.visibility = Visibility.Hidden;
+        controlsTabContent.style.visibility = Visibility.Hidden;
+
     }
     
     public void OpenSettingsMenu()
     {
         settingsMenuContainer.style.visibility = Visibility.Visible;
-        graphicsTabContent.style.visibility = Visibility.Visible;
+        currentTabContent.style.visibility = Visibility.Visible;
+
     }
 
     public void CloseSettingsMenu()
     {
         settingsMenuContainer.style.visibility = Visibility.Hidden;
-        graphicsTabContent.style.visibility = Visibility.Hidden;
-        audioTabContent.style.visibility = Visibility.Hidden;
-        controlsTabContent.style.visibility = Visibility.Hidden;
-        currentTab = graphicsTabContent; // so graphics tab will be displayed when opened again
+
+        // reset menu back to graphics tab
+        openGraphicsTab();
+        currentTabContent.style.visibility = Visibility.Hidden;
 
         if (!IsChangesApplied())
         {
@@ -137,6 +145,7 @@ public class SettingsMenuUI : MonoBehaviour
     private void OnBack()
     {
         CloseSettingsMenu();
+        pauseMenuUI.Pause();
 
     }
 
@@ -160,26 +169,43 @@ public class SettingsMenuUI : MonoBehaviour
         graphicsQualityDropdown.index = graphicsQualityDefault; 
     }
 
-    private void switchTab(VisualElement newTab)
+    private void switchTab(VisualElement newTabContent, VisualElement newTabButton, String imageUrl)
     {
-        currentTab.style.visibility = Visibility.Hidden;
-        newTab.style.visibility = Visibility.Visible;
-        currentTab = newTab;
+        currentTabContent.style.visibility = Visibility.Hidden;
+        currentTabButton.style.minWidth = 125;
+        currentTabButton.style.minHeight = 32;
+        currentTabButton.style.maxWidth = 205;
+        currentTabButton.style.maxHeight = 32;
+        newTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>(imageUrl);
+        newTabContent.style.visibility = Visibility.Visible;
+        newTabButton.style.minWidth = 309;
+        newTabButton.style.minHeight = 95;
+        currentTabContent = newTabContent;
+        currentTabButton = newTabButton;
     }
 
     private void openGraphicsTab()
     {
-        switchTab(graphicsTabContent);
+        switchTab(graphicsTabContent, graphicsTabButton, "Assets/UI Toolkit/Graphics/graphicsTabActive.png");
+        audioTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/UI Toolkit/Graphics/audioTab.png");
+        controlsTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/UI Toolkit/Graphics/controlsTab.png");
+
     }
 
     private void openAudioTab()
     {
-        switchTab(audioTabContent);
+        switchTab(audioTabContent, audioTabButton, "Assets/UI Toolkit/Graphics/audioTabActive.png");
+        graphicsTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/UI Toolkit/Graphics/graphicsTab.png");
+        controlsTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/UI Toolkit/Graphics/controlsTab.png");
+
     }
 
     private void openControlsTab()
     {
-        switchTab(controlsTabContent);
+        switchTab(controlsTabContent, controlsTabButton, "Assets/UI Toolkit/Graphics/controlsTabActive.png");
+        graphicsTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/UI Toolkit/Graphics/graphicsTab.png");
+        audioTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/UI Toolkit/Graphics/audioTab.png");
+
     }
 
     private void SetLookSensitivity()
