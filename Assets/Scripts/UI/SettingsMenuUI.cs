@@ -64,7 +64,7 @@ public class SettingsMenuUI : MonoBehaviour
     {
         settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
         settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("SettingsMenu");
-        /*
+        
         mouseSensitivitySlider = settingsMenuContainer.Q<SliderInt>("MouseSensitivitySlider");
 
         masterVolumeSlider = settingsMenuContainer.Q<Slider>("MasterVolumeSlider");
@@ -72,9 +72,9 @@ public class SettingsMenuUI : MonoBehaviour
         sfxVolumeSlider = settingsMenuContainer.Q<Slider>("SFXVolumeSlider");
 
         fullscreenToggle = settingsMenuContainer.Q<Toggle>("FullscreenToggle");
-        resolutionDropdown = settingsMenuContainer.Q<DropdownField>("ResolutionDropdown");
+        resolutionDropdown = settingsMenuContainer.Q<DropdownField>("DisplayResolutionDropdown");
         graphicsQualityDropdown = settingsMenuContainer.Q<DropdownField>("GraphicsQualityDropdown");
-        */
+        
         applyButton = settingsMenuContainer.Q<Button>("ApplyButton");
         backButton = settingsMenuContainer.Q<Button>("BackButton");
         resetButton = settingsMenuContainer.Q<Button>("ResetButton");

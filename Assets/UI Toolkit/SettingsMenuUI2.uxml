@@ -28,13 +28,40 @@
                         <engine:DropdownField name="GraphicsQualityDropdown" index="0" class="settingsControl dropdown" />
                     </engine:VisualElement>
                 </engine:VisualElement>
-            </engine:VisualElement>
-            <engine:VisualElement name="ApplyReset" style="flex-grow: 1; height: auto; flex-direction: row; width: 1300px; justify-content: flex-end;">
-                <engine:VisualElement name="ResetButtonContainer" class="buttonContainer" style="flex-grow: 1;">
-                    <engine:Button enable-rich-text="false" name="ResetButton" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/resetButton.png?fileID=2800000&amp;guid=e9d3ba3c63915dc4f9bcb41d09e0a3d7&amp;type=3#resetButton&quot;);" />
+                <engine:VisualElement name="AudioTabContent" enabled="true" class="tabContent" style="flex-grow: 1; color: rgba(234, 234, 234, 0.89); font-size: 40px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Changa-VariableFont_wght.ttf?fileID=12800000&amp;guid=5384da3f9695d514a805852fd32a203d&amp;type=3#Changa-VariableFont_wght&quot;); flex-direction: column;">
+                    <engine:VisualElement name="MasterVolumeContainer" class="settingContainer" style="flex-grow: 1;">
+                        <engine:Label text="MASTER VOLUME&#10;" display-tooltip-when-elided="false" name="MasterVolumeSliderLabel" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&amp;guid=e93b317134e96644da79334d3840c058&amp;type=3#Changa-Regular&quot;);" />
+                        <engine:Slider value="42" high-value="100" name="MasterVolumeSlider" class="settingsControl" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="MusicVolumeContainer" class="settingContainer" style="flex-grow: 1;">
+                        <engine:Label text="MUSIC VOLUME" display-tooltip-when-elided="false" name="MusicVolumeSliderLabel" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&amp;guid=e93b317134e96644da79334d3840c058&amp;type=3#Changa-Regular&quot;); height: 80px; max-height: 80px;" />
+                        <engine:Slider value="42" high-value="100" name="MusicVolumeSlider" class="settingsControl" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="SFXVolumeContainer" class="settingContainer" style="flex-grow: 1;">
+                        <engine:Label text="SOUND EFFECTS VOLUME" display-tooltip-when-elided="false" name="SFXVolumeSliderLabel" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&amp;guid=e93b317134e96644da79334d3840c058&amp;type=3#Changa-Regular&quot;); height: 80px; max-height: 80px;" />
+                        <engine:Slider value="42" high-value="100" name="SFXVolumeSlider" class="settingsControl" />
+                    </engine:VisualElement>
                 </engine:VisualElement>
-                <engine:VisualElement name="ApplyButtonContainer" class="buttonContainer" style="flex-grow: 1;">
-                    <engine:Button selectable="true" name="ApplyButton" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/applyButton.png?fileID=2800000&amp;guid=db79ce2b944350744a5f621ab5d81a4e&amp;type=3#applyButton&quot;);" />
+                <engine:VisualElement name="ControlsTabContent" enabled="true" class="tabContent" style="flex-grow: 1; color: rgba(234, 234, 234, 0.89); font-size: 40px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Changa-VariableFont_wght.ttf?fileID=12800000&amp;guid=5384da3f9695d514a805852fd32a203d&amp;type=3#Changa-VariableFont_wght&quot;); flex-direction: column;">
+                    <engine:VisualElement name="MouseSensitivityContainer" class="settingContainer" style="flex-grow: 1;">
+                        <engine:Label text="MOUSE SENSITIVITY" display-tooltip-when-elided="false" name="MouseSensitivityLabel" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&amp;guid=e93b317134e96644da79334d3840c058&amp;type=3#Changa-Regular&quot;);" />
+                        <engine:Slider value="42" high-value="100" name="MouseSensitivitySlider" class="settingsControl" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="MenuButtons" style="flex-grow: 1; height: auto; flex-direction: row; width: 1300px; justify-content: flex-end;">
+                <engine:VisualElement name="RightSide" style="flex-grow: 1; flex-direction: row;">
+                    <engine:VisualElement name="ResetButtonContainer" class="buttonContainer" style="flex-grow: 1;">
+                        <engine:Button enable-rich-text="false" name="ResetButton" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/resetButton.png?fileID=2800000&amp;guid=e9d3ba3c63915dc4f9bcb41d09e0a3d7&amp;type=3#resetButton&quot;);" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="ApplyButtonContainer" class="buttonContainer" style="flex-grow: 1;">
+                        <engine:Button selectable="true" name="ApplyButton" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/applyButton.png?fileID=2800000&amp;guid=db79ce2b944350744a5f621ab5d81a4e&amp;type=3#applyButton&quot;);" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+                <engine:VisualElement name="LeftSide" style="flex-grow: 1; flex-direction: row-reverse;">
+                    <engine:VisualElement name="ApplyButtonContainer" class="buttonContainer" style="flex-grow: 1;">
+                        <engine:Button selectable="true" name="ApplyButton" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/yellowArrow.png?fileID=2800000&amp;guid=bd3b91e2b98b85146805e229aab50575&amp;type=3#yellowArrow&quot;); width: 90px; height: 70px;" />
+                    </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
