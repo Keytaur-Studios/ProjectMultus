@@ -20,7 +20,7 @@ public class PauseMenuUI : MonoBehaviour
 
 
     private void Awake()
-    {        
+    {
         settings = GetComponent<SettingsMenuUI>();
 
         // initialize pause menu UI elements
@@ -46,7 +46,7 @@ public class PauseMenuUI : MonoBehaviour
             Pause();
         }
         else
-        {            
+        {
             Resume();
         }
     }
