@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/PauseMenuStyle.uss?fileID=7433441132597879392&amp;guid=286dc420b29d32b48b553d4c0902931c&amp;type=3#PauseMenuStyle" />
-    <engine:VisualElement name="PauseMenuContainer" style="flex-grow: 1; align-items: center; justify-content: center; background-color: rgba(17, 17, 17, 0.8); background-image: none;">
+    <engine:VisualElement name="PauseMenu" style="flex-grow: 1; align-items: center; justify-content: center; background-color: rgba(17, 17, 17, 0.8); background-image: none;">
         <engine:VisualElement name="Buttons_GRP" style="justify-content: center; align-self: center; align-content: center; align-items: center;">
             <engine:VisualElement name="ResumeButtonContainer" style="flex-grow: 1;">
                 <engine:Button name="ResumeButton" enable-rich-text="true" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/resume%20button.png?fileID=21300000&amp;guid=234a4358162521346b94baf07996dca6&amp;type=3#resume button&quot;);" />

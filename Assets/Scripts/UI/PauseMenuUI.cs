@@ -25,10 +25,10 @@ public class PauseMenuUI : MonoBehaviour
 
         // initialize pause menu UI elements
         pauseMenuUIDocument = pauseMenu.GetComponent<UIDocument>();
-        pauseMenuContainer = pauseMenuUIDocument.rootVisualElement.Q("PauseMenuContainer");
-        resumeButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("ResumeButton");
-        settingsButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("SettingsButton");
-        exitButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("ExitButton");
+        pauseMenuContainer = pauseMenuUIDocument.rootVisualElement.Q<VisualElement>("PauseMenu");
+        resumeButton = pauseMenuContainer.Q<Button>("ResumeButton");
+        settingsButton = pauseMenuContainer.Q<Button>("SettingsButton");
+        exitButton = pauseMenuContainer.Q<Button>("ExitButton");
 
         // ensure Pause Menu is hidden by default
         pauseMenuContainer.style.visibility = Visibility.Hidden; // must not setActive(false), this will break the UI

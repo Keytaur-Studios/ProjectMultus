@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -12,15 +13,21 @@ public class SettingsMenuUI : MonoBehaviour
     private VisualElement settingsMenuContainer; // Container in Visual Tree Asset
     private PlayerLook look; // For mouse sensitivity
 
+    // Tab containers
+    private VisualElement graphicsTabContent, audioTabContent, controlsTabContent;
+    private Button graphicsTabButton, audioTabButton, controlsTabButton;
+    private VisualElement currentTab; // 1 Graphics 2 Audio 3 Controls
+
+
     // Settings controls
-    private SliderInt mouseSensitivitySlider;
+    private Slider mouseSensitivitySlider;
     private Slider masterVolumeSlider, musicVolumeSlider, sfxVolumeSlider;
     private Toggle fullscreenToggle;
     private DropdownField resolutionDropdown, graphicsQualityDropdown;
     private Button applyButton, backButton, resetButton;
 
     // Most recently applied values
-    private int savedMouseSensitivity;
+    private float savedMouseSensitivity;
     private float savedMasterVolume;
     private float savedMusicVolume;
     private float savedSfxVolume;
@@ -37,19 +44,33 @@ public class SettingsMenuUI : MonoBehaviour
     {
         look = GetComponent<PlayerLook>();
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
-        
+
+        Debug.Log("settings 0");
+
         InitUIElements();
-        /*
+        
         InitDisplayResolutions();
         InitQualitySettings();
         SaveSettings();
 
+        Debug.Log("settings 1");
+
         backButton.clicked += OnBack;
         applyButton.clicked += OnApply;
         resetButton.clicked += OnReset;
-        */
+
+        graphicsTabButton.clicked += openGraphicsTab;
+        audioTabButton.clicked += openAudioTab;
+        controlsTabButton.clicked += openControlsTab;
+        
         // ensure Settings Menu is hidden by default
-        settingsMenuContainer.style.visibility = Visibility.Hidden; 
+        settingsMenuContainer.style.visibility = Visibility.Hidden;
+
+        // hide all tabs other than graphics (ensure only one tab content is showing at a time)
+        currentTab = graphicsTabContent;
+        audioTabContent.style.visibility = Visibility.Hidden;
+        controlsTabContent.style.visibility = Visibility.Hidden;
+        Debug.Log("settings 2");
     }
 
     private void OnDisable()
@@ -57,15 +78,25 @@ public class SettingsMenuUI : MonoBehaviour
         backButton.clicked -= OnBack;
         applyButton.clicked -= OnApply;
         resetButton.clicked -= OnReset;
-
+        graphicsTabButton.clicked -= openGraphicsTab;
+        audioTabButton.clicked -= openAudioTab;
+        controlsTabButton.clicked -= openControlsTab;
     }
 
     private void InitUIElements()
     {
         settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
-        settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("SettingsMenu");
-        
-        mouseSensitivitySlider = settingsMenuContainer.Q<SliderInt>("MouseSensitivitySlider");
+        settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q<VisualElement>("SettingsMenu");
+
+        graphicsTabButton = settingsMenuContainer.Q<Button>("GraphicsTabButton");
+        audioTabButton = settingsMenuContainer.Q<Button>("AudioTabButton");
+        controlsTabButton = settingsMenuContainer.Q<Button>("ControlsTabButton");
+
+        graphicsTabContent = settingsMenuContainer.Q<VisualElement>("GraphicsTabContent");
+        audioTabContent = settingsMenuContainer.Q<VisualElement>("AudioTabContent");
+        controlsTabContent = settingsMenuContainer.Q<VisualElement>("ControlsTabContent");
+
+        mouseSensitivitySlider = settingsMenuContainer.Q<Slider>("MouseSensitivitySlider");
 
         masterVolumeSlider = settingsMenuContainer.Q<Slider>("MasterVolumeSlider");
         musicVolumeSlider = settingsMenuContainer.Q<Slider>("MusicVolumeSlider");
@@ -84,20 +115,25 @@ public class SettingsMenuUI : MonoBehaviour
     public void OpenSettingsMenu()
     {
         settingsMenuContainer.style.visibility = Visibility.Visible;
+        graphicsTabContent.style.visibility = Visibility.Visible;
     }
 
     public void CloseSettingsMenu()
     {
         settingsMenuContainer.style.visibility = Visibility.Hidden;
+        graphicsTabContent.style.visibility = Visibility.Hidden;
+        audioTabContent.style.visibility = Visibility.Hidden;
+        controlsTabContent.style.visibility = Visibility.Hidden;
+        currentTab = graphicsTabContent; // so graphics tab will be displayed when opened again
 
-        /*
         if (!IsChangesApplied())
         {
             DiscardChanges();
         }
-        */
+        
 
     }
+
     private void OnBack()
     {
         CloseSettingsMenu();
@@ -122,6 +158,28 @@ public class SettingsMenuUI : MonoBehaviour
         fullscreenToggle.value = false;
         resolutionDropdown.index = resolutionDefault;
         graphicsQualityDropdown.index = graphicsQualityDefault; 
+    }
+
+    private void switchTab(VisualElement newTab)
+    {
+        currentTab.style.visibility = Visibility.Hidden;
+        newTab.style.visibility = Visibility.Visible;
+        currentTab = newTab;
+    }
+
+    private void openGraphicsTab()
+    {
+        switchTab(graphicsTabContent);
+    }
+
+    private void openAudioTab()
+    {
+        switchTab(audioTabContent);
+    }
+
+    private void openControlsTab()
+    {
+        switchTab(controlsTabContent);
     }
 
     private void SetLookSensitivity()
