@@ -5,7 +5,7 @@ using static UnityEditor.Rendering.FilterWindow;
 /* This class handles displaying/hiding hover text when the player cursor is over an Interactable Object */
 public class HoverText : MonoBehaviour
 {
-    private PlayerMotor motor; // Publisher of hover events
+    private PlayerLook look; // Publisher of hover events
     [SerializeField] GameObject hoverTextGameObject; // Hover text UI
     private UIDocument hoverTextUIDocument; // Visual tree component of hover text UI
     private Label hoverTextContent; // The text that displays on hover
@@ -14,15 +14,15 @@ public class HoverText : MonoBehaviour
     void Awake()
     {
         // Initialize variables
-        motor = gameObject.GetComponent<PlayerMotor>();
+        look = gameObject.GetComponent<PlayerLook>();
         hoverTextUIDocument = hoverTextGameObject.GetComponent<UIDocument>();
         hoverTextContent = hoverTextUIDocument.rootVisualElement.Q<Label>("HoverText");
 
         hoverTextContent.style.visibility = Visibility.Hidden; // ensures hovertext is hidden at the start
 
         // Subscribe to hover events
-        motor.OnInteractableHoverExit += HideHoverText;
-        motor.OnInteractableHoverEnter += ShowHoverText;
+        look.OnInteractableHoverExit += HideHoverText;
+        look.OnInteractableHoverEnter += ShowHoverText;
 
     }
 
@@ -43,8 +43,8 @@ public class HoverText : MonoBehaviour
 
     void OnDisable()
     {
-        motor.OnInteractableHoverExit -= HideHoverText;
-        motor.OnInteractableHoverEnter -= ShowHoverText;
+        look.OnInteractableHoverExit -= HideHoverText;
+        look.OnInteractableHoverEnter -= ShowHoverText;
     }
 }
 

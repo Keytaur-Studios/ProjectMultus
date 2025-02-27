@@ -390,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   isPressed: 0
-  hoverText: '[F] Test this game'
+  hoverText: '[E] Test this game'
   minigame: Test Game
   occupied: 0
   cameraTransform: {fileID: 1289996934}
