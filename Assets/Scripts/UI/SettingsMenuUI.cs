@@ -39,6 +39,7 @@ public class SettingsMenuUI : MonoBehaviour
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
         
         InitUIElements();
+        /*
         InitDisplayResolutions();
         InitQualitySettings();
         SaveSettings();
@@ -46,7 +47,7 @@ public class SettingsMenuUI : MonoBehaviour
         backButton.clicked += OnBack;
         applyButton.clicked += OnApply;
         resetButton.clicked += OnReset;
-
+        */
         // ensure Settings Menu is hidden by default
         settingsMenuContainer.style.visibility = Visibility.Hidden; 
     }
@@ -63,7 +64,7 @@ public class SettingsMenuUI : MonoBehaviour
     {
         settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
         settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("SettingsMenu");
-
+        /*
         mouseSensitivitySlider = settingsMenuContainer.Q<SliderInt>("MouseSensitivitySlider");
 
         masterVolumeSlider = settingsMenuContainer.Q<Slider>("MasterVolumeSlider");
@@ -73,10 +74,11 @@ public class SettingsMenuUI : MonoBehaviour
         fullscreenToggle = settingsMenuContainer.Q<Toggle>("FullscreenToggle");
         resolutionDropdown = settingsMenuContainer.Q<DropdownField>("ResolutionDropdown");
         graphicsQualityDropdown = settingsMenuContainer.Q<DropdownField>("GraphicsQualityDropdown");
-
+        */
         applyButton = settingsMenuContainer.Q<Button>("ApplyButton");
         backButton = settingsMenuContainer.Q<Button>("BackButton");
         resetButton = settingsMenuContainer.Q<Button>("ResetButton");
+
     }
     
     public void OpenSettingsMenu()
@@ -88,15 +90,18 @@ public class SettingsMenuUI : MonoBehaviour
     {
         settingsMenuContainer.style.visibility = Visibility.Hidden;
 
+        /*
         if (!IsChangesApplied())
         {
             DiscardChanges();
         }
+        */
 
     }
     private void OnBack()
     {
         CloseSettingsMenu();
+
     }
 
     private void OnApply()

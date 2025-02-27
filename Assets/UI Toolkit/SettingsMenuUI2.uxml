@@ -1,7 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/SettingsMenuStyle2.uss?fileID=7433441132597879392&amp;guid=0a9c3a7c90b80b14e8175fd64f654876&amp;type=3#SettingsMenuStyle2" />
-    <engine:VisualElement name="Container" style="flex-grow: 1; background-color: rgba(17, 17, 17, 0.8); align-items: center; justify-content: center; align-content: center;">
-        <engine:VisualElement name="SettingsModal" style="width: 1450px; height: 800px; color: rgba(13, 12, 8, 0.89); background-color: rgba(13, 12, 8, 0.91); padding-top: 35px; padding-right: 35px; padding-bottom: 35px; padding-left: 35px; align-items: center; border-top-left-radius: 55px; border-top-right-radius: 55px; border-bottom-right-radius: 55px; border-bottom-left-radius: 55px;">
+    <engine:VisualElement name="SettingsMenu" style="flex-grow: 1; background-color: rgba(17, 17, 17, 0.8); align-items: center; justify-content: center; align-content: center;">
+        <engine:VisualElement name="SettingsModal" style="width: 1450px; height: 800px; color: rgba(13, 12, 8, 0.89); background-color: rgba(13, 12, 8, 0.91); padding-top: 35px; padding-right: 35px; padding-bottom: 35px; padding-left: 35px; align-items: center; border-top-left-radius: 55px; border-top-right-radius: 55px; border-bottom-right-radius: 55px; border-bottom-left-radius: 55px; scale: 0.9 0.9;">
             <engine:VisualElement name="TabHeaderContainer" style="flex-grow: 1; height: 100px; flex-direction: row; max-height: 100px; justify-content: space-around; margin-bottom: 33px; width: 1100px;">
                 <engine:VisualElement name="GraphicsTabHeaderContainer" class="tabHeaderContainer">
                     <engine:Button name="GraphicsTabHeader" class="tabHeader" style="height: 32px; background-color: rgba(188, 188, 188, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Graphics/graphicsTab.png?fileID=2800000&amp;guid=eed398f3f9c6282449d2ad9759769f11&amp;type=3#graphicsTab&quot;); width: 200px;" />
@@ -21,7 +21,7 @@
                     </engine:VisualElement>
                     <engine:VisualElement name="DisplayModeContainer" class="settingContainer" style="flex-grow: 1;">
                         <engine:Label text="DISPLAY RESOLUTION" display-tooltip-when-elided="false" name="DisplayResolutionLabel" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&amp;guid=e93b317134e96644da79334d3840c058&amp;type=3#Changa-Regular&quot;); height: 80px; max-height: 80px;" />
-                        <engine:DropdownField class="settingsControl dropdown" />
+                        <engine:DropdownField name="DisplayResolutionDropdown" choices="1,2" class="settingsControl dropdown" />
                     </engine:VisualElement>
                     <engine:VisualElement name="GraphicsQualityContainer" class="settingContainer" style="flex-grow: 1;">
                         <engine:Label text="GRAPHICS QUALITY" display-tooltip-when-elided="false" name="GraphicsQualityLabel" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&amp;guid=e93b317134e96644da79334d3840c058&amp;type=3#Changa-Regular&quot;); height: 80px; max-height: 80px;" />

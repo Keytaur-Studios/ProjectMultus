@@ -16,7 +16,7 @@
 }
 
 .tabHeader:hover {
-    -unity-background-image-tint-color: rgba(219, 219, 219, 0.82);
+    -unity-background-image-tint-color: rgba(180, 180, 180, 0.82);
     transition-duration: 0.04s;
     transition-timing-function: ease-in;
 }
@@ -26,10 +26,6 @@
     transition-duration: 0.01s;
     transition-timing-function: ease-out;
     scale: 0.95 0.95;
-}
-
-.dropdown {
-    font-size: 35px;
 }
 
 .settingsControl {
@@ -52,6 +48,33 @@
 
 .settingsLabel {
     height: 80px;
+}
+
+.dropdown {
+    font-size: 33px;
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&guid=e93b317134e96644da79334d3840c058&type=3#Changa-Regular");
+}
+
+.dropdown .unity-text-element {
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&guid=e93b317134e96644da79334d3840c058&type=3#Changa-Regular");
+    color: rgb(0, 0, 0);
+}
+
+.dropdown .unity-base-popup-field__input {
+    background-color: rgb(255, 255, 255);
+    max-height: 56px;
+}
+
+.dropdown .unity-base-popup-field__text {
+    background-color: rgb(255, 255, 255);
+}
+
+.dropdown .unity-base-popup-field__arrow {
+    background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1304905567622442630&guid=247b2c7106126c642b883ebecf88290b&type=3#arrow-down@2x");
+    scale: 5 5;
+    margin-right: 6px;
+    rotate: 0;
+    margin-top: 4px;
 }
 
 .buttonContainer {
@@ -94,7 +117,7 @@
     transition-timing-function: ease-in;
     transition-duration: 0.02s;
     -unity-background-image-tint-color: rgb(115, 115, 115);
-    scale: 0.9 0.9;
+    scale: 0.95 0.95;
 }
 
 .toggle {

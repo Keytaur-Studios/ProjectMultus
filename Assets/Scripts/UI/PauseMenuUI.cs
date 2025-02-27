@@ -25,7 +25,7 @@ public class PauseMenuUI : MonoBehaviour
 
         // initialize pause menu UI elements
         pauseMenuUIDocument = pauseMenu.GetComponent<UIDocument>();
-        pauseMenuContainer = pauseMenuUIDocument.rootVisualElement.Q("Container");
+        pauseMenuContainer = pauseMenuUIDocument.rootVisualElement.Q("PauseMenuContainer");
         resumeButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("ResumeButton");
         settingsButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("SettingsButton");
         exitButton = pauseMenuUIDocument.rootVisualElement.Q<Button>("ExitButton");
@@ -79,6 +79,7 @@ public class PauseMenuUI : MonoBehaviour
     private void OnSettingsButtonClick()
     {
         settings.OpenSettingsMenu();
+        pauseMenuContainer.style.visibility = Visibility.Hidden;
     }
 
     private void OnResumeButtonClick()
