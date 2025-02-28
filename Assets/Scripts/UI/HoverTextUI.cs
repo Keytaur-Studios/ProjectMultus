@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.Rendering.FilterWindow;
 
 /* This class handles displaying/hiding hover text when the player cursor is over an Interactable Object */
 public class HoverText : MonoBehaviour
