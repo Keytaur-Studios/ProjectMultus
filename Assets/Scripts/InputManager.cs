@@ -11,8 +11,6 @@ public class InputManager : MonoBehaviour
 
     private bool cameraFreeze;
 
-    private PauseMenuUI pauseMenu;
-
     void Awake()
     {
         UnfreezeCamera();
@@ -24,13 +22,10 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
 
-        pauseMenu = GetComponent<PauseMenuUI>();
-
-        player.Click.performed += ctx => motor.Click();
+        player.Click.performed += ctx => look.SecondaryInteractHandler();
         player.Jump.performed += ctx => motor.Jump();
-        player.Interact.performed += ctx => look.Interact();
-        player.Pause.performed += ctx => pauseMenu.TogglePauseMenu();
-        //player.Interact.canceled += ctx => look.StopInteract();
+        player.Interact.performed += ctx => look.InteractHandler();
+        //player.Pause.performed += ctx => pauseMenu.TogglePauseMenu();
 
         EnablePlayerControls();
 
