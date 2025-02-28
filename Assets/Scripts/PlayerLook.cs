@@ -74,7 +74,8 @@ public class PlayerLook : NetworkBehaviour
         transform.localRotation = Quaternion.Euler(0, rotation.x, 0);
 
         // Check if looking at Interactable Object
-        CheckForTarget();
+        if (lastInteracted == null)
+            CheckForTarget();
     }
 
     public void CheckForTarget()
@@ -136,7 +137,10 @@ public class PlayerLook : NetworkBehaviour
         if (!IsOwner) return;
 
         if (lastInteracted != null)
+        {
             StopInteract();
+            //return;
+        }
 
         if (target == null) return;
 
