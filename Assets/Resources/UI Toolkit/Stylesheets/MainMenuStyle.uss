@@ -1,10 +1,28 @@
+.playerNamePlate {
+    flex-grow: 1;
+    background-image: resource('UI Toolkit/Graphics/playerNamePlate');
+    background-size: 100% 24.46%;
+}
+
+.titleLogo {
+    flex-grow: 1;
+    background-image: resource('UI Toolkit/Graphics/titleLogo');
+    background-size: 100% 100%;
+    max-width: 300px;
+    max-height: 229px;
+    min-height: 229px;
+    min-width: 300px;
+    rotate: -2.89deg;
+    scale: 1 1;
+}
+
 .button {
     font-size: 34px;
     padding-top: 0;
     padding-right: 0;
     padding-bottom: 0;
     padding-left: 0;
-    width: 300px;
+    width: 302px;
     margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
