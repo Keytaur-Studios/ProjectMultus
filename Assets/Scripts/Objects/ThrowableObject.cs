@@ -89,6 +89,8 @@ abstract public class ThrowableObject : NetworkBehaviour
         col.enabled = false;
         DisableColliderClientRpc();
 
+        if (GetComponent<NetworkObject>().OwnerClientId == playerId) return;
+
         GetComponent<NetworkObject>().ChangeOwnership(playerId);
     }
 
