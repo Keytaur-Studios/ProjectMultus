@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  hoverText: '[E] to pickup'
+  hoverText: '[E] to Pickup'
   resourceName: 
   resourceID: 0
 --- !u!64 &2407368852433189304
