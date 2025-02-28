@@ -16,7 +16,7 @@ public class PauseMenuUI : MonoBehaviour
     public PlayerInput playerInput;
     private InputAction pauseAction;
 
-    public static bool isGamePaused = false;
+    public bool isGamePaused = false;
 
 
     private void Awake()

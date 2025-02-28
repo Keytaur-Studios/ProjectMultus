@@ -135,7 +135,7 @@ public class PlayerMotor : NetworkBehaviour
             return;
 
         // Stop player movement while in pause menu
-        if (PauseMenuUI.isGamePaused)
+        if (GetComponent<PauseMenuUI>().isGamePaused)
             return;
 
         StateHandler(input);
