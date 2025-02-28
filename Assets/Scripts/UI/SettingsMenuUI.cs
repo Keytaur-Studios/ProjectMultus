@@ -110,7 +110,7 @@ public class SettingsMenuUI : MonoBehaviour
         currentTabButton = graphicsTabButton;
         currentTabButton.style.minWidth = 309;
         currentTabButton.style.minHeight = 95;
-        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTabActive.png");
+        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTabActive");
 
         // hide all tabs other than graphics (ensure only one tab content is showing at a time)
         audioTabContent.style.visibility = Visibility.Hidden;
@@ -175,7 +175,7 @@ public class SettingsMenuUI : MonoBehaviour
         currentTabButton.style.minHeight = 32;
         currentTabButton.style.maxWidth = 205;
         currentTabButton.style.maxHeight = 32;
-        newTabButton.style.backgroundImage = AssetDatabase.LoadAssetAtPath<Texture2D>(imageUrl);
+        newTabButton.style.backgroundImage = Resources.Load<Texture2D>(imageUrl);
         newTabContent.style.visibility = Visibility.Visible;
         newTabButton.style.minWidth = 309;
         newTabButton.style.minHeight = 95;
@@ -185,25 +185,25 @@ public class SettingsMenuUI : MonoBehaviour
 
     private void openGraphicsTab()
     {
-        switchTab(graphicsTabContent, graphicsTabButton, "Assets/UI Toolkit/Graphics/graphicsTabActive.png");
-        audioTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/audioTab.png");
-        controlsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/controlsTab.png");
+        switchTab(graphicsTabContent, graphicsTabButton, "UI Toolkit/Graphics/graphicsTabActive");
+        audioTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/audioTab");
+        controlsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/controlsTab");
 
     }
 
     private void openAudioTab()
     {
-        switchTab(audioTabContent, audioTabButton, "Assets/UI Toolkit/Graphics/audioTabActive.png");
-        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTab.png");
-        controlsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/controlsTab.png");
+        switchTab(audioTabContent, audioTabButton, "UI Toolkit/Graphics/audioTabActive");
+        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTab");
+        controlsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/controlsTab");
 
     }
 
     private void openControlsTab()
     {
-        switchTab(controlsTabContent, controlsTabButton, "Assets/UI Toolkit/Graphics/controlsTabActive.png");
-        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTab.png");
-        audioTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/audioTab.png");
+        switchTab(controlsTabContent, controlsTabButton, "UI Toolkit/Graphics/controlsTabActive");
+        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTab");
+        audioTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/audioTab");
 
     }
 
