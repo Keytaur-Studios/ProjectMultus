@@ -26,8 +26,13 @@
 }
 
 .playerIcon {
-    width: 90px;
-    height: 90px;
+    flex-grow: 1;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: resource('UI Toolkit/Graphics/monkeyIcon');
+    height: 60px;
+    max-width: 70px;
+    width: 70px;
+    margin-left: 10px;
 }
 
 .button {
