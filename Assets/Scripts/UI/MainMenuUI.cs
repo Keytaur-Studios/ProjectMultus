@@ -13,15 +13,13 @@ public class MainMenuUI : MonoBehaviour
 
 
     private void Awake()
-    {
+    {        
         // Initialize buttons
         joinGameButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("JoinGameButton");
         createLobbyButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CreateLobbyButton");
         optionsButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("OptionsButton");
         exitButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("ExitButton");
         editPlayerNameButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("EditPlayerNameButton");
-
-
 
         // Subcribe to button events
         joinGameButton.clicked += OnJoinGameButtonClick;
@@ -30,6 +28,8 @@ public class MainMenuUI : MonoBehaviour
         exitButton.clicked += OnExitButtonClick;
         editPlayerNameButton.clicked += OnEditPlayerNameButtonClick;
 
+        // Hide all UI except for Main Menu
+        HideUI(lobbyMenuUI, "LobbyMenu");
     }
 
     private void OnDisable()
@@ -55,8 +55,10 @@ public class MainMenuUI : MonoBehaviour
         Debug.Log("Create Lobby button clicked");
 
         // Hide Main Menu UI
+        HideUI(mainMenuUI, "MainMenu");
 
         // Display Lobby Menu UI
+        ShowUI(lobbyMenuUI, "LobbyMenu");
 
         // Awake Lobby Menu script?
 
@@ -89,8 +91,27 @@ public class MainMenuUI : MonoBehaviour
         // Go to Change Player Name Script
     }
 
+    // Hides a container within a UI Document
+    // UIGameObject is a GameObject with a UI Document component
+    private void HideUI(GameObject UIGameObject, string containerName)
+    {
+        // get container reference from UI Document
+        VisualElement element = UIGameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>(containerName);
+        // hide container
+        element.style.visibility = Visibility.Hidden;
 
+    }
 
+    // Unhides a container within a UI Document
+    // UIGameObject is a GameObject with a UI Document component
+    private void ShowUI(GameObject UIGameObject, string containerName)
+    {
+        // get container reference from UI Document
+        VisualElement element = UIGameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>(containerName);
+        // display container
+        element.style.visibility = Visibility.Visible;
+
+    }
 
 
 }

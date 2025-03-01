@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuUI: {fileID: 711401672}
-  lobbyMenuUI: {fileID: 0}
+  lobbyMenuUI: {fileID: 1032815071}
   joinGamePopupUI: {fileID: 0}
   editPlayerNamePopupUI: {fileID: 0}
   settingsMenuUI: {fileID: 0}
@@ -1883,6 +1883,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967072419}
   m_CullTransparentMesh: 1
+--- !u!1 &1032815071 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8337710765442187619, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
+  m_PrefabInstance: {fileID: 1896998666883192067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1064944730
 GameObject:
   m_ObjectHideFlags: 0
@@ -5319,7 +5324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8337710765442187619, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5393,6 +5398,6 @@ SceneRoots:
   - {fileID: 790318727}
   - {fileID: 1402609710}
   - {fileID: 2132790503}
+  - {fileID: 85990266}
   - {fileID: 3343527995436949772}
   - {fileID: 1896998666883192067}
-  - {fileID: 85990266}
