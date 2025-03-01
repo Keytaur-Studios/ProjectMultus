@@ -11,6 +11,8 @@ public class MainMenuUI : MonoBehaviour
 
     private Button joinGameButton, createLobbyButton, optionsButton, exitButton, editPlayerNameButton;
 
+    private LobbyMenuUI lobbyMenuScript;
+
 
     private void Awake()
     {        
@@ -27,6 +29,10 @@ public class MainMenuUI : MonoBehaviour
         optionsButton.clicked += OnOptionsButtonClick; 
         exitButton.clicked += OnExitButtonClick;
         editPlayerNameButton.clicked += OnEditPlayerNameButtonClick;
+
+        // Event triggered when you click back to main menu 
+        lobbyMenuScript = lobbyMenuUI.GetComponent<LobbyMenuUI>();
+        lobbyMenuScript.OnBackToMainMenuEvent += ShowMainMenu;
 
         // Hide all UI except for Main Menu
         HideUI(lobbyMenuUI, "LobbyMenu");
@@ -91,9 +97,17 @@ public class MainMenuUI : MonoBehaviour
         // Go to Change Player Name Script
     }
 
+    // Re-displays the Main Menu UI when you leave the lobby menu
+    // This function is a subscriber to OnBackToMainMenuEvent in LobbyMenuUI.cs
+    private void ShowMainMenu()
+    {
+        HideUI(lobbyMenuUI, "LobbyMenu");
+        ShowUI(mainMenuUI, "MainMenu");
+    }
+
     // Hides a container within a UI Document
     // UIGameObject is a GameObject with a UI Document component
-    private void HideUI(GameObject UIGameObject, string containerName)
+    public static void HideUI(GameObject UIGameObject, string containerName)
     {
         // get container reference from UI Document
         VisualElement element = UIGameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>(containerName);
@@ -104,7 +118,7 @@ public class MainMenuUI : MonoBehaviour
 
     // Unhides a container within a UI Document
     // UIGameObject is a GameObject with a UI Document component
-    private void ShowUI(GameObject UIGameObject, string containerName)
+    public static void ShowUI(GameObject UIGameObject, string containerName)
     {
         // get container reference from UI Document
         VisualElement element = UIGameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>(containerName);

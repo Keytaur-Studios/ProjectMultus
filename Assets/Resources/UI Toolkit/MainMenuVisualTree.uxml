@@ -20,7 +20,7 @@
         </engine:VisualElement>
         <engine:VisualElement name="PlayerInfoContainer" style="flex-grow: 1; margin-top: 35px; margin-right: 35px; margin-bottom: 35px; margin-left: 35px; align-items: flex-end;">
             <engine:VisualElement name="PlayerNameContainer" class="playerNameContainer" style="min-height: 140px;">
-                <engine:VisualElement name="PlayerNamePlate" class="playerNamePlate playerNamePlate2">
+                <engine:VisualElement name="PlayerNameplate" class="playerNamePlate playerNamePlate2">
                     <engine:Label text="PLAYERNAME" name="PlayerName" class="playerNamePlateText" />
                 </engine:VisualElement>
                 <engine:Button name="EditPlayerNameButton" class="button editPlayerNameButton" />
