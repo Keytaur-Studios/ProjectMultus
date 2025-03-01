@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Resources/UI%20Toolkit/Stylesheets/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=baf49a270371f4246bb4e8e00919d7b8&amp;type=3#MainMenuStyle" />
     <engine:VisualElement name="MainMenu" style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
         <engine:VisualElement name="MenuOptionsContainer" style="flex-grow: 1; align-items: center; justify-content: center; align-content: center; max-width: 50%; padding-top: 92px; padding-right: 456px; padding-bottom: 92px; padding-left: 92px;">
-            <engine:VisualElement name="TitleLogo" class="titleLogo" />
+            <engine:VisualElement name="TitleLogo" class="titleLogo" style="background-image: resource(&apos;UI Toolkit/Graphics/TitleLogo&apos;); margin-bottom: 55px;" />
             <engine:VisualElement name="OptionsButtonsGRP" style="flex-grow: 1; align-items: center; max-height: 450px;">
                 <engine:VisualElement name="JoinGameButtonContainer" style="flex-grow: 1;">
                     <engine:Button name="JoinGameButton" class="button" style="background-image: resource(&apos;UI Toolkit/Graphics/joinGameButton&apos;);" />
