@@ -11,11 +11,15 @@ public class MainMenuUI : MonoBehaviour
 
     private Button joinGameButton, createLobbyButton, optionsButton, exitButton, editPlayerNameButton;
 
-    private LobbyMenuUI lobbyMenuScript;
+    private LobbyMenuUI lobby;
+    private SettingsMenuUI settings;
 
 
     private void Awake()
-    {        
+    {
+        lobby = lobbyMenuUI.GetComponent<LobbyMenuUI>();
+        settings = GetComponent<SettingsMenuUI>();
+
         // Initialize buttons
         joinGameButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("JoinGameButton");
         createLobbyButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CreateLobbyButton");
@@ -30,12 +34,13 @@ public class MainMenuUI : MonoBehaviour
         exitButton.clicked += OnExitButtonClick;
         editPlayerNameButton.clicked += OnEditPlayerNameButtonClick;
 
-        // Event triggered when you click back to main menu 
-        lobbyMenuScript = lobbyMenuUI.GetComponent<LobbyMenuUI>();
-        lobbyMenuScript.OnBackToMainMenuEvent += ShowMainMenu;
+        // Event triggered when you go back to main menu
+        lobby.OnBackToMainMenuEvent += ShowMainMenu;
+        settings.OnBackEvent += ShowMainMenu;
 
         // Hide all UI except for Main Menu
         HideUI(lobbyMenuUI, "LobbyMenu");
+        HideUI(settingsMenuUI, "SettingsMenu");
     }
 
     private void OnDisable()
@@ -46,46 +51,33 @@ public class MainMenuUI : MonoBehaviour
         optionsButton.clicked -= OnOptionsButtonClick;
         exitButton.clicked -= OnExitButtonClick;
         editPlayerNameButton.clicked -= OnEditPlayerNameButtonClick;
+        
+        lobby.OnBackToMainMenuEvent -= ShowMainMenu;
     }
 
     // BUTTON CLICK EVENTS
     private void OnJoinGameButtonClick()
     {
-        Debug.Log("Join button clicked");
-
         // Display Enter Join Code Popup
     }
 
     private void OnCreateLobbyButtonClick()
     {
-        Debug.Log("Create Lobby button clicked");
-
-        // Hide Main Menu UI
         HideUI(mainMenuUI, "MainMenu");
-
-        // Display Lobby Menu UI
         ShowUI(lobbyMenuUI, "LobbyMenu");
-
-        // Awake Lobby Menu script?
-
     }
 
     private void OnOptionsButtonClick()
     {
-        Debug.Log("Options button clicked");
-
-        // Hide Main Menu UI
-
-        // Open Settings UI
-
+        Debug.Log("Settings menu not functional yet");
+        //HideUI(mainMenuUI, "MainMenu");
+        //ShowUI(settingsMenuUI, "SettingsMenu");
     }
 
     private void OnExitButtonClick()
     {
-        Debug.Log("Exit button clicked");
-
         // Exit Game!
-
+        Application.Quit();
     }
 
     private void OnEditPlayerNameButtonClick()

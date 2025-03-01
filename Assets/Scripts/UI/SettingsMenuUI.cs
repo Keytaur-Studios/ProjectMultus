@@ -13,7 +13,6 @@ public class SettingsMenuUI : MonoBehaviour
     private UIDocument settingsMenuUIDocument; // UI Document component on SettingsMenuUI
     private VisualElement settingsMenuContainer; // Container in Visual Tree Asset
     private PlayerLook look; // For mouse sensitivity
-    private PauseMenuUI pauseMenuUI;
 
     // Tab elements
     private VisualElement graphicsTabContent, audioTabContent, controlsTabContent;
@@ -43,10 +42,11 @@ public class SettingsMenuUI : MonoBehaviour
 
     private bool isApplied;
 
+    public event Action OnBackEvent;
+
     private void Awake()
     {
         look = GetComponent<PlayerLook>();
-        pauseMenuUI = GetComponent<PauseMenuUI>();
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
 
         InitUIElements();
@@ -55,19 +55,18 @@ public class SettingsMenuUI : MonoBehaviour
         SaveSettings();
 
         // Register Button Callbacks
-        backButton.clicked += OnBackToPause;
+        backButton.clicked += OnBackEvent;
         applyButton.clicked += OnApply;
         resetButton.clicked += OnReset;
         graphicsTabButton.clicked += openGraphicsTab;
         audioTabButton.clicked += openAudioTab;
-        controlsTabButton.clicked += openControlsTab;
-       
+        controlsTabButton.clicked += openControlsTab;       
 
     }
 
     private void OnDisable()
     {
-        backButton.clicked -= OnBackToPause;
+        backButton.clicked -= OnBack;
         applyButton.clicked -= OnApply;
         resetButton.clicked -= OnReset;
         graphicsTabButton.clicked -= openGraphicsTab;
@@ -141,10 +140,10 @@ public class SettingsMenuUI : MonoBehaviour
 
     }
 
-    private void OnBackToPause()
+    private void OnBack()
     {
         CloseSettingsMenu();
-        pauseMenuUI.DisplayPauseMenu();
+        OnBackEvent?.Invoke();
 
     }
 

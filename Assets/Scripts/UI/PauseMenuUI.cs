@@ -37,6 +37,8 @@ public class PauseMenuUI : MonoBehaviour
         resumeButton.clicked += OnResumeButtonClick;
         settingsButton.clicked += OnSettingsButtonClick;
         exitButton.clicked += OnExitButtonClick;
+
+        settings.OnBackEvent += DisplayPauseMenu;
     }
 
     public void TogglePauseMenu()
