@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Resources/UI%20Toolkit/Stylesheets/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=baf49a270371f4246bb4e8e00919d7b8&amp;type=3#MainMenuStyle" />
     <engine:VisualElement name="MainMenu" style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
         <engine:VisualElement name="MenuOptionsContainer" style="flex-grow: 1; align-items: center; justify-content: center; align-content: center; max-width: 43%; padding-top: 0; padding-right: 113px; padding-bottom: 0; padding-left: 0;">
-            <engine:VisualElement name="TitleLogo" class="titleLogo" style="background-image: resource(&apos;UI Toolkit/Graphics/TitleLogo&apos;); margin-bottom: 0; min-width: 420px; max-width: 420px; max-height: 310px; margin-top: 0; margin-right: 0; margin-left: 0; min-height: 310px; top: auto;" />
+            <engine:VisualElement name="TitleLogo" class="titleLogo" style="background-image: resource(&apos;UI Toolkit/Graphics/TitleLogo&apos;); margin-bottom: 0; min-width: 420px; max-width: 473px; max-height: 310px; margin-top: 0; margin-right: 0; margin-left: 0; min-height: 310px; top: auto;" />
             <engine:VisualElement name="OptionsButtonsGRP" style="flex-grow: 1; align-items: center; max-height: 383px; width: 379px; align-self: center; scale: 1.1 1.1; top: 0; margin-top: 96px; justify-content: space-between;">
                 <engine:VisualElement name="JoinGameButtonContainer" class="buttonContainer" style="flex-grow: 1; align-self: center; align-items: center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
                     <engine:Button name="JoinGameButton" class="button" style="background-image: resource(&apos;UI Toolkit/Graphics/joinGameButton&apos;);" />
