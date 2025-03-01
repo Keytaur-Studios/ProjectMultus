@@ -1,25 +1,41 @@
-.titleLogo {
+.playerContainer {
     flex-grow: 1;
-    background-image: resource('UI Toolkit/Graphics/titleLogo');
-    background-size: 100% 100%;
-    max-width: 300px;
-    max-height: 229px;
-    min-height: 229px;
-    min-width: 300px;
-    rotate: -2.89deg;
-    scale: 1 1;
+    height: auto;
+    max-height: 120px;
+    padding-top: 0;
+    min-height: auto;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-top-left-radius: 55px;
+    border-top-right-radius: 55px;
+    border-bottom-right-radius: 55px;
+    border-bottom-left-radius: 55px;
+    flex-direction: row;
+    align-items: center;
 }
 
-.buttonContainer {
-    width: auto;
-    max-width: 300px;
-    justify-content: center;
-    align-items: center;
-    max-height: 93px;
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
+.playerName {
+    -unity-font-definition: resource('UI Toolkit/Fonts/Changa-Light');
+    color: rgb(255, 255, 255);
+    font-size: 58px;
+    -unity-text-align: middle-left;
+    width: 850px;
+}
+
+.playerIcon {
+    width: 90px;
+    height: 90px;
+}
+
+.editPlayerNameButton {
+    background-image: resource('UI Toolkit/Graphics/editPlayerNameButton');
+    width: 35px;
+    height: 35px;
+    right: 38px;
+    top: 4px;
 }
 
 .button {
@@ -69,21 +85,6 @@
     max-height: 140px;
 }
 
-.playerNamePlate-text {
-}
-
-.playerNameContainer {
-}
-
-.playerNameContainer2 {
-}
-
-.playerNamePlate2 {
-    background-size: 100% 100%;
-    min-width: 400px;
-    max-height: 97.84px;
-}
-
 .playerNamePlateText {
     align-self: center;
     align-content: center;
@@ -100,12 +101,4 @@
     padding-left: 0;
     -unity-text-align: middle-center;
     width: 322px;
-}
-
-.editPlayerNameButton {
-    background-image: resource('UI Toolkit/Graphics/editPlayerNameButton');
-    width: 35px;
-    height: 35px;
-    right: 38px;
-    top: 4px;
 }

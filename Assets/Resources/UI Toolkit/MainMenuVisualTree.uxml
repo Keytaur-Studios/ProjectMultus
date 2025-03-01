@@ -19,11 +19,11 @@
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="PlayerInfoContainer" style="flex-grow: 1; margin-top: 35px; margin-right: 35px; margin-bottom: 35px; margin-left: 35px; align-items: flex-end;">
-            <engine:VisualElement name="PlayerNameContainer" style="flex-grow: 1; align-items: flex-end; width: auto; min-height: 83px; max-height: 205px;">
-                <engine:VisualElement name="PlayerNameCard" class="playerNamePlate" style="background-size: 100% 100%; min-width: 400px; max-height: 97.84px;">
-                    <engine:Label text="PLAYERNAME" name="PlayerName" style="align-self: center; align-content: center; top: 7%; -unity-font-definition: resource(&apos;UI Toolkit/Fonts/Changa-SemiBold&apos;); font-size: 42px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; width: 87%;" />
+            <engine:VisualElement name="PlayerNameContainer" class="playerNameContainer" style="min-height: 140px;">
+                <engine:VisualElement name="PlayerNamePlate" class="playerNamePlate playerNamePlate2">
+                    <engine:Label text="PLAYERNAME" name="PlayerName" class="playerNamePlateText" />
                 </engine:VisualElement>
-                <engine:Button name="EditPlayerNameButton" class="button" style="background-image: resource(&apos;UI Toolkit/Graphics/editPlayerNameButton&apos;); width: 35px; height: 35px; right: 38px; top: 4px;" />
+                <engine:Button name="EditPlayerNameButton" class="button editPlayerNameButton" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
