@@ -221,7 +221,7 @@ public class SettingsMenuUI : MonoBehaviour
         }
         else
         {
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            Screen.fullScreenMode = FullScreenMode.Windowed;
         }
     }
 
