@@ -76,6 +76,11 @@ public class PlayerLook : NetworkBehaviour
         // Check if looking at Interactable Object
         if (lastInteracted == null)
             CheckForTarget();
+        else
+        {
+            target = null;
+            OnInteractableHoverExit?.Invoke();
+        }
     }
 
     public void CheckForTarget()
