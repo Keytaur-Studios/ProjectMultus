@@ -103,14 +103,17 @@ public class LobbyMenuUI : MonoBehaviour
 
             // Add a player into the Lobby modal
             VisualElement playerSingleVE = AddPlayer();
+            if (playerSingleVE.Q<Label>() == null) Debug.Log("playerSingleVE is null");
 
                         
             LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();
             lobbyPlayerSingleUI.UpdatePlayer(player);
-            lobbyPlayerSingleUI.setKickButton(playerSingleVE.Q<Button>("KickPlayerButton"));
-            
-            
-            playerSingleVE.Q<Label>("PlayerNameText").text = lobbyPlayerSingleUI.GetPlayerName();
+            lobbyPlayerSingleUI.setKickButton(playerSingleVE.Q<Button>());
+
+            if (lobbyPlayerSingleUI == null) Debug.Log("lobbyPlayerSingleUI is null");
+            if (lobbyPlayerSingleUI.GetPlayerName() == null) Debug.Log("lobbyPlayerSingleUI.GetPlayerName() is null");
+
+            playerSingleVE.Q<Label>().text = lobbyPlayerSingleUI.GetPlayerName();
 
             lobbyPlayerSingleUI.SetKickPlayerButtonVisible( 
                 LobbyHandler.Instance.IsLobbyHost() &&

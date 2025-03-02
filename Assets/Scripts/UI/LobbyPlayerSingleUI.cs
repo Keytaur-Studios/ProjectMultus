@@ -13,8 +13,11 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
     private Player player;
 
 
-    private void Awake() {
-        kickPlayerButton.clicked += KickPlayer;
+    private void Start() {
+        if (kickPlayerButton != null)
+        {
+            kickPlayerButton.clicked += KickPlayer;
+        }
     }
 
     

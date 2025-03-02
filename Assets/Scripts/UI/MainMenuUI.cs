@@ -15,7 +15,7 @@ public class MainMenuUI : MonoBehaviour
     private SettingsMenuUI settings;
 
 
-    private void Awake()
+    private void Start()
     {
         lobby = lobbyMenuUI.GetComponent<LobbyMenuUI>();
         settings = GetComponent<SettingsMenuUI>();

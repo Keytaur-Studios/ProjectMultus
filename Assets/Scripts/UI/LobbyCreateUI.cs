@@ -20,10 +20,6 @@ public class LobbyCreateUI : MonoBehaviour {
 
         createLobbyButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CreateLobbyButton");
         createLobbyButton.clicked += onCreateLobbyButtonClick;
-
-        LobbyHandler.Instance.OnJoinedLobby += HideOnEvent;
-        LobbyHandler.Instance.OnLeftLobby += ShowOnEvent;
-
     }
 
     private void onCreateLobbyButtonClick()
@@ -31,21 +27,6 @@ public class LobbyCreateUI : MonoBehaviour {
         LobbyHandler.Instance.CreateLobby(
                 EditPlayerName.Instance.GetPlayerName() + "'s Game"
             );
-    }
-
-    private void Hide()
-    {
-        gameObject.transform.localScale = Vector3.zero;
-    }
-
-    private void ShowOnEvent(object sender, System.EventArgs e)
-    {
-        gameObject.transform.localScale = Vector3.one;
-    }
-
-    private void HideOnEvent(object sender, System.EventArgs e)
-    {
-        gameObject.transform.localScale = Vector3.zero;
     }
 
 }
