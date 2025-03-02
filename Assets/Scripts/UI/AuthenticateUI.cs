@@ -10,22 +10,17 @@ public class AuthenticateUI : MonoBehaviour
 
     public event EventHandler OnAuthenticated;
 
-    [SerializeField] private Button authenticateButton;
-
     private void Awake()
     {
         Instance = this;
-        authenticateButton.onClick.AddListener(() =>
-        {
-            LobbyHandler.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
-            Hide();
-            OnAuthenticated?.Invoke(this, EventArgs.Empty);
-        });
+        if (LobbyHandler.Instance == null)
+            Debug.Log("LobbyHandler.Instance is null");
+        if (EditPlayerName.Instance == null)
+            Debug.Log("EditPlayerName.Instance is null");
+        if (EditPlayerName.Instance.GetPlayerName() == null)
+            Debug.Log("name is null yet");
+        LobbyHandler.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
+        OnAuthenticated?.Invoke(this, EventArgs.Empty);
     }
 
-    private void Hide()
-    {
-        gameObject.transform.localScale = Vector3.zero;
-        //gameObject.SetActive(false);
-    }
 }

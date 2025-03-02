@@ -73,9 +73,12 @@ public class LobbyUI : MonoBehaviour {
 
         foreach (Player player in lobby.Players) {
             
-            Transform playerSingleTransform = Instantiate(playerSingleTemplate, container); // add a PlayerSingleTemplate to the PlayerList
+            Transform playerSingleTransform = Instantiate(playerSingleTemplate, container); 
+            // add a PlayerSingleTemplate to the PlayerList
+            
             playerSingleTransform.gameObject.SetActive(true);  // ??
             LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();  // ??
+            // lobbyPlayerSingleUI.kickButton = playerSingleTransform.getUIbutton
 
             lobbyPlayerSingleUI.SetKickPlayerButtonVisible( // update method 
                 LobbyHandler.Instance.IsLobbyHost() &&

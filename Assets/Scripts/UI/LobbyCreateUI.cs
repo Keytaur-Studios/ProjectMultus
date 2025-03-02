@@ -37,8 +37,8 @@ public class LobbyCreateUI : MonoBehaviour {
             );
             //Hide();
         });
+        Debug.Log("LobbyCreateUI is awake");
 
-        AuthenticateUI.Instance.OnAuthenticated += ShowOnEvent;
         LobbyHandler.Instance.OnJoinedLobby += HideOnEvent;
         LobbyHandler.Instance.OnLeftLobby += ShowOnEvent;
 
@@ -83,8 +83,6 @@ public class LobbyCreateUI : MonoBehaviour {
             UpdateText();
         });
         */
-
-        Hide();
     }
 
     /*private void UpdateText() {

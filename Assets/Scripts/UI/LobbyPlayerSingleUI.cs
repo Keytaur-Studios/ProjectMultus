@@ -13,7 +13,7 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
     
     // private string playerNameText;
     // private Button kickPlayerButton
-    // 
+    
 
     private Player player;
 
@@ -22,13 +22,17 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
         kickPlayerButton.onClick.AddListener(KickPlayer);
     }
 
+    
     public void SetKickPlayerButtonVisible(bool visible) {
-        kickPlayerButton.gameObject.SetActive(visible);
+        kickPlayerButton.gameObject.SetActive(visible); 
+        // kickPlayerButton.style.Visibility = Visibility.hidden; 
     }
 
     public void UpdatePlayer(Player player) {
         this.player = player;
+        
         playerNameText.text = player.Data[LobbyManager.KEY_PLAYER_NAME].Value;
+        //
     }
 
     private void KickPlayer() {
