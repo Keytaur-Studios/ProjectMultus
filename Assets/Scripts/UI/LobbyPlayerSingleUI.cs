@@ -3,36 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.Services.Lobbies.Models;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class LobbyPlayerSingleUI : MonoBehaviour {
 
 
-    [SerializeField] private TextMeshProUGUI playerNameText;
-    [SerializeField] private Button kickPlayerButton;
-    
-    // private string playerNameText  s            ;
-    // private Button kickPlayerButton
-    
-
+    private string playerNameText;
+    private Button kickPlayerButton;
     private Player player;
 
 
     private void Awake() {
-        kickPlayerButton.onClick.AddListener(KickPlayer);
+        kickPlayerButton.clicked += KickPlayer;
     }
 
     
     public void SetKickPlayerButtonVisible(bool visible) {
-        kickPlayerButton.gameObject.SetActive(visible); 
-        // kickPlayerButton.style.Visibility = Visibility.hidden; 
+        if (visible){
+            kickPlayerButton.style.visibility = Visibility.Visible;
+        }
+        else
+        {
+            kickPlayerButton.style.visibility = Visibility.Hidden;
+        }
     }
 
     public void UpdatePlayer(Player player) {
         this.player = player;
-        
-        playerNameText.text = player.Data[LobbyManager.KEY_PLAYER_NAME].Value;
-        //
+        playerNameText = player.Data[LobbyManager.KEY_PLAYER_NAME].Value;
+    }
+
+    public string GetPlayerName() {  return playerNameText; }
+
+    public void setKickButton(Button kickButton)
+    {
+        kickPlayerButton = kickButton;
     }
 
     private void KickPlayer() {

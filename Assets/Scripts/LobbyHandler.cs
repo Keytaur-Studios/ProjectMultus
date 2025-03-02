@@ -298,7 +298,7 @@ public class LobbyHandler : MonoBehaviour
 
                 joinedLobby = lobby;
 
-                LobbyUI.Instance.UnsubscribeUI();
+                LobbyMenuUI.Instance.UnsubscribeUI();
 
                 SceneManager.Instance.
                     LoadScene(sceneName);
