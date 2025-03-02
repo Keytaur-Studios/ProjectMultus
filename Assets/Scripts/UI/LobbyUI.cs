@@ -13,19 +13,27 @@ public class LobbyUI : MonoBehaviour {
 
 
     [SerializeField] private Transform playerSingleTemplate;
+    // private VisualElement playerSingleTemplate;
     [SerializeField] private Transform container;
-    [SerializeField] private TextMeshProUGUI lobbyNameText;
-    [SerializeField] private TextMeshProUGUI playerCountText;
+    // private VisualElement PlayerList;
+    [SerializeField] private TextMeshProUGUI lobbyNameText; 
+    // private Label LobbyName;
+    [SerializeField] private TextMeshProUGUI playerCountText; // delete
+    
     [SerializeField] private TextMeshProUGUI lobbyCodeText;
+    // private Label lobbyCodeText;
     [SerializeField] private Button leaveLobbyButton;
+    // private Button backToMainMenuButton;
     [SerializeField] private Button startGameButton;
-
+    // private Button startGameButton;
     [SerializeField] private string newSceneName;
 
     private void Awake() {
         Instance = this;
 
-        playerSingleTemplate.gameObject.SetActive(false);
+        // initialize UI elements
+
+        playerSingleTemplate.gameObject.SetActive(false); // delete
 
         leaveLobbyButton.onClick.AddListener(() =>
         {
@@ -44,12 +52,12 @@ public class LobbyUI : MonoBehaviour {
         LobbyHandler.Instance.OnLeftLobby += LobbyHandler_OnLeftLobby;
         LobbyHandler.Instance.OnKickedFromLobby += LobbyHandler_OnLeftLobby;
 
-        Hide();
+        Hide(); // delete
     }
 
     private void LobbyHandler_OnLeftLobby(object sender, System.EventArgs e) {
         ClearLobby();
-        Hide();
+        Hide(); // delete
     }
 
     private void UpdateLobby_Event(object sender, LobbyHandler.LobbyEventArgs e) {
@@ -64,11 +72,12 @@ public class LobbyUI : MonoBehaviour {
         ClearLobby();
 
         foreach (Player player in lobby.Players) {
-            Transform playerSingleTransform = Instantiate(playerSingleTemplate, container);
-            playerSingleTransform.gameObject.SetActive(true);
-            LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();
+            
+            Transform playerSingleTransform = Instantiate(playerSingleTemplate, container); // add a PlayerSingleTemplate to the PlayerList
+            playerSingleTransform.gameObject.SetActive(true);  // ??
+            LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();  // ??
 
-            lobbyPlayerSingleUI.SetKickPlayerButtonVisible(
+            lobbyPlayerSingleUI.SetKickPlayerButtonVisible( // update method 
                 LobbyHandler.Instance.IsLobbyHost() &&
                 player.Id != AuthenticationService.Instance.PlayerId // Don't allow kick self
             );
@@ -77,25 +86,25 @@ public class LobbyUI : MonoBehaviour {
             SetStartButtonVisible(LobbyHandler.Instance.IsLobbyHost());
         }
 
-        lobbyNameText.text = lobby.Name;
-        lobbyCodeText.text = lobby.LobbyCode;
-        playerCountText.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
+        lobbyNameText.text = lobby.Name; // lobbyNameText.text = lobby.Name;
+        lobbyCodeText.text = lobby.LobbyCode; // joinCode.text = lobby.LobbyCode;
+        playerCountText.text = lobby.Players.Count + "/" + lobby.MaxPlayers; // delete
 
         LobbyHandler.Instance.PrintPlayers();
 
-        Show();
+        Show(); // ??
     }
 
-    private void SetStartButtonVisible(bool visible)
+    private void SetStartButtonVisible(bool visible) 
     {
-        startGameButton.gameObject.SetActive(visible);
+        startGameButton.gameObject.SetActive(visible); // startGameButton.style.visibility = Visibility.Hidden;
     }
 
     private void ClearLobby() {
         if (this.gameObject.activeInHierarchy == true)
         foreach (Transform child in container) {
             if (child == playerSingleTemplate) continue;
-            Destroy(child.gameObject);
+            Destroy(child.gameObject); // remove playerSingle from playerList
         }
     }
 

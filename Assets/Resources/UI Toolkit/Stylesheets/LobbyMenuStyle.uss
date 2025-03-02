@@ -17,7 +17,7 @@
     align-items: center;
 }
 
-.playerName {
+.playerNameText {
     -unity-font-definition: resource('UI Toolkit/Fonts/Changa-Light');
     color: rgb(255, 255, 255);
     font-size: 58px;
@@ -33,6 +33,14 @@
     max-width: 70px;
     width: 70px;
     margin-left: 10px;
+}
+
+#KickPlayerButton:hover {
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+}
+
+#KickPlayerButton:active {
+    -unity-background-image-tint-color: rgba(111, 0, 0, 0.84);
 }
 
 .button {
@@ -56,9 +64,9 @@
 }
 
 .button:hover {
-    transition-duration: 0.1s;
+    transition-duration: 0.08s;
     transition-timing-function: ease-in;
-    -unity-background-image-tint-color: rgb(214, 214, 214);
+    -unity-background-image-tint-color: rgb(200, 200, 200);
     scale: 1 1;
 }
 
@@ -72,6 +80,26 @@
     flex-grow: 1;
     background-image: resource('UI Toolkit/Graphics/playerNamePlate');
     background-size: 100% 24.46%;
+}
+
+.button {
+    font-size: 34px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    width: 302px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    background-color: rgba(197, 176, 176, 0);
+    height: 85px;
+    -unity-background-scale-mode: scale-to-fit;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
 }
 
 .playerNameContainer {
@@ -106,4 +134,16 @@
     height: 35px;
     right: 38px;
     top: 4px;
+}
+
+#KickPlayerButton .button:hover {
+}
+
+.kickPlayerButton {
+    width: 50px;
+    height: 42px;
+    background-image: resource('UI Toolkit/Graphics/xButton');
+    max-width: 50px;
+    max-height: 42px;
+    min-height: 42px;
 }
