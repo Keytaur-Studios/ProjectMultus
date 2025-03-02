@@ -1,37 +1,52 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System;
+using UnityEngine.UIElements;
 
 public class LobbyJoinCodeUI : MonoBehaviour
 {
-    [SerializeField] private Button joinButton;
+    public static LobbyJoinCodeUI Instance { get; private set; }
 
-    private void Awake()
+    public GameObject mainMenuUI;
+    public GameObject joinCodePopupUI;
+
+    private Button goButton;
+    private Button cancelButton;
+    private TextField joinCodeInput;
+
+    private LobbyHandler lobbyHandler;
+
+
+    private void Start()
     {
-        joinButton.GetComponent<Button>().onClick.AddListener(() =>
+        Instance = this;
+
+        lobbyHandler = GameObject.Find("NetworkManager").GetComponent<LobbyHandler>();
+
+        goButton = joinCodePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("GoButton");
+        cancelButton = joinCodePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CancelButton");
+        joinCodeInput = joinCodePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<TextField>("JoinCodeInput");
+
+        goButton.clicked += OnGoButtonClick;
+        cancelButton.clicked += OnCancelButtonClick;
+    }
+
+
+    private void OnGoButtonClick()
+    {
+        string joinCode = joinCodeInput.value;
+        LobbyHandler.Instance.JoinLobbyByCode(joinCode.ToUpper());
+
+        joinCodeInput.value = ""; // clear value
+
+        if (lobbyHandler.joinedLobby != null)
         {
-            InputWindowUI.Show_Static("Join Code", "", "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ0123456789", 6,
-            () => {
-                // Cancel
-            },
-            (string joinCode) =>
-            {
-                LobbyHandler.Instance.JoinLobbyByCode(joinCode.ToUpper());
-            });
-        });
-
-        //AuthenticateUI.Instance.OnAuthenticated += Show;
-        //Hide();
+            MainMenuUI.HideUI(joinCodePopupUI, "JoinCodePopup");
+        }
     }
 
-    private void Hide()
+    private void OnCancelButtonClick()
     {
-        gameObject.SetActive(false);
-    }
-
-    private void Show(object sender, System.EventArgs e)
-    {
-        gameObject.SetActive(true);
+        MainMenuUI.HideUI(joinCodePopupUI, "JoinCodePopup");
     }
 }
+

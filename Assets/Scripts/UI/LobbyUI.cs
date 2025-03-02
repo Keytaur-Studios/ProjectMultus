@@ -101,7 +101,7 @@ public class LobbyUI : MonoBehaviour {
 
     private void SetStartButtonVisible(bool visible) 
     {
-        startGameButton.gameObject.SetActive(visible); // startGameButton.style.visibility = Visibility.Hidden;
+        //startGameButton.style.visibility = Visibility.Hidden
     }
 
     private void ClearLobby() {

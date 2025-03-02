@@ -35,7 +35,6 @@ public class MainMenuUI : MonoBehaviour
         editPlayerNameButton.clicked += OnEditPlayerNameButtonClick;
 
         // Event triggered when you go back to main menu
-        lobby.OnBackToMainMenuEvent += ShowMainMenu;
         settings.OnBackEvent += ShowMainMenu;
 
         // Hide all UI except for Main Menu
@@ -53,22 +52,19 @@ public class MainMenuUI : MonoBehaviour
         optionsButton.clicked -= OnOptionsButtonClick;
         exitButton.clicked -= OnExitButtonClick;
         editPlayerNameButton.clicked -= OnEditPlayerNameButtonClick;
-        
-        lobby.OnBackToMainMenuEvent -= ShowMainMenu;
     }
 
     // BUTTON CLICK EVENTS
     private void OnJoinGameButtonClick()
     {
         // Display Enter Join Code Popup
-        HideUI(mainMenuUI, "MainMenu");
-        ShowUI(lobbyMenuUI, "LobbyMenu");
+        ShowUI(joinCodePopupUI, "JoinCodePopup");
     }
 
     private void OnCreateLobbyButtonClick()
     {
         HideUI(mainMenuUI, "MainMenu");
-        ShowUI(joinCodePopupUI, "JoinCodePopup");
+        ShowUI(lobbyMenuUI, "LobbyMenu");
     }
 
     private void OnOptionsButtonClick()

@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuUI: {fileID: 711401672}
   lobbyMenuUI: {fileID: 1032815071}
-  joinCodePopupUI: {fileID: 0}
+  joinCodePopupUI: {fileID: 2485070287214855463}
   editPlayerNamePopupUI: {fileID: 6728359169323424557}
   settingsMenuUI: {fileID: 1920695118}
 --- !u!4 &85990266
@@ -226,7 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2d71fc622a7f34ea182a2e219d8f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joinButton: {fileID: 0}
+  mainMenuUI: {fileID: 711401672}
+  joinCodePopupUI: {fileID: 2485070287214855463}
 --- !u!114 &85990271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,6 +782,8 @@ MonoBehaviour:
   newSceneName: ThrowableObject
   playerList: {fileID: 2128241819}
   playerSingleTemplate: {fileID: 1968037102}
+  lobbyMenuUI: {fileID: 1032815071}
+  mainMenuUI: {fileID: 711401672}
 --- !u!1 &1402609707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,6 +1368,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc6547cb74398c043a24db8ef8d57f72, type: 3}
+--- !u!1 &2485070287214855463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1911922683311374789, guid: fc6547cb74398c043a24db8ef8d57f72, type: 3}
+  m_PrefabInstance: {fileID: 2485070287214855462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3343527995436949772
 PrefabInstance:
   m_ObjectHideFlags: 0

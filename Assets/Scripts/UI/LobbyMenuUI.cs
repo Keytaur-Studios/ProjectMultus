@@ -14,7 +14,8 @@ public class LobbyMenuUI : MonoBehaviour
     [SerializeField] private Transform playerList;
     [SerializeField] private Transform playerSingleTemplate;
 
-
+    public GameObject lobbyMenuUI;
+    public GameObject mainMenuUI;
 
     private Button backToMainMenuButton;
     private Button startGameButton;
@@ -25,12 +26,8 @@ public class LobbyMenuUI : MonoBehaviour
     private VisualElement rootElement;
     private VisualElement playerListVisualElement;
 
-    public event Action OnBackToMainMenuEvent;
-
-
     private void Awake()
     {
-        //lobbyui.cs
 
         Instance = this;
 
@@ -59,9 +56,12 @@ public class LobbyMenuUI : MonoBehaviour
 
     private void OnBackToMainMenuButtonClick()
     {
-        Debug.Log("Back to Main Menu click");
+        MainMenuUI.ShowUI(mainMenuUI, "MainMenu");
+        MainMenuUI.HideUI(lobbyMenuUI, "LobbyMenu");
+
+        rootElement.style.visibility = Visibility.Hidden; // make sure lobby menu is hidden
+
         LobbyHandler.Instance.LeaveLobby();
-        OnBackToMainMenuEvent?.Invoke();
     }
     private void OnStartGameButtonClick()
     {
@@ -123,8 +123,8 @@ public class LobbyMenuUI : MonoBehaviour
             SetStartButtonVisible(LobbyHandler.Instance.IsLobbyHost());
         }
 
-        lobbyNameLabel.text = lobby.Name; // lobbyNameText.text = lobby.Name;
-        lobbyCodeLabel.text = lobby.LobbyCode; // joinCode.text = lobby.LobbyCode;
+        lobbyNameLabel.text = lobby.Name; 
+        lobbyCodeLabel.text = lobby.LobbyCode; 
 
         LobbyHandler.Instance.PrintPlayers();
     }
@@ -158,6 +158,7 @@ public class LobbyMenuUI : MonoBehaviour
 
     private void SetStartButtonVisible(bool visible)
     {
+        Debug.Log("setting start button visible");
         if (visible)
         {
             startGameButton.style.visibility = Visibility.Visible;
