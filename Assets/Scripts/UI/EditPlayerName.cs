@@ -14,12 +14,16 @@ public class EditPlayerName : MonoBehaviour
     //[SerializeField] private TextMeshProUGUI playerNameText;
     public GameObject mainMenuUI;
     public GameObject lobbyMenuUI;
-    //public GameObject editPlayerNameUI;
+    public GameObject editPlayerNamePopupUI;
 
     private Label playerNameText_main;
     private Label playerNameText_lobby;
     private Button editPlayerNameButton_main;
     private Button editPlayerNameButton_lobby;
+
+    private TextField editPlayerNameInput;
+    private Button okayButton;
+    private Button cancelButton;
 
     private string playerName;
 
@@ -39,22 +43,37 @@ public class EditPlayerName : MonoBehaviour
 
     private void Start()
     {
+        // main menu's edit name ui
         playerNameText_main = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Label>("PlayerName");
         editPlayerNameButton_main = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("EditPlayerNameButton");
+        
+        // lobby menu's edit name ui
         playerNameText_lobby = lobbyMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Label>("PlayerName");
         editPlayerNameButton_lobby = lobbyMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("EditPlayerNameButton");
+        
+        // editPlayerNamePopupUI UI Document references
+        editPlayerNameInput = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<TextField>("EditPlayerNameInput");
+        okayButton = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("OkayButton");
+        cancelButton = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CancelButton");
 
         // change name displayed on UI
         playerNameText_main.text = playerName;
         playerNameText_lobby.text = playerName;
 
-        editPlayerNameButton_lobby.clicked += changeName;
-        editPlayerNameButton_main.clicked += changeName;
+        editPlayerNameButton_lobby.clicked += ShowPopup;
+        editPlayerNameButton_main.clicked += ShowPopup;
+        okayButton.clicked += OnOkayButtonClick;
+        cancelButton.clicked += OnCancelButtonClick;
+
     }
 
-    private void changeName()
+    private void ShowPopup()
     {
-        Debug.Log("change name button clicked detected");
+        MainMenuUI.ShowUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
+        
+
+
+        /*
         InputWindowUI.Show_Static("Player Name", playerName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .,-", 20,
             () => {
                 // Cancel
@@ -66,6 +85,31 @@ public class EditPlayerName : MonoBehaviour
                 playerNameText_lobby.text = playerName;
                 OnNameChanged?.Invoke(this, EventArgs.Empty);
             });
+
+        */
+    }
+
+    private void OnCancelButtonClick()
+    {
+        // clear input field
+        editPlayerNameInput.value = "";
+        // hide popup
+        MainMenuUI.HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
+    }
+
+    private void OnOkayButtonClick()
+    {
+        // Validate input; will not apply if empty
+        if (editPlayerNameInput.value == "")
+        {
+            return;
+        }
+
+        // Valid input, reassign name
+        playerName = editPlayerNameInput.value;
+        playerNameText_main.text = playerName;
+        playerNameText_lobby.text = playerName;
+        OnNameChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void EditPlayerName_OnNameChanged(object sender, EventArgs e)

@@ -84,7 +84,7 @@ public class MainMenuUI : MonoBehaviour
     private void OnEditPlayerNameButtonClick()
     {
         Debug.Log("Edit Name button clicked");
-
+        ShowUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
         // Display Edit Player Name Popup
 
         // Go to Change Player Name Script

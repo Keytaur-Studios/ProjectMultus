@@ -1407,6 +1407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuUI: {fileID: 711401672}
   lobbyMenuUI: {fileID: 1032815071}
+  editPlayerNamePopupUI: {fileID: 6728359169323424557}
 --- !u!114 &849747500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4978,6 +4979,6 @@ SceneRoots:
   - {fileID: 3343527995436949772}
   - {fileID: 1896998666883192067}
   - {fileID: 135096793}
+  - {fileID: 6728359169323424556}
   - {fileID: 1402609710}
   - {fileID: 2132790503}
-  - {fileID: 6728359169323424556}
