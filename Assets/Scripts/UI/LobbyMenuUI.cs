@@ -38,14 +38,20 @@ public class LobbyMenuUI : MonoBehaviour
     {
         VisualElement player = new VisualElement();
         player.AddToClassList("playerContainer");
+        
         VisualElement playerIcon = new VisualElement();
         playerIcon.AddToClassList("playerIcon");
+        
         Label playerName = new Label();
         playerName.AddToClassList("playerNameText");
+        playerName.AddToClassList("playerNameText");
+        playerName.AddToClassList("playerNameText");
+
         Button kickButton = new Button();
         kickButton.name = "KickPlayerButton";
         kickButton.AddToClassList("kickPlayerButton");
         kickButton.AddToClassList("button");
+        
         player.Add(playerIcon);
         player.Add(playerName);
         player.Add(kickButton);

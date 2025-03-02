@@ -22,9 +22,9 @@
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement name="PlayerList" style="flex-grow: 1; padding-top: 0; margin-top: 13px;">
-                <engine:VisualElement name="PlayerSingle" class="playerContainer" style="padding-top: 25px; padding-right: 25px; padding-bottom: 25px; padding-left: 25px;">
+                <engine:VisualElement name="PlayerSingle" class="playerContainer">
                     <engine:VisualElement name="PlayerIcon" class="playerIcon" />
-                    <engine:Label text="PLAYERNAME" name="PlayerNameText" class="playerNameText" style="padding-left: 20px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 14px; padding-right: 14px; padding-bottom: 14px; font-size: 50px; width: 812px;" />
+                    <engine:Label text="PLAYERNAME" name="PlayerNameText" class="playerNameText" />
                     <engine:Button name="KickPlayerButton" class="button kickPlayerButton" />
                 </engine:VisualElement>
             </engine:VisualElement>

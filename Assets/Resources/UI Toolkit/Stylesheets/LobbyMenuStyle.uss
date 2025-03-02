@@ -2,7 +2,7 @@
     flex-grow: 1;
     height: auto;
     max-height: 120px;
-    padding-top: 0;
+    padding-top: 25px;
     min-height: auto;
     margin-top: 20px;
     margin-right: 20px;
@@ -15,14 +15,21 @@
     border-bottom-left-radius: 55px;
     flex-direction: row;
     align-items: center;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-left: 25px;
 }
 
 .playerNameText {
     -unity-font-definition: resource('UI Toolkit/Fonts/Changa-Light');
     color: rgb(255, 255, 255);
-    font-size: 58px;
+    font-size: 50px;
     -unity-text-align: middle-left;
-    width: 850px;
+    width: 812px;
+    padding-left: 20px;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
 }
 
 .playerIcon {
@@ -146,4 +153,24 @@
     max-width: 50px;
     max-height: 42px;
     min-height: 42px;
+}
+
+.pname {
+    padding-left: 20px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    font-size: 50px;
+    width: 812px;
+}
+
+.pcon {
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-left: 25px;
 }
