@@ -1,0 +1,13 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UI%20Toolkit/Stylesheets/PopupStyle.uss?fileID=7433441132597879392&amp;guid=3b9669fbe8a28c44383e381eefbc1c77&amp;type=3#PopupStyle" />
+    <engine:VisualElement name="EditPlayerNamePopup" style="flex-grow: 1; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.5);">
+        <engine:VisualElement name="Modal" style="flex-grow: 1; background-image: resource(&apos;UI Toolkit/Graphics/changeNameModal&apos;); width: 600px; height: 277px; max-height: 277px; max-width: 600px; min-height: 277px; min-width: 600px; justify-content: center; padding-top: 0;">
+            <engine:Label text="JOIN CODE" class="header" style="background-image: none;" />
+            <engine:TextField placeholder-text="Enter Join Code" name="JoinCodeInput" max-length="15" hide-placeholder-on-focus="true" class="popupTextInput" style="align-self: center; flex-direction: column;" />
+            <engine:VisualElement style="flex-grow: 1; flex-direction: row; align-self: center; max-height: 94px;">
+                <engine:Button text="&#10;" name="CancelButton" class="button" style="background-image: resource(&apos;UI Toolkit/Graphics/cancelButton&apos;);" />
+                <engine:Button name="OkayButton" class="button" style="background-image: resource(&apos;UI Toolkit/Graphics/goButton&apos;);" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

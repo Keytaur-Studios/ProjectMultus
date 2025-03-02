@@ -29,8 +29,8 @@
 .button:hover {
     transition-duration: 0.08s;
     transition-timing-function: ease-in;
-    -unity-background-image-tint-color: rgb(214, 214, 214);
-    scale: 0.98 0.98;
+    -unity-background-image-tint-color: rgb(180, 180, 180);
+    scale: 0.97 0.97;
 }
 
 .button:active {
@@ -57,4 +57,20 @@
     border-right-width: 0;
     border-bottom-width: 0;
     border-left-width: 0;
+}
+
+.header {
+    margin-top: 33px;
+    margin-right: 11px;
+    margin-bottom: 11px;
+    margin-left: 11px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-font-definition: resource('UI Toolkit/Fonts/ChangaOne-Regular');
+    color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
+    font-size: 50px;
+    background-image: resource('UI Toolkit/Graphics/playerNamePlate');
 }

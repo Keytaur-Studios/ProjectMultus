@@ -5,7 +5,7 @@ public class MainMenuUI : MonoBehaviour
 {
     public GameObject mainMenuUI;
     public GameObject lobbyMenuUI;
-    public GameObject joinGamePopupUI;
+    public GameObject joinCodePopupUI;
     public GameObject editPlayerNamePopupUI;
     public GameObject settingsMenuUI;
 
@@ -42,6 +42,7 @@ public class MainMenuUI : MonoBehaviour
         HideUI(lobbyMenuUI, "LobbyMenu");
         HideUI(settingsMenuUI, "SettingsMenu");
         HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
+        HideUI(joinCodePopupUI, "JoinCodePopup");
     }
 
     private void OnDisable()
@@ -60,12 +61,14 @@ public class MainMenuUI : MonoBehaviour
     private void OnJoinGameButtonClick()
     {
         // Display Enter Join Code Popup
+        HideUI(mainMenuUI, "MainMenu");
+        ShowUI(lobbyMenuUI, "LobbyMenu");
     }
 
     private void OnCreateLobbyButtonClick()
     {
         HideUI(mainMenuUI, "MainMenu");
-        ShowUI(lobbyMenuUI, "LobbyMenu");
+        ShowUI(joinCodePopupUI, "JoinCodePopup");
     }
 
     private void OnOptionsButtonClick()

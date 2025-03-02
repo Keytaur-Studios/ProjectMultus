@@ -18,6 +18,7 @@ public class EditPlayerName : MonoBehaviour
 
     private Label playerNameText_main;
     private Label playerNameText_lobby;
+    private Label playerNameText_popup;
     private Button editPlayerNameButton_main;
     private Button editPlayerNameButton_lobby;
 
@@ -55,10 +56,12 @@ public class EditPlayerName : MonoBehaviour
         editPlayerNameInput = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<TextField>("EditPlayerNameInput");
         okayButton = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("OkayButton");
         cancelButton = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CancelButton");
+        playerNameText_popup = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Label>("PlayerNameTextOnModal");
 
         // change name displayed on UI
         playerNameText_main.text = playerName;
         playerNameText_lobby.text = playerName;
+        playerNameText_popup.text = playerName;
 
         editPlayerNameButton_lobby.clicked += ShowPopup;
         editPlayerNameButton_main.clicked += ShowPopup;
@@ -109,7 +112,14 @@ public class EditPlayerName : MonoBehaviour
         playerName = editPlayerNameInput.value;
         playerNameText_main.text = playerName;
         playerNameText_lobby.text = playerName;
+        playerNameText_popup.text = playerName;
+
         OnNameChanged?.Invoke(this, EventArgs.Empty);
+
+        // clear input field
+        editPlayerNameInput.value = "";
+       
+        MainMenuUI.HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
     }
 
     private void EditPlayerName_OnNameChanged(object sender, EventArgs e)
