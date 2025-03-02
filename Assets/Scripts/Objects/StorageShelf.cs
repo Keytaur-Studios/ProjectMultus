@@ -24,7 +24,7 @@ public class StorageShelf : InteractableObject
         playerObj = player;
 
         ResourceEconomy.Instance.RemoveResourceServerRpc(resourceId, 1);
-        ResourceEconomy.Instance.SpawnPrefabServerRpc(resourceId, NetworkManager.Singleton.LocalClientId);
+        ResourceEconomy.Instance.SpawnPrefabServerRpc(resourceId, NetworkManager.Singleton.LocalClientId, gameObject.GetInstanceID());
     }
 
     public void OnResourceSpawned(ulong objId)
