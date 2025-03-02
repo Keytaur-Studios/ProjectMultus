@@ -41,6 +41,7 @@ public class MainMenuUI : MonoBehaviour
         // Hide all UI except for Main Menu
         HideUI(lobbyMenuUI, "LobbyMenu");
         HideUI(settingsMenuUI, "SettingsMenu");
+        HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
     }
 
     private void OnDisable()

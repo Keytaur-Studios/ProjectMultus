@@ -64,23 +64,13 @@ public class EditPlayerName : MonoBehaviour
 
                 playerNameText_main.text = playerName;
                 playerNameText_lobby.text = playerName;
-                if (OnNameChanged == null)
-                    Debug.Log("this is null");
-
                 OnNameChanged?.Invoke(this, EventArgs.Empty);
             });
     }
 
     private void EditPlayerName_OnNameChanged(object sender, EventArgs e)
     {
-        if (e == null)
-        {
-            Debug.LogError("EventArgs is null in OnNameChanged!");
-            return; // Prevent the exception by not using the null argument.
-        }
-
         LobbyHandler.Instance.UpdatePlayerName(GetPlayerName());
-
     }
 
     public string GetPlayerName()

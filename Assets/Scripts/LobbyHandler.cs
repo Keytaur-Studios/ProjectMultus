@@ -60,7 +60,10 @@ public class LobbyHandler : MonoBehaviour
         AuthenticationService.Instance.SignedIn += () => {
             // do nothing
             Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId + " " + playerName);
+            if (PlayerNameManager.Instance.thisPlayerId == null)
+                Debug.Log("here");
             PlayerNameManager.Instance.thisPlayerId = AuthenticationService.Instance.PlayerId;
+            Debug.Log("here?");
             //RefreshLobbyList();
         };
 
