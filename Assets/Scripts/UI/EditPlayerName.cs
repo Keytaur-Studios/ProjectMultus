@@ -18,10 +18,12 @@ public class EditPlayerName : MonoBehaviour
     private void Awake() {
         Instance = this;
 
+        // generate playerName
+        playerName = "Player" + UnityEngine.Random.Range(1000, 9999);
+        playerNameText.text = playerName;
+        OnNameChanged += EditPlayerName_OnNameChanged;
 
-        if (Instance == null)
-            Debug.Log("Instance is null??");
-
+        // create an inputwindow when clicked
         GetComponent<Button>().onClick.AddListener(() =>
         {
             InputWindowUI.Show_Static("Player Name", playerName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .,-", 20,
@@ -38,14 +40,6 @@ public class EditPlayerName : MonoBehaviour
         });
 
         playerNameText.text = playerName;
-    }
-
-    private void Start()
-    {
-        playerName = "Player" + UnityEngine.Random.Range(1000, 9999);
-        playerNameText.text = playerName;
-        OnNameChanged += EditPlayerName_OnNameChanged;
-        Debug.Log(playerName);
     }
 
     private void EditPlayerName_OnNameChanged(object sender, EventArgs e)

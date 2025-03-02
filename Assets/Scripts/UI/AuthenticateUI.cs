@@ -13,12 +13,6 @@ public class AuthenticateUI : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        if (LobbyHandler.Instance == null)
-            Debug.Log("LobbyHandler.Instance is null");
-        if (EditPlayerName.Instance == null)
-            Debug.Log("EditPlayerName.Instance is null");
-        if (EditPlayerName.Instance.GetPlayerName() == null)
-            Debug.Log("name is null yet");
         LobbyHandler.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
         OnAuthenticated?.Invoke(this, EventArgs.Empty);
     }
