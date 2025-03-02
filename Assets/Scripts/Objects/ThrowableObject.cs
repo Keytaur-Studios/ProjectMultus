@@ -15,17 +15,13 @@ abstract public class ThrowableObject : NetworkBehaviour
     private Collider col;
     private Transform handTransform;
 
-    private void Start()
-    {
-        col = GetComponent<Collider>();
-        rb = GetComponent<Rigidbody>();
-        gameObject.tag = "Throwable Object";
-    }
-
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         owned.OnValueChanged += (oldValue, newValue) => UpdateObjectState(newValue);
+        col = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();
+        gameObject.tag = "Throwable Object";
         UpdateObjectState(owned.Value);
     }
 
@@ -63,6 +59,8 @@ abstract public class ThrowableObject : NetworkBehaviour
     {
         if (owned.Value) return;
         handTransform = player.GetComponent<PlayerLook>().hand.transform;
+        player.GetComponent<PlayerLook>().heldObj = gameObject;
+        player.GetComponent<PlayerLook>().holding = true;
         RequestPickupServerRpc(player.GetComponent<NetworkObject>().OwnerClientId);
     }
 
