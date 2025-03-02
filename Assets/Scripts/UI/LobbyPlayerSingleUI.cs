@@ -11,7 +11,7 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private Button kickPlayerButton;
     
-    // private string playerNameText;
+    // private string playerNameText  s            ;
     // private Button kickPlayerButton
     
 

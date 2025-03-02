@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class EditPlayerName : MonoBehaviour
 {
@@ -11,40 +11,76 @@ public class EditPlayerName : MonoBehaviour
 
     public event EventHandler OnNameChanged;
 
-    [SerializeField] private TextMeshProUGUI playerNameText;
+    //[SerializeField] private TextMeshProUGUI playerNameText;
+    public GameObject mainMenuUI;
+    public GameObject lobbyMenuUI;
+    //public GameObject editPlayerNameUI;
+
+    private Label playerNameText_main;
+    private Label playerNameText_lobby;
+    private Button editPlayerNameButton_main;
+    private Button editPlayerNameButton_lobby;
 
     private string playerName;
 
     private void Awake() {
         Instance = this;
 
+
         // generate playerName
         playerName = "Player" + UnityEngine.Random.Range(1000, 9999);
-        playerNameText.text = playerName;
+
+
         OnNameChanged += EditPlayerName_OnNameChanged;
 
-        // create an inputwindow when clicked
-        GetComponent<Button>().onClick.AddListener(() =>
-        {
-            InputWindowUI.Show_Static("Player Name", playerName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .,-", 20,
+
+
+    }
+
+    private void Start()
+    {
+        playerNameText_main = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Label>("PlayerName");
+        editPlayerNameButton_main = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("EditPlayerNameButton");
+        playerNameText_lobby = lobbyMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Label>("PlayerName");
+        editPlayerNameButton_lobby = lobbyMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("EditPlayerNameButton");
+
+        // change name displayed on UI
+        playerNameText_main.text = playerName;
+        playerNameText_lobby.text = playerName;
+
+        editPlayerNameButton_lobby.clicked += changeName;
+        editPlayerNameButton_main.clicked += changeName;
+    }
+
+    private void changeName()
+    {
+        Debug.Log("change name button clicked detected");
+        InputWindowUI.Show_Static("Player Name", playerName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .,-", 20,
             () => {
                 // Cancel
             },
             (string newName) => {
                 playerName = newName;
 
-                playerNameText.text = playerName;
+                playerNameText_main.text = playerName;
+                playerNameText_lobby.text = playerName;
+                if (OnNameChanged == null)
+                    Debug.Log("this is null");
 
                 OnNameChanged?.Invoke(this, EventArgs.Empty);
             });
-        });
-
-        playerNameText.text = playerName;
     }
 
     private void EditPlayerName_OnNameChanged(object sender, EventArgs e)
     {
+        if (e == null)
+        {
+            Debug.LogError("EventArgs is null in OnNameChanged!");
+            return; // Prevent the exception by not using the null argument.
+        }
+
         LobbyHandler.Instance.UpdatePlayerName(GetPlayerName());
+
     }
 
     public string GetPlayerName()

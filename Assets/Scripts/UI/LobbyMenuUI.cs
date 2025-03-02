@@ -44,8 +44,6 @@ public class LobbyMenuUI : MonoBehaviour
         
         Label playerName = new Label();
         playerName.AddToClassList("playerNameText");
-        playerName.AddToClassList("playerNameText");
-        playerName.AddToClassList("playerNameText");
 
         Button kickButton = new Button();
         kickButton.name = "KickPlayerButton";
