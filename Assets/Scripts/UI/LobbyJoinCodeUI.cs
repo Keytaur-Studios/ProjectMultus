@@ -8,6 +8,7 @@ public class LobbyJoinCodeUI : MonoBehaviour
 
     public GameObject mainMenuUI;
     public GameObject joinCodePopupUI;
+    public GameObject lobbyMenuUI;
 
     private Button goButton;
     private Button cancelButton;
@@ -30,18 +31,16 @@ public class LobbyJoinCodeUI : MonoBehaviour
         cancelButton.clicked += OnCancelButtonClick;
     }
 
-
+    
     private void OnGoButtonClick()
     {
+        // attempt to join a lobby with user input
         string joinCode = joinCodeInput.value;
         LobbyHandler.Instance.JoinLobbyByCode(joinCode.ToUpper());
 
         joinCodeInput.value = ""; // clear value
+        MainMenuUI.HideUI(joinCodePopupUI, "JoinCodePopup");
 
-        if (lobbyHandler.joinedLobby != null)
-        {
-            MainMenuUI.HideUI(joinCodePopupUI, "JoinCodePopup");
-        }
     }
 
     private void OnCancelButtonClick()

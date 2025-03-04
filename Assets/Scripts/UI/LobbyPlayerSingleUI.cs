@@ -45,7 +45,7 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
 
     private void KickPlayer() {
         if (player != null) {
-            LobbyManager.Instance.KickPlayer(player.Id);
+            LobbyHandler.Instance.KickPlayer(player.Id);
         }
     }
 

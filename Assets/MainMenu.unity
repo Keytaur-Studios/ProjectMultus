@@ -228,6 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuUI: {fileID: 711401672}
   joinCodePopupUI: {fileID: 2485070287214855463}
+  lobbyMenuUI: {fileID: 1032815071}
 --- !u!114 &85990271
 MonoBehaviour:
   m_ObjectHideFlags: 0

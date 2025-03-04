@@ -47,8 +47,12 @@ public class LobbyMenuUI : MonoBehaviour
         editPlayerNameButton.clicked += OnEditPlayerNameButtonClick;
 
         LobbyHandler.Instance.OnJoinedLobby += UpdateLobby_Event;
+        LobbyHandler.Instance.OnJoinedLobby += ShowLobbyMenu;
+
         LobbyHandler.Instance.OnJoinedLobbyUpdate += UpdateLobby_Event;
         LobbyHandler.Instance.OnLeftLobby += LobbyHandler_OnLeftLobby;
+        LobbyHandler.Instance.OnLeftLobby += HideLobbyMenu_Event;
+
         LobbyHandler.Instance.OnKickedFromLobby += LobbyHandler_OnLeftLobby;
 
         //AddPlayer(); testing
@@ -73,11 +77,30 @@ public class LobbyMenuUI : MonoBehaviour
         Debug.Log("edit name button click");
     }
 
-    // LobbyUI.cs
+
+    private void ShowLobbyMenu(object sender, LobbyHandler.LobbyEventArgs e)
+    {
+        MainMenuUI.HideUI(mainMenuUI, "MainMenu");
+        MainMenuUI.ShowUI(lobbyMenuUI, "LobbyMenu");
+
+    }
+
+    private void HideLobbyMenu_Event(object sender, System.EventArgs e)
+    {
+        HideLobbyMenu();
+    }
+
+    private void HideLobbyMenu()
+    {
+        MainMenuUI.HideUI(lobbyMenuUI, "LobbyMenu");
+    }
 
     private void LobbyHandler_OnLeftLobby(object sender, System.EventArgs e)
     {
         ClearLobby();
+        MainMenuUI.HideUI(mainMenuUI, "MainMenu");
+        MainMenuUI.ShowUI(lobbyMenuUI, "LobbyMenu");
+
     }
 
     private void UpdateLobby_Event(object sender, LobbyHandler.LobbyEventArgs e)

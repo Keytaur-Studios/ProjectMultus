@@ -21,13 +21,7 @@
                     </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>
-            <engine:VisualElement name="PlayerList" style="flex-grow: 1; padding-top: 0; margin-top: 13px;">
-                <engine:VisualElement name="PlayerSingle" class="playerContainer">
-                    <engine:VisualElement name="PlayerIcon" class="playerIcon" />
-                    <engine:Label text="PLAYERNAME" name="PlayerNameText" class="playerNameText" />
-                    <engine:Button name="KickPlayerButton" class="button kickPlayerButton" />
-                </engine:VisualElement>
-            </engine:VisualElement>
+            <engine:VisualElement name="PlayerList" style="flex-grow: 1; padding-top: 0; margin-top: 13px;" />
         </engine:VisualElement>
         <engine:VisualElement name="StartGameContainer" style="flex-grow: 1; height: 0; align-self: center;">
             <engine:Button name="StartGameButton" class="button" style="width: 380px; align-items: stretch; align-self: center; background-image: resource(&apos;UI Toolkit/Graphics/startGameButton&apos;); background-color: rgba(188, 188, 188, 0); margin-top: 10px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; height: 90px;" />
