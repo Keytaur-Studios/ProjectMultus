@@ -9,18 +9,21 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
 
 
     private string playerNameText;
-    private Button kickPlayerButton;
+    //private Button kickPlayerButton;
     private Player player;
 
 
     private void Start() {
+        /*
         if (kickPlayerButton != null)
         {
             kickPlayerButton.clicked += KickPlayer;
         }
+        */
     }
 
-    
+    /* KICK FUNCTIONALITY DOES NOT WORK YET
+     
     public void SetKickPlayerButtonVisible(bool visible) {
         if (visible){
             kickPlayerButton.style.visibility = Visibility.Visible;
@@ -31,16 +34,7 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
         }
     }
 
-    public void UpdatePlayer(Player player) {
-        this.player = player;
-        playerNameText = player.Data[LobbyManager.KEY_PLAYER_NAME].Value;
-    }
-
-    public string GetPlayerName() {  return playerNameText; }
-
-    public string GetPlayerId() { return player.Id; }
-
-    public void setKickButton(Button kickButton)
+        public void setKickButton(Button kickButton)
     {
         kickPlayerButton = kickButton;
     }
@@ -57,6 +51,19 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
             LobbyHandler.Instance.KickPlayer(player.Id);
         }
     }
+    */
+
+    public void UpdatePlayer(Player player) {
+        this.player = player;
+        playerNameText = player.Data[LobbyManager.KEY_PLAYER_NAME].Value;
+    }
+
+    public string GetPlayerName() {  return playerNameText; }
+
+    public string GetPlayerId() { return player.Id; }
+
+
+
 
 
 }

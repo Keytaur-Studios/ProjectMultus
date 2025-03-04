@@ -80,11 +80,12 @@ public class LobbyUI : MonoBehaviour {
             playerSingleTransform.gameObject.SetActive(true);  // ??
             LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();  // ??
             // lobbyPlayerSingleUI.kickButton = playerSingleTransform.getUIbutton
-
+            /*
             lobbyPlayerSingleUI.SetKickPlayerButtonVisible( // update method 
                 LobbyHandler.Instance.IsLobbyHost() &&
                 player.Id != AuthenticationService.Instance.PlayerId // Don't allow kick self
             );
+            */
 
             lobbyPlayerSingleUI.UpdatePlayer(player);
             SetStartButtonVisible(LobbyHandler.Instance.IsLobbyHost());

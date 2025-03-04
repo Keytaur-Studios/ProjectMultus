@@ -17,7 +17,7 @@
                 <engine:VisualElement name="GraphicsTabContent" enabled="true" class="tabContent" style="flex-grow: 1; color: rgba(234, 234, 234, 0.89); font-size: 40px; -unity-font-definition: url(&quot;project://database/Assets/Resources/UI%20Toolkit/Fonts/Changa-VariableFont_wght.ttf?fileID=12800000&amp;guid=5384da3f9695d514a805852fd32a203d&amp;type=3#Changa-VariableFont_wght&quot;); flex-direction: column;">
                     <engine:VisualElement name="FullscreenToggleContainer" class="settingContainer" style="flex-grow: 1;">
                         <engine:Label text="FULLSCREEN" display-tooltip-when-elided="false" name="FullscreenToggleLabel" style="-unity-font-definition: url(&quot;project://database/Assets/Resources/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&amp;guid=e93b317134e96644da79334d3840c058&amp;type=3#Changa-Regular&quot;);" />
-                        <engine:Toggle toggle-on-label-click="false" name="FullscreenToggle" class="settingsControl toggle" />
+                        <engine:Toggle toggle-on-label-click="false" name="FullscreenToggle" value="false" class="settingsControl toggle" />
                     </engine:VisualElement>
                     <engine:VisualElement name="DisplayModeContainer" class="settingContainer" style="flex-grow: 1;">
                         <engine:Label text="DISPLAY RESOLUTION" display-tooltip-when-elided="false" name="DisplayResolutionLabel" style="-unity-font-definition: url(&quot;project://database/Assets/Resources/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&amp;guid=e93b317134e96644da79334d3840c058&amp;type=3#Changa-Regular&quot;); height: 80px; max-height: 80px;" />

@@ -51,7 +51,7 @@ public class LobbyMenuUI : MonoBehaviour
         LobbyHandler.Instance.OnJoinedLobby += ShowLobbyMenu;
         LobbyHandler.Instance.OnJoinedLobbyUpdate += UpdateLobby_Event;
         LobbyHandler.Instance.OnLeftLobby += LobbyHandler_OnLeftLobby;
-        LobbyHandler.Instance.OnKickedFromLobby += LobbyHandler_OnLeftLobby;
+        //LobbyHandler.Instance.OnKickedFromLobby += LobbyHandler_OnLeftLobby;
     }
 
 
@@ -109,17 +109,20 @@ public class LobbyMenuUI : MonoBehaviour
                         
             LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();
             lobbyPlayerSingleUI.UpdatePlayer(player);
-            lobbyPlayerSingleUI.setKickButton(playerSingleVE.Q<Button>());
+            //lobbyPlayerSingleUI.setKickButton(playerSingleVE.Q<Button>());
             playerSingleVE.name = lobbyPlayerSingleUI.GetPlayerId();
 
 
             playerSingleVE.Q<Label>().text = lobbyPlayerSingleUI.GetPlayerName();
 
+
+            /*
             // Set the Kick button visibility for the lobby host
             lobbyPlayerSingleUI.SetKickPlayerButtonVisible( 
                 LobbyHandler.Instance.IsLobbyHost() &&
                 player.Id != AuthenticationService.Instance.PlayerId // Don't allow kick self
             );
+            */
 
             SetStartButtonVisible(LobbyHandler.Instance.IsLobbyHost());
         }
@@ -141,14 +144,17 @@ public class LobbyMenuUI : MonoBehaviour
         Label playerName = new Label();
         playerName.AddToClassList("playerNameText");
 
+        /*
         Button kickButton = new Button();
         kickButton.name = "KickPlayerButton";
         kickButton.AddToClassList("kickPlayerButton");
         kickButton.AddToClassList("button");
+        */
+
 
         playerElement.Add(playerIcon);
         playerElement.Add(playerName);
-        playerElement.Add(kickButton);
+        //playerElement.Add(kickButton);
 
         playerListVisualElement.Add(playerElement);
 
@@ -180,7 +186,7 @@ public class LobbyMenuUI : MonoBehaviour
         LobbyHandler.Instance.OnJoinedLobby -= UpdateLobby_Event;
         LobbyHandler.Instance.OnJoinedLobbyUpdate -= UpdateLobby_Event;
         LobbyHandler.Instance.OnLeftLobby -= LobbyHandler_OnLeftLobby;
-        LobbyHandler.Instance.OnKickedFromLobby -= LobbyHandler_OnLeftLobby;
+        //LobbyHandler.Instance.OnKickedFromLobby -= LobbyHandler_OnLeftLobby;
     }
 
 }
