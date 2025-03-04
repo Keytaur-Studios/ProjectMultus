@@ -4,6 +4,9 @@ using UnityEngine.UIElements;
 
 public class MainMenuUI : MonoBehaviour
 {
+    public static MainMenuUI Instance { get; private set; }
+
+
     public GameObject mainMenuUI;
     public GameObject lobbyMenuUI;
     public GameObject joinCodePopupUI;
@@ -17,6 +20,8 @@ public class MainMenuUI : MonoBehaviour
 
     private void Start()
     {        
+        Instance = this;
+
         InitializeUI();
         SubscribeToEvents();
         HideOtherUIOnStart();
@@ -42,7 +47,7 @@ public class MainMenuUI : MonoBehaviour
         editPlayerNameButton.clicked += OnEditPlayerNameButtonClick;
 
         // Redisplay the main menu when you leave the settings menu
-        SettingsMenuUI.OnBackEvent += ShowMainMenu;
+        SettingsMenuUI.LeaveSettingsEvent += ShowMainMenu;
     }
 
     private void HideOtherUIOnStart()
@@ -56,12 +61,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnDisable()
     {
-        // Unsubscribe to button events
-        joinGameButton.clicked -= OnJoinGameButtonClick;
-        createLobbyButton.clicked -= OnCreateLobbyButtonClick;
-        optionsButton.clicked -= OnOptionsButtonClick;
-        exitButton.clicked -= OnExitButtonClick;
-        editPlayerNameButton.clicked -= OnEditPlayerNameButtonClick;
+        UnsubscribeToEvents();
     }
 
     // BUTTON CLICK EVENTS
@@ -106,6 +106,14 @@ public class MainMenuUI : MonoBehaviour
         UIHelper.ShowUI(mainMenuUI, "MainMenu");
     }
 
-
+    private void UnsubscribeToEvents()
+    {
+        joinGameButton.clicked -= OnJoinGameButtonClick;
+        createLobbyButton.clicked -= OnCreateLobbyButtonClick;
+        optionsButton.clicked -= OnOptionsButtonClick;
+        exitButton.clicked -= OnExitButtonClick;
+        editPlayerNameButton.clicked -= OnEditPlayerNameButtonClick;
+        SettingsMenuUI.LeaveSettingsEvent -= ShowMainMenu;
+    }
 
 }

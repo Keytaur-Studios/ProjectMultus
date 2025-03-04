@@ -6,6 +6,11 @@ public static class UIHelper
 {
     public static void ShowUI(GameObject uiGameObject, string containerName)
     {
+        if (uiGameObject == null)
+        {
+            Debug.LogError($"{uiGameObject.name} is null");
+        }
+
         VisualElement element = uiGameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>(containerName);
         element.style.visibility = Visibility.Visible;
     }
@@ -16,6 +21,12 @@ public static class UIHelper
 
     public static void HideUI(GameObject uiGameObject, string containerName)
     {
+        Debug.Log("3");
+        if (uiGameObject == null)
+        {
+            Debug.LogError($"{uiGameObject.name} is null");
+        }
+
         VisualElement element = uiGameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>(containerName);
         element.style.visibility = Visibility.Hidden;
     }

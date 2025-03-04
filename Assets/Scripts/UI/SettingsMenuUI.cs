@@ -32,9 +32,9 @@ public class SettingsMenuUI : MonoBehaviour
     // Default graphics (set when player loads into scene, used to reset changes back to default)
     private int graphicsQualityDefault, resolutionDefault;
 
-    public static event Action OnBackEvent;
+    public static event Action LeaveSettingsEvent;
 
-    private void Start()
+    private void OnEnable()
     {
         look = GetComponent<PlayerLook>(); // NOTE: this will be NULL if settings menu is accessed from main menu
 
@@ -47,6 +47,9 @@ public class SettingsMenuUI : MonoBehaviour
 
         ApplySettings(); // Apply loaded settings
         SubscribeToEvents();
+
+        // Hide UI after a short delay to ensure it's ready
+        Invoke("HideUIElements", 0.1f);
 
         // ensure Settings Menu is hidden by default
         UIHelper.HideUI(settingsMenuUI, "SettingsMenu");
@@ -110,7 +113,11 @@ public class SettingsMenuUI : MonoBehaviour
         audioTabButton.clicked += OpenAudioTab;
         controlsTabButton.clicked += OpenControlsTab;
 
-        MainMenuUI.OnOpenSettingsFromMainMenu += OpenSettingsMenu;
+        if (MainMenuUI.Instance != null)
+        {
+            Debug.Log("mainmenu isnt null");
+            MainMenuUI.OnOpenSettingsFromMainMenu += OpenSettingsMenu;
+        }
     }
 
 
@@ -122,13 +129,18 @@ public class SettingsMenuUI : MonoBehaviour
         graphicsTabButton.clicked -= OpenGraphicsTab;
         audioTabButton.clicked -= OpenAudioTab;
         controlsTabButton.clicked -= OpenControlsTab;
+
+        if (MainMenuUI.Instance != null)
+        {
+            MainMenuUI.OnOpenSettingsFromMainMenu -= OpenSettingsMenu;
+        }
     }
 
 
     private void ExitSettings()
     {
+        LeaveSettingsEvent?.Invoke();
         CloseSettingsMenu();
-        OnBackEvent?.Invoke();
 
     }
 
@@ -162,6 +174,11 @@ public class SettingsMenuUI : MonoBehaviour
 
     public void CloseSettingsMenu()
     {
+        Debug.Log("1");
+        if (settingsMenuUI == null)
+        {
+            Debug.LogError("settingsMenuUI is null");
+        }
         UIHelper.HideUI(settingsMenuUI, "SettingsMenu");
         OpenGraphicsTab();
         UIHelper.HideUI(currentTabContent);
@@ -172,6 +189,11 @@ public class SettingsMenuUI : MonoBehaviour
         }
     }
 
+    private void HideUIElements()
+    {
+        UIHelper.HideUI(settingsMenuUI, "SettingsMenu");
+        UIHelper.HideUI(currentTabContent);
+    }
 
     private void InitDisplayResolutions()
     {
