@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -11,16 +13,24 @@ public class SettingsMenuUI : MonoBehaviour
     private UIDocument settingsMenuUIDocument; // UI Document component on SettingsMenuUI
     private VisualElement settingsMenuContainer; // Container in Visual Tree Asset
     private PlayerLook look; // For mouse sensitivity
+    private PauseMenuUI pauseMenuUI;
+
+    // Tab elements
+    private VisualElement graphicsTabContent, audioTabContent, controlsTabContent;
+    private Button graphicsTabButton, audioTabButton, controlsTabButton;
+    private VisualElement currentTabContent; // 1 Graphics 2 Audio 3 Controls
+    private VisualElement currentTabButton;
+
 
     // Settings controls
-    private SliderInt mouseSensitivitySlider;
+    private Slider mouseSensitivitySlider;
     private Slider masterVolumeSlider, musicVolumeSlider, sfxVolumeSlider;
     private Toggle fullscreenToggle;
     private DropdownField resolutionDropdown, graphicsQualityDropdown;
     private Button applyButton, backButton, resetButton;
 
     // Most recently applied values
-    private int savedMouseSensitivity;
+    private float savedMouseSensitivity;
     private float savedMasterVolume;
     private float savedMusicVolume;
     private float savedSfxVolume;
@@ -36,67 +46,106 @@ public class SettingsMenuUI : MonoBehaviour
     private void Awake()
     {
         look = GetComponent<PlayerLook>();
+        pauseMenuUI = GetComponent<PauseMenuUI>();
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
-        
+
         InitUIElements();
         InitDisplayResolutions();
         InitQualitySettings();
         SaveSettings();
 
-        backButton.clicked += OnBack;
+        // Register Button Callbacks
+        backButton.clicked += OnBackToPause;
         applyButton.clicked += OnApply;
         resetButton.clicked += OnReset;
+        graphicsTabButton.clicked += openGraphicsTab;
+        audioTabButton.clicked += openAudioTab;
+        controlsTabButton.clicked += openControlsTab;
+       
 
-        // ensure Settings Menu is hidden by default
-        settingsMenuContainer.style.visibility = Visibility.Hidden; 
     }
 
     private void OnDisable()
     {
-        backButton.clicked -= OnBack;
+        backButton.clicked -= OnBackToPause;
         applyButton.clicked -= OnApply;
         resetButton.clicked -= OnReset;
-
+        graphicsTabButton.clicked -= openGraphicsTab;
+        audioTabButton.clicked -= openAudioTab;
+        controlsTabButton.clicked -= openControlsTab;
     }
 
     private void InitUIElements()
     {
         settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
-        settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q("SettingsMenu");
+        settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q<VisualElement>("SettingsMenu");
 
-        mouseSensitivitySlider = settingsMenuContainer.Q<SliderInt>("MouseSensitivitySlider");
+        graphicsTabButton = settingsMenuContainer.Q<Button>("GraphicsTabButton");
+        audioTabButton = settingsMenuContainer.Q<Button>("AudioTabButton");
+        controlsTabButton = settingsMenuContainer.Q<Button>("ControlsTabButton");
+
+        graphicsTabContent = settingsMenuContainer.Q<VisualElement>("GraphicsTabContent");
+        audioTabContent = settingsMenuContainer.Q<VisualElement>("AudioTabContent");
+        controlsTabContent = settingsMenuContainer.Q<VisualElement>("ControlsTabContent");
+
+        mouseSensitivitySlider = settingsMenuContainer.Q<Slider>("MouseSensitivitySlider");
 
         masterVolumeSlider = settingsMenuContainer.Q<Slider>("MasterVolumeSlider");
         musicVolumeSlider = settingsMenuContainer.Q<Slider>("MusicVolumeSlider");
         sfxVolumeSlider = settingsMenuContainer.Q<Slider>("SFXVolumeSlider");
 
         fullscreenToggle = settingsMenuContainer.Q<Toggle>("FullscreenToggle");
-        resolutionDropdown = settingsMenuContainer.Q<DropdownField>("ResolutionDropdown");
+        resolutionDropdown = settingsMenuContainer.Q<DropdownField>("DisplayResolutionDropdown");
         graphicsQualityDropdown = settingsMenuContainer.Q<DropdownField>("GraphicsQualityDropdown");
-
+        
         applyButton = settingsMenuContainer.Q<Button>("ApplyButton");
         backButton = settingsMenuContainer.Q<Button>("BackButton");
         resetButton = settingsMenuContainer.Q<Button>("ResetButton");
+
+        // ensure Settings Menu is hidden by default
+        settingsMenuContainer.style.visibility = Visibility.Hidden;
+
+        // first tab is graphics, set up UI to display graphics tab opened
+        currentTabContent = graphicsTabContent;
+        currentTabButton = graphicsTabButton;
+        currentTabButton.style.minWidth = 309;
+        currentTabButton.style.minHeight = 95;
+        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTabActive");
+
+        // hide all tabs other than graphics (ensure only one tab content is showing at a time)
+        audioTabContent.style.visibility = Visibility.Hidden;
+        controlsTabContent.style.visibility = Visibility.Hidden;
+
     }
     
     public void OpenSettingsMenu()
     {
         settingsMenuContainer.style.visibility = Visibility.Visible;
+        currentTabContent.style.visibility = Visibility.Visible;
+
     }
 
     public void CloseSettingsMenu()
     {
         settingsMenuContainer.style.visibility = Visibility.Hidden;
 
+        // reset menu back to graphics tab
+        openGraphicsTab();
+        currentTabContent.style.visibility = Visibility.Hidden;
+
         if (!IsChangesApplied())
         {
             DiscardChanges();
         }
+        
 
     }
-    private void OnBack()
+
+    private void OnBackToPause()
     {
         CloseSettingsMenu();
+        pauseMenuUI.DisplayPauseMenu();
+
     }
 
     private void OnApply()
@@ -119,6 +168,45 @@ public class SettingsMenuUI : MonoBehaviour
         graphicsQualityDropdown.index = graphicsQualityDefault; 
     }
 
+    private void switchTab(VisualElement newTabContent, VisualElement newTabButton, String imageUrl)
+    {
+        currentTabContent.style.visibility = Visibility.Hidden;
+        currentTabButton.style.minWidth = 125;
+        currentTabButton.style.minHeight = 32;
+        currentTabButton.style.maxWidth = 205;
+        currentTabButton.style.maxHeight = 32;
+        newTabButton.style.backgroundImage = Resources.Load<Texture2D>(imageUrl);
+        newTabContent.style.visibility = Visibility.Visible;
+        newTabButton.style.minWidth = 309;
+        newTabButton.style.minHeight = 95;
+        currentTabContent = newTabContent;
+        currentTabButton = newTabButton;
+    }
+
+    private void openGraphicsTab()
+    {
+        switchTab(graphicsTabContent, graphicsTabButton, "UI Toolkit/Graphics/graphicsTabActive");
+        audioTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/audioTab");
+        controlsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/controlsTab");
+
+    }
+
+    private void openAudioTab()
+    {
+        switchTab(audioTabContent, audioTabButton, "UI Toolkit/Graphics/audioTabActive");
+        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTab");
+        controlsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/controlsTab");
+
+    }
+
+    private void openControlsTab()
+    {
+        switchTab(controlsTabContent, controlsTabButton, "UI Toolkit/Graphics/controlsTabActive");
+        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTab");
+        audioTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/audioTab");
+
+    }
+
     private void SetLookSensitivity()
     {
         look.xSensitivity = mouseSensitivitySlider.value;
@@ -133,7 +221,7 @@ public class SettingsMenuUI : MonoBehaviour
         }
         else
         {
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            Screen.fullScreenMode = FullScreenMode.Windowed;
         }
     }
 

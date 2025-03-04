@@ -1,0 +1,49 @@
+.header {
+    font-size: 69px;
+    color: rgb(255, 255, 255);
+}
+
+.button {
+    font-size: 34px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    width: 300px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    background-color: rgba(197, 176, 176, 0);
+    height: 85px;
+    -unity-background-scale-mode: scale-to-fit;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.button:hover {
+    width: 287px;
+    transition-duration: 0.02s;
+    transition-timing-function: ease-in;
+    -unity-background-image-tint-color: rgb(200, 196, 193);
+}
+
+.button:active {
+    transition-duration: 0.01s;
+    width: 280px;
+    -unity-background-image-tint-color: rgb(161, 161, 161);
+}
+
+#ExitButton:hover {
+    transition-duration: 0.01s;
+    width: 267px;
+    -unity-background-image-tint-color: rgb(200, 196, 193);
+}
+
+#ExitButton:active {
+    transition-duration: 0.01s;
+    width: 260px;
+    -unity-background-image-tint-color: rgb(161, 161, 161);
+}
