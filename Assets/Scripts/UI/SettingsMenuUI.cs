@@ -41,10 +41,11 @@ public class SettingsMenuUI : MonoBehaviour
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
 
         InitUIElements();
-        InitDisplayResolutions();
+        LoadSettings(); // Load settings
+        InitDisplayResolutions(); 
         InitQualitySettings();
-        LoadSettings();
-        SaveSettings();
+
+        ApplySettings(); // Apply loaded settings
         SubscribeToEvents();
 
         // ensure Settings Menu is hidden by default
@@ -56,6 +57,7 @@ public class SettingsMenuUI : MonoBehaviour
     {
         UnsubscribeToEvents();
     }
+
 
     private void InitUIElements()
     {
@@ -97,12 +99,13 @@ public class SettingsMenuUI : MonoBehaviour
 
     }
 
+
     private void SubscribeToEvents()
     {
         // Register Button Callbacks
-        backButton.clicked += OnBack;
-        applyButton.clicked += OnApply;
-        resetButton.clicked += OnReset;
+        backButton.clicked += ExitSettings;
+        applyButton.clicked += ApplySettings;
+        resetButton.clicked += ResetToDefault;
         graphicsTabButton.clicked += OpenGraphicsTab;
         audioTabButton.clicked += OpenAudioTab;
         controlsTabButton.clicked += OpenControlsTab;
@@ -110,20 +113,52 @@ public class SettingsMenuUI : MonoBehaviour
         MainMenuUI.OnOpenSettingsFromMainMenu += OpenSettingsMenu;
     }
 
+
     private void UnsubscribeToEvents()
     {
-        backButton.clicked -= OnBack;
-        applyButton.clicked -= OnApply;
-        resetButton.clicked -= OnReset;
+        backButton.clicked -= ExitSettings;
+        applyButton.clicked -= ApplySettings;
+        resetButton.clicked -= ResetToDefault;
         graphicsTabButton.clicked -= OpenGraphicsTab;
         audioTabButton.clicked -= OpenAudioTab;
         controlsTabButton.clicked -= OpenControlsTab;
+    }
+
+
+    private void ExitSettings()
+    {
+        CloseSettingsMenu();
+        OnBackEvent?.Invoke();
+
+    }
+
+
+    private void ApplySettings()
+    {
+        QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true); // apply graphics quality
+        ApplyResolution();
+        ToggleFullscreen();
+        SetLookSensitivity();
+        SaveSettings();
+    }
+
+
+    private void ResetToDefault()
+    {
+        mouseSensitivitySlider.value = 30; // 30f is the value initialized in PlayerMotor.cs 
+        masterVolumeSlider.value = 100; // full volumes are default
+        sfxVolumeSlider.value = 100;
+        musicVolumeSlider.value = 100;
+        fullscreenToggle.value = false;
+        resolutionDropdown.index = resolutionDefault;
+        graphicsQualityDropdown.index = graphicsQualityDefault; 
     }
     public void OpenSettingsMenu()
     {
         UIHelper.ShowUI(settingsMenuUI, "SettingsMenu");
         UIHelper.ShowUI(currentTabContent);
     }
+
 
     public void CloseSettingsMenu()
     {
@@ -137,31 +172,66 @@ public class SettingsMenuUI : MonoBehaviour
         }
     }
 
-    private void OnBack()
-    {
-        CloseSettingsMenu();
-        OnBackEvent?.Invoke();
 
-    }
-
-    private void OnApply()
+    private void InitDisplayResolutions()
     {
-        QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true); // apply graphics quality
+        // initialize the resolution drop down menu options
+        resolutionDropdown.choices = Screen.resolutions
+            .Select(resolution => $"{resolution.width}x{resolution.height}")
+            .ToList();
+
+        // Check if player already has a saved resolution preference
+        if (PlayerPrefs.GetInt("DisplayResolution", -1) == -1)
+        {
+            // Use current screen resolution as default if no saved preference
+            resolutionDropdown.index = Screen.resolutions
+                    .Select((resolution, index) => (resolution, index))
+                    .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height)
+                    .index;
+
+            // save this as the default setting
+            resolutionDefault = resolutionDropdown.index;
+        }
+        else
+        {
+            // Load player's saved resolution
+            resolutionDropdown.index = PlayerPrefs.GetInt("DisplayResolution");
+
+            // Set the default to the player's current screen resolution in case of reset
+            resolutionDefault = Screen.resolutions
+                    .Select((resolution, index) => (resolution, index))
+                    .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height)
+                    .index;
+        }
+
         ApplyResolution();
-        ToggleFullscreen();
-        SetLookSensitivity();
-        SaveSettings();
+        
     }
 
-    private void OnReset()
+
+    private void InitQualitySettings()
     {
-        mouseSensitivitySlider.value = 30; // 30f is the value initialized in PlayerMotor.cs 
-        masterVolumeSlider.value = 100; // full volumes are default
-        sfxVolumeSlider.value = 100;
-        musicVolumeSlider.value = 100;
-        fullscreenToggle.value = false;
-        resolutionDropdown.index = resolutionDefault;
-        graphicsQualityDropdown.index = graphicsQualityDefault; 
+        // initialize the graphics dropdown options with UnityEngine presets (Performant, Balanced, High Fidelity) 
+        graphicsQualityDropdown.choices = QualitySettings.names.ToList();
+
+        // Check if player already has a saved quality preference
+        if (PlayerPrefs.GetInt("GraphicsQuality", -1) != -1)
+            // Initialize with saved quality
+            graphicsQualityDropdown.index = PlayerPrefs.GetInt("GraphicsQuality", -1); 
+        else
+        {
+            // Initialized with default quality if no preference
+            graphicsQualityDropdown.index = QualitySettings.GetQualityLevel();
+        }
+
+        graphicsQualityDefault = graphicsQualityDropdown.index;
+    }
+
+
+    private void ApplyResolution()
+    {
+        var newResolution = Screen.resolutions[resolutionDropdown.index];
+        Screen.SetResolution(newResolution.width, newResolution.height, true);
     }
 
     private void SetLookSensitivity()
@@ -179,6 +249,7 @@ public class SettingsMenuUI : MonoBehaviour
 
     }
 
+
     private void ToggleFullscreen()
     {
         if (fullscreenToggle.value == true)
@@ -191,55 +262,6 @@ public class SettingsMenuUI : MonoBehaviour
         }
     }
 
-    private void ApplyResolution()
-    {
-        var newResolution = Screen.resolutions[resolutionDropdown.index];
-        Screen.SetResolution(newResolution.width, newResolution.height, true);
-    }
-
-    private void InitDisplayResolutions()
-    {
-        // initialize the resolution drop down menu options
-        resolutionDropdown.choices = Screen.resolutions.Select(resolution => $"{resolution.width}x{resolution.height}").ToList();
-
-        // Check if player already has a saved resolution preference
-        if (PlayerPrefs.GetInt("DisplayResolution", -1) == -1)
-        {
-            // No saved preference, use player's current screen resolution
-            resolutionDropdown.index = Screen.resolutions
-                    .Select((resolution, index) => (resolution, index))
-                    .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height)
-                    .index;
-
-            // save this as the default setting
-            resolutionDefault = resolutionDropdown.index;
-        }
-        else
-        {
-            // player already has a saved resolution; load preference
-            resolutionDropdown.index = PlayerPrefs.GetInt("DisplayResolution");
-
-            // save default setting as players current screen resolution, to revert back to if player resets their settings
-            resolutionDefault = Screen.resolutions
-                    .Select((resolution, index) => (resolution, index))
-                    .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height)
-                    .index;
-        }
-
-        ApplyResolution();
-        
-    }
-
-    private void InitQualitySettings()
-    {
-        // initialize the graphics dropdown options with UnityEngine presets (Performant, Balanced, High Fidelity) 
-        graphicsQualityDropdown.choices = QualitySettings.names.ToList();
-        
-        // display the player's saved quality level as the selected value
-        graphicsQualityDropdown.index = QualitySettings.GetQualityLevel();
-        
-        graphicsQualityDefault = graphicsQualityDropdown.index;
-    }
 
     // Reverts settings to "saved" settings
     private void DiscardChanges()
@@ -249,6 +271,7 @@ public class SettingsMenuUI : MonoBehaviour
         ApplyResolution();
         QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true);
     }
+
 
     // Saves all current settings values
     private void SaveSettings()
@@ -263,6 +286,7 @@ public class SettingsMenuUI : MonoBehaviour
         PlayerPrefs.SetInt("DisplayResolution", resolutionDropdown.index);
         PlayerPrefs.SetInt("GraphicsQuality", graphicsQualityDropdown.index);
     }
+
 
     private void LoadSettings()
     {
@@ -279,6 +303,7 @@ public class SettingsMenuUI : MonoBehaviour
 
     }
 
+
     // returns true if any settings have been modified without applying
     private bool IsChangesApplied()
     {
@@ -293,6 +318,7 @@ public class SettingsMenuUI : MonoBehaviour
         else
             return true;
     }
+
 
     private void SwitchTab(VisualElement newTabContent, Button newTabButton, string activeImage, Button inactiveButton1, string inactiveImage1, Button inactiveButton2, string inactiveImage2)
     {

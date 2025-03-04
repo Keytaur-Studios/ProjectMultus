@@ -40,14 +40,16 @@ public class LobbyJoinCodeUI : MonoBehaviour
         string joinCode = joinCodeInput.value;
         LobbyHandler.Instance.JoinLobbyByCode(joinCode.ToUpper());
 
-        joinCodeInput.value = ""; // clear value
         UIHelper.HideUI(joinCodePopupUI, "JoinCodePopup");
+
+        joinCodeInput.value = ""; // clear value
 
     }
 
     private void OnCancelButtonClick()
     {
         UIHelper.HideUI(joinCodePopupUI, "JoinCodePopup");
+        joinCodeInput.value = ""; // clear value
     }
 }
 

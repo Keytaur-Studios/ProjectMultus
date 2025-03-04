@@ -24,7 +24,7 @@ public class LobbyMenuUI : MonoBehaviour
     private VisualElement playerListVisualElement;
 
 
-    private void Awake()
+    private void Start()
     {
 
         Instance = this;
