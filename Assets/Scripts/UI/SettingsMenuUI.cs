@@ -34,7 +34,7 @@ public class SettingsMenuUI : MonoBehaviour
 
     public static event Action LeaveSettingsEvent;
 
-    private void OnEnable()
+    private void Start()
     {
         look = GetComponent<PlayerLook>(); // NOTE: this will be NULL if settings menu is accessed from main menu
 
@@ -42,6 +42,7 @@ public class SettingsMenuUI : MonoBehaviour
 
         InitUIElements();
         LoadSettings(); // Load settings
+        InitFullScreen();
         InitDisplayResolutions(); 
         InitQualitySettings();
 
@@ -228,6 +229,22 @@ public class SettingsMenuUI : MonoBehaviour
 
         ApplyResolution();
         
+    }
+
+    private void InitFullScreen()
+    {
+        if (PlayerPrefs.GetInt("FullscreenMode", -1) == -1)
+        {
+            // do nothing if no save preference
+        }
+        else
+        {
+            // use player preference
+            Screen.fullScreenMode = PlayerPrefs.GetInt("FullscreenMode") == 1 ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed;
+        }
+
+        // set value in menu
+        fullscreenToggle.value = (Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen);
     }
 
 
