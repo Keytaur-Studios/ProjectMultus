@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
@@ -26,6 +27,7 @@ public class LobbyMenuUI : MonoBehaviour
     private VisualElement rootElement;
     private VisualElement playerListVisualElement;
 
+
     private void Awake()
     {
 
@@ -51,7 +53,6 @@ public class LobbyMenuUI : MonoBehaviour
 
         LobbyHandler.Instance.OnJoinedLobbyUpdate += UpdateLobby_Event;
         LobbyHandler.Instance.OnLeftLobby += LobbyHandler_OnLeftLobby;
-        LobbyHandler.Instance.OnLeftLobby += HideLobbyMenu_Event;
 
         LobbyHandler.Instance.OnKickedFromLobby += LobbyHandler_OnLeftLobby;
 
@@ -60,6 +61,7 @@ public class LobbyMenuUI : MonoBehaviour
 
     private void OnBackToMainMenuButtonClick()
     {
+        Debug.Log("backbutton click");
         MainMenuUI.ShowUI(mainMenuUI, "MainMenu");
         MainMenuUI.HideUI(lobbyMenuUI, "LobbyMenu");
 
@@ -85,22 +87,13 @@ public class LobbyMenuUI : MonoBehaviour
 
     }
 
-    private void HideLobbyMenu_Event(object sender, System.EventArgs e)
-    {
-        HideLobbyMenu();
-    }
-
-    private void HideLobbyMenu()
-    {
-        MainMenuUI.HideUI(lobbyMenuUI, "LobbyMenu");
-    }
 
     private void LobbyHandler_OnLeftLobby(object sender, System.EventArgs e)
     {
+        startGameButton.style.visibility = Visibility.Hidden;
+        MainMenuUI.HideUI(lobbyMenuUI, "LobbyMenu");
+        MainMenuUI.ShowUI(mainMenuUI, "MainMenu");
         ClearLobby();
-        MainMenuUI.HideUI(mainMenuUI, "MainMenu");
-        MainMenuUI.ShowUI(lobbyMenuUI, "LobbyMenu");
-
     }
 
     private void UpdateLobby_Event(object sender, LobbyHandler.LobbyEventArgs e)
@@ -121,23 +114,23 @@ public class LobbyMenuUI : MonoBehaviour
         {
             // add a PlayerSingleTemplate to the PlayerList
             Transform playerSingleTransform = Instantiate(playerSingleTemplate, playerList);
+
             playerSingleTransform.gameObject.SetActive(true);
 
 
-            // Add a player into the Lobby modal
+            // Add a player into the Lobby visual modal
             VisualElement playerSingleVE = AddPlayer();
-            if (playerSingleVE.Q<Label>() == null) Debug.Log("playerSingleVE is null");
 
                         
             LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();
             lobbyPlayerSingleUI.UpdatePlayer(player);
             lobbyPlayerSingleUI.setKickButton(playerSingleVE.Q<Button>());
+            playerSingleVE.name = lobbyPlayerSingleUI.GetPlayerId();
 
-            if (lobbyPlayerSingleUI == null) Debug.Log("lobbyPlayerSingleUI is null");
-            if (lobbyPlayerSingleUI.GetPlayerName() == null) Debug.Log("lobbyPlayerSingleUI.GetPlayerName() is null");
 
             playerSingleVE.Q<Label>().text = lobbyPlayerSingleUI.GetPlayerName();
 
+            // Set the Kick button visibility for the lobby host
             lobbyPlayerSingleUI.SetKickPlayerButtonVisible( 
                 LobbyHandler.Instance.IsLobbyHost() &&
                 player.Id != AuthenticationService.Instance.PlayerId // Don't allow kick self
@@ -193,14 +186,16 @@ public class LobbyMenuUI : MonoBehaviour
     }
 
     private void ClearLobby()
-    {
-        if (this.gameObject.activeInHierarchy == true)
+    {            
             foreach (Transform child in playerList)
             {
-                if (child == playerSingleTemplate) continue;
-                playerListVisualElement.Clear();
+                if (child == playerSingleTemplate) 
+                {
+                    continue; 
+                }
                 Destroy(child.gameObject); // remove playerSingle from playerList
             }
+            playerListVisualElement.Clear();
     }
 
     public void UnsubscribeUI()

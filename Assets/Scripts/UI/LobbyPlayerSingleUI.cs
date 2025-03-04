@@ -38,6 +38,8 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
 
     public string GetPlayerName() {  return playerNameText; }
 
+    public string GetPlayerId() { return player.Id; }
+
     public void setKickButton(Button kickButton)
     {
         kickPlayerButton = kickButton;
