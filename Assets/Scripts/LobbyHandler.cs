@@ -39,11 +39,6 @@ public class LobbyHandler : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        //OnGameStarted += DisableUI_OnStartGame;
-    }
-
     private void DisableUI_OnStartGame(object sender, EventArgs e)
     {
         GameObject.Find("Canvas").SetActive(false);

@@ -23,10 +23,12 @@ public class LobbyJoinCodeUI : MonoBehaviour
 
         lobbyHandler = GameObject.Find("NetworkManager").GetComponent<LobbyHandler>();
 
-        goButton = joinCodePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("GoButton");
-        cancelButton = joinCodePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CancelButton");
-        joinCodeInput = joinCodePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<TextField>("JoinCodeInput");
+        // Initialize UI Elements
+        goButton = UIHelper.GetUIElement<Button>(joinCodePopupUI, "GoButton");
+        cancelButton = UIHelper.GetUIElement<Button>(joinCodePopupUI, "CancelButton");
+        joinCodeInput = UIHelper.GetUIElement<TextField>(joinCodePopupUI, "JoinCodeInput");
 
+        // Subscribe to events
         goButton.clicked += OnGoButtonClick;
         cancelButton.clicked += OnCancelButtonClick;
     }
@@ -39,13 +41,13 @@ public class LobbyJoinCodeUI : MonoBehaviour
         LobbyHandler.Instance.JoinLobbyByCode(joinCode.ToUpper());
 
         joinCodeInput.value = ""; // clear value
-        MainMenuUI.HideUI(joinCodePopupUI, "JoinCodePopup");
+        UIHelper.HideUI(joinCodePopupUI, "JoinCodePopup");
 
     }
 
     private void OnCancelButtonClick()
     {
-        MainMenuUI.HideUI(joinCodePopupUI, "JoinCodePopup");
+        UIHelper.HideUI(joinCodePopupUI, "JoinCodePopup");
     }
 }
 

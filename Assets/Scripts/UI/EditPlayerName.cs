@@ -11,7 +11,8 @@ public class EditPlayerName : MonoBehaviour
 
     public event EventHandler OnNameChanged;
 
-    //[SerializeField] private TextMeshProUGUI playerNameText;
+    private string playerName;
+
     public GameObject mainMenuUI;
     public GameObject lobbyMenuUI;
     public GameObject editPlayerNamePopupUI;
@@ -26,70 +27,57 @@ public class EditPlayerName : MonoBehaviour
     private Button okayButton;
     private Button cancelButton;
 
-    private string playerName;
 
     private void Awake() {
         Instance = this;
 
-
         // generate playerName
         playerName = "Player" + UnityEngine.Random.Range(1000, 9999);
-
-
         OnNameChanged += EditPlayerName_OnNameChanged;
-
-
 
     }
 
     private void Start()
     {
-        // main menu's edit name ui
-        playerNameText_main = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Label>("PlayerName");
-        editPlayerNameButton_main = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("EditPlayerNameButton");
-        
-        // lobby menu's edit name ui
-        playerNameText_lobby = lobbyMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Label>("PlayerName");
-        editPlayerNameButton_lobby = lobbyMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("EditPlayerNameButton");
-        
-        // editPlayerNamePopupUI UI Document references
-        editPlayerNameInput = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<TextField>("EditPlayerNameInput");
-        okayButton = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("OkayButton");
-        cancelButton = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CancelButton");
-        playerNameText_popup = editPlayerNamePopupUI.GetComponent<UIDocument>().rootVisualElement.Q<Label>("PlayerNameTextOnModal");
+        InitializeUI();
+        UpdateNameOnUI();
+        SubscribeToEvents();
+    }
 
-        // change name displayed on UI
+    private void InitializeUI()
+    {
+        // player name plate in main menu screen
+        playerNameText_main = UIHelper.GetUIElement<Label>(mainMenuUI, "PlayerName");
+        editPlayerNameButton_main = UIHelper.GetUIElement<Button>(mainMenuUI, "EditPlayerNameButton");
+        // player name plate in lobby menu screen
+        playerNameText_lobby = UIHelper.GetUIElement<Label>(lobbyMenuUI, "PlayerName");
+        editPlayerNameButton_lobby = UIHelper.GetUIElement<Button>(lobbyMenuUI, "EditPlayerNameButton");
+        // edit player name modal 
+        editPlayerNameInput = UIHelper.GetUIElement<TextField>(editPlayerNamePopupUI, "EditPlayerNameInput");
+        okayButton = UIHelper.GetUIElement<Button>(editPlayerNamePopupUI, "OkayButton");
+        cancelButton = UIHelper.GetUIElement<Button>(editPlayerNamePopupUI, "CancelButton");
+        playerNameText_popup = UIHelper.GetUIElement<Label>(editPlayerNamePopupUI, "PlayerNameTextOnModal");
+    }
+
+    private void UpdateNameOnUI()
+    {
         playerNameText_main.text = playerName;
         playerNameText_lobby.text = playerName;
         playerNameText_popup.text = playerName;
+    }
 
+    private void SubscribeToEvents()
+    {
         editPlayerNameButton_lobby.clicked += ShowPopup;
         editPlayerNameButton_main.clicked += ShowPopup;
         okayButton.clicked += OnOkayButtonClick;
         cancelButton.clicked += OnCancelButtonClick;
-
     }
+
 
     private void ShowPopup()
     {
-        MainMenuUI.ShowUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
-        
-
-
-        /*
-        InputWindowUI.Show_Static("Player Name", playerName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .,-", 20,
-            () => {
-                // Cancel
-            },
-            (string newName) => {
-                playerName = newName;
-
-                playerNameText_main.text = playerName;
-                playerNameText_lobby.text = playerName;
-                OnNameChanged?.Invoke(this, EventArgs.Empty);
-            });
-
-        */
+        UIHelper.ShowUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
     }
 
     private void OnCancelButtonClick()
@@ -97,29 +85,27 @@ public class EditPlayerName : MonoBehaviour
         // clear input field
         editPlayerNameInput.value = "";
         // hide popup
-        MainMenuUI.HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
+        UIHelper.HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
     }
 
     private void OnOkayButtonClick()
     {
-        // Validate input; will not apply if empty
+        // Validate input
         if (editPlayerNameInput.value == "")
         {
-            return;
+            return; // do not apply; players cannot set an empty string as their name
         }
 
         // Valid input, reassign name
         playerName = editPlayerNameInput.value;
-        playerNameText_main.text = playerName;
-        playerNameText_lobby.text = playerName;
-        playerNameText_popup.text = playerName;
+        UpdateNameOnUI();
 
         OnNameChanged?.Invoke(this, EventArgs.Empty);
 
-        // clear input field
+        UIHelper.HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
+
+        // reset input field
         editPlayerNameInput.value = "";
-       
-        MainMenuUI.HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
     }
 
     private void EditPlayerName_OnNameChanged(object sender, EventArgs e)

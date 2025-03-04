@@ -18,7 +18,8 @@ public class LobbyCreateUI : MonoBehaviour {
     private void Start() {
         Instance = this;
 
-        createLobbyButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CreateLobbyButton");
+        createLobbyButton = UIHelper.GetUIElement<Button>(mainMenuUI, "CreateLobbyButton");
+
         createLobbyButton.clicked += onCreateLobbyButtonClick;
     }
 

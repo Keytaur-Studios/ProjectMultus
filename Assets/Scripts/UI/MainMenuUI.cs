@@ -19,29 +19,42 @@ public class MainMenuUI : MonoBehaviour
     {
         lobby = lobbyMenuUI.GetComponent<LobbyMenuUI>();
         settings = GetComponent<SettingsMenuUI>();
+        
+        InitializeUI();
+        SubscribeToEvents();
+        HideOtherUIOnStart();
+    }
 
-        // Initialize buttons
-        joinGameButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("JoinGameButton");
-        createLobbyButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("CreateLobbyButton");
-        optionsButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("OptionsButton");
-        exitButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("ExitButton");
-        editPlayerNameButton = mainMenuUI.GetComponent<UIDocument>().rootVisualElement.Q<Button>("EditPlayerNameButton");
+    private void InitializeUI()
+    {
+        joinGameButton = UIHelper.GetUIElement<Button>(mainMenuUI, "JoinGameButton");
+        createLobbyButton = UIHelper.GetUIElement<Button>(mainMenuUI, "CreateLobbyButton");
+        optionsButton = UIHelper.GetUIElement<Button>(mainMenuUI, "OptionsButton");
+        exitButton = UIHelper.GetUIElement<Button>(mainMenuUI, "ExitButton");
+        editPlayerNameButton = UIHelper.GetUIElement<Button>(mainMenuUI, "EditPlayerNameButton");
 
+    }
+
+    private void SubscribeToEvents()
+    {
         // Subcribe to button events
         joinGameButton.clicked += OnJoinGameButtonClick;
         createLobbyButton.clicked += OnCreateLobbyButtonClick;
-        optionsButton.clicked += OnOptionsButtonClick; 
+        optionsButton.clicked += OnOptionsButtonClick;
         exitButton.clicked += OnExitButtonClick;
         editPlayerNameButton.clicked += OnEditPlayerNameButtonClick;
 
         // Event triggered when you go back to main menu
         settings.OnBackEvent += ShowMainMenu;
+    }
 
+    private void HideOtherUIOnStart()
+    {
         // Hide all UI except for Main Menu
-        HideUI(lobbyMenuUI, "LobbyMenu");
-        HideUI(settingsMenuUI, "SettingsMenu");
-        HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
-        HideUI(joinCodePopupUI, "JoinCodePopup");
+        UIHelper.HideUI(lobbyMenuUI, "LobbyMenu");
+        UIHelper.HideUI(settingsMenuUI, "SettingsMenu");
+        UIHelper.HideUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
+        UIHelper.HideUI(joinCodePopupUI, "JoinCodePopup");
     }
 
     private void OnDisable()
@@ -58,20 +71,20 @@ public class MainMenuUI : MonoBehaviour
     private void OnJoinGameButtonClick()
     {
         // Display Enter Join Code Popup
-        ShowUI(joinCodePopupUI, "JoinCodePopup");
+        UIHelper.ShowUI(joinCodePopupUI, "JoinCodePopup");
     }
 
     private void OnCreateLobbyButtonClick()
     {
-        HideUI(mainMenuUI, "MainMenu");
-        ShowUI(lobbyMenuUI, "LobbyMenu");
+        UIHelper.HideUI(mainMenuUI, "MainMenu");
+        UIHelper.ShowUI(lobbyMenuUI, "LobbyMenu");
     }
 
     private void OnOptionsButtonClick()
     {
         Debug.Log("Settings menu not functional yet");
-        //HideUI(mainMenuUI, "MainMenu");
-        //ShowUI(settingsMenuUI, "SettingsMenu");
+        //UIHelper.HideUI(mainMenuUI, "MainMenu");
+        //UIHelper.ShowUI(settingsMenuUI, "SettingsMenu");
     }
 
     private void OnExitButtonClick()
@@ -83,7 +96,7 @@ public class MainMenuUI : MonoBehaviour
     private void OnEditPlayerNameButtonClick()
     {
         Debug.Log("Edit Name button clicked");
-        ShowUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
+        UIHelper.ShowUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
         // Display Edit Player Name Popup
 
         // Go to Change Player Name Script
@@ -93,31 +106,10 @@ public class MainMenuUI : MonoBehaviour
     // This function is a subscriber to OnBackToMainMenuEvent in LobbyMenuUI.cs
     private void ShowMainMenu()
     {
-        HideUI(lobbyMenuUI, "LobbyMenu");
-        ShowUI(mainMenuUI, "MainMenu");
+        UIHelper.HideUI(lobbyMenuUI, "LobbyMenu");
+        UIHelper.ShowUI(mainMenuUI, "MainMenu");
     }
 
-    // Hides a container within a UI Document
-    // UIGameObject is a GameObject with a UI Document component
-    public static void HideUI(GameObject UIGameObject, string containerName)
-    {
-        // get container reference from UI Document
-        VisualElement element = UIGameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>(containerName);
-        // hide container
-        element.style.visibility = Visibility.Hidden;
-
-    }
-
-    // Unhides a container within a UI Document
-    // UIGameObject is a GameObject with a UI Document component
-    public static void ShowUI(GameObject UIGameObject, string containerName)
-    {
-        // get container reference from UI Document
-        VisualElement element = UIGameObject.GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>(containerName);
-        // display container
-        element.style.visibility = Visibility.Visible;
-
-    }
 
 
 }
