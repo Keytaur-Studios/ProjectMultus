@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,15 +12,11 @@ public class MainMenuUI : MonoBehaviour
 
     private Button joinGameButton, createLobbyButton, optionsButton, exitButton, editPlayerNameButton;
 
-    private LobbyMenuUI lobby;
-    private SettingsMenuUI settings;
+    public static event Action OnOpenSettingsFromMainMenu;
 
 
     private void Start()
-    {
-        lobby = lobbyMenuUI.GetComponent<LobbyMenuUI>();
-        settings = GetComponent<SettingsMenuUI>();
-        
+    {        
         InitializeUI();
         SubscribeToEvents();
         HideOtherUIOnStart();
@@ -44,8 +41,8 @@ public class MainMenuUI : MonoBehaviour
         exitButton.clicked += OnExitButtonClick;
         editPlayerNameButton.clicked += OnEditPlayerNameButtonClick;
 
-        // Event triggered when you go back to main menu
-        settings.OnBackEvent += ShowMainMenu;
+        // Redisplay the main menu when you leave the settings menu
+        SettingsMenuUI.OnBackEvent += ShowMainMenu;
     }
 
     private void HideOtherUIOnStart()
@@ -82,9 +79,8 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnOptionsButtonClick()
     {
-        Debug.Log("Settings menu not functional yet");
-        //UIHelper.HideUI(mainMenuUI, "MainMenu");
-        //UIHelper.ShowUI(settingsMenuUI, "SettingsMenu");
+        UIHelper.HideUI(mainMenuUI, "MainMenu");
+        OnOpenSettingsFromMainMenu?.Invoke();
     }
 
     private void OnExitButtonClick()

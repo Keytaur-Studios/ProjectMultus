@@ -53,11 +53,11 @@
 
 .dropdown {
     font-size: 33px;
-    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&guid=e93b317134e96644da79334d3840c058&type=3#Changa-Regular");
+    -unity-font-definition: url("project://database/Assets/Resources/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&guid=e93b317134e96644da79334d3840c058&type=3#Changa-Regular");
 }
 
 .dropdown .unity-text-element {
-    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&guid=e93b317134e96644da79334d3840c058&type=3#Changa-Regular");
+    -unity-font-definition: url("project://database/Assets/Resources/UI%20Toolkit/Fonts/Changa-Regular.ttf?fileID=12800000&guid=e93b317134e96644da79334d3840c058&type=3#Changa-Regular");
     color: rgb(0, 0, 0);
 }
 
@@ -71,7 +71,7 @@
 }
 
 .dropdown .unity-base-popup-field__arrow {
-    background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1304905567622442630&guid=247b2c7106126c642b883ebecf88290b&type=3#arrow-down@2x");
+    background-image: resource('UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme');
     scale: 5 5;
     margin-right: 6px;
     rotate: 0;
@@ -96,7 +96,7 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Changa-SemiBold.ttf?fileID=12800000&guid=13601e7fe5bf97b4ca9736fcc80b4d35&type=3#Changa-SemiBold");
+    -unity-font-definition: url("project://database/Assets/Resources/UI%20Toolkit/Fonts/Changa-SemiBold.ttf?fileID=12800000&guid=13601e7fe5bf97b4ca9736fcc80b4d35&type=3#Changa-SemiBold");
     font-size: 40px;
     padding-right: 0;
     padding-left: 0;
@@ -142,7 +142,7 @@
 .toggle .unity-toggle__checkmark {
     width: 93px;
     height: 80px;
-    background-image: url("project://database/Assets/UI%20Toolkit/Graphics/toggleUnchecked.png?fileID=2800000&guid=eee288dfefb366749925f7f0650ffa96&type=3#toggleUnchecked");
+    background-image: url("project://database/Assets/Resources/UI%20Toolkit/Graphics/toggleUnchecked.png?fileID=2800000&guid=eee288dfefb366749925f7f0650ffa96&type=3#toggleUnchecked");
     background-color: rgb(0, 0, 0);
     -unity-background-image-tint-color: rgb(255, 255, 255);
     max-width: 93px;
@@ -162,7 +162,7 @@
 .toggle .unity-toggle__input:checked > .unity-toggle__checkmark {
     width: 93px;
     height: 80px;
-    background-image: url("project://database/Assets/UI%20Toolkit/Graphics/toggleChecked.png?fileID=2800000&guid=8cec15e569ed37c439a70d957022019d&type=3#toggleChecked");
+    background-image: url("project://database/Assets/Resources/UI%20Toolkit/Graphics/toggleChecked.png?fileID=2800000&guid=8cec15e569ed37c439a70d957022019d&type=3#toggleChecked");
 }
 
 .settingContainer {
