@@ -46,6 +46,13 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
     }
 
     private void KickPlayer() {
+
+        // Check if the host has the right permissions
+        if (LobbyHandler.Instance.IsLobbyHost())
+        {
+            Debug.Log("The current player is the host and can kick players.");
+        }
+
         if (player != null) {
             LobbyHandler.Instance.KickPlayer(player.Id);
         }
