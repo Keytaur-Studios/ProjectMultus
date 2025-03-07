@@ -9,8 +9,7 @@ using UnityEngine.UIElements;
 
 public class SettingsMenuUI : MonoBehaviour
 {
-    public GameObject settingsMenuUI;
-
+    [SerializeField] GameObject settingsMenuUI;
     [SerializeField] AudioMixer audioMixer;
 
     private PlayerLook look; // For mouse sensitivity
@@ -49,8 +48,7 @@ public class SettingsMenuUI : MonoBehaviour
         ApplySettings(); // Apply loaded settings
         SubscribeToEvents();
 
-        // Hide UI after a short delay to ensure it's ready
-        Invoke("HideUIElements", 0.1f);
+        HideUIElements();
 
         // ensure Settings Menu is hidden by default
         UIHelper.HideUI(settingsMenuUI, "SettingsMenu");

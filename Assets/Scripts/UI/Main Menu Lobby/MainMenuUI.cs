@@ -1,21 +1,24 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 
 public class MainMenuUI : MonoBehaviour
 {
     public static MainMenuUI Instance { get; private set; }
 
 
-    public GameObject mainMenuUI;
-    public GameObject lobbyMenuUI;
-    public GameObject joinCodePopupUI;
-    public GameObject editPlayerNamePopupUI;
-    public GameObject settingsMenuUI;
+    [SerializeField] GameObject mainMenuUI;
+    [SerializeField] GameObject lobbyMenuUI;
+    [SerializeField] GameObject joinCodePopupUI;
+    [SerializeField] GameObject editPlayerNamePopupUI;
+    [SerializeField] GameObject settingsMenuUI;
 
     private Button joinGameButton, createLobbyButton, optionsButton, exitButton, editPlayerNameButton;
 
     public static event Action OnOpenSettingsFromMainMenu;
+
+
 
 
     private void Start()
@@ -93,9 +96,6 @@ public class MainMenuUI : MonoBehaviour
     {
         Debug.Log("Edit Name button clicked");
         UIHelper.ShowUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
-        // Display Edit Player Name Popup
-
-        // Go to Change Player Name Script
     }
 
     // Re-displays the Main Menu UI when you leave the lobby menu

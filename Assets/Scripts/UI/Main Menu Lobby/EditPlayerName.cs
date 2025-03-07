@@ -13,9 +13,9 @@ public class EditPlayerName : MonoBehaviour
 
     private string playerName;
 
-    public GameObject mainMenuUI;
-    public GameObject lobbyMenuUI;
-    public GameObject editPlayerNamePopupUI;
+    [SerializeField] GameObject mainMenuUI;
+    [SerializeField] GameObject lobbyMenuUI;
+    [SerializeField] GameObject editPlayerNamePopupUI;
 
     private Label playerNameText_main;
     private Label playerNameText_lobby;
@@ -33,8 +33,6 @@ public class EditPlayerName : MonoBehaviour
 
         // generate playerName
         playerName = "Player" + UnityEngine.Random.Range(1000, 9999);
-        OnNameChanged += EditPlayerName_OnNameChanged;
-
     }
 
     private void Start()
@@ -57,6 +55,9 @@ public class EditPlayerName : MonoBehaviour
         okayButton = UIHelper.GetUIElement<Button>(editPlayerNamePopupUI, "OkayButton");
         cancelButton = UIHelper.GetUIElement<Button>(editPlayerNamePopupUI, "CancelButton");
         playerNameText_popup = UIHelper.GetUIElement<Label>(editPlayerNamePopupUI, "PlayerNameTextOnModal");
+
+
+        Debug.Log("edit init");
     }
 
     private void UpdateNameOnUI()
@@ -72,16 +73,22 @@ public class EditPlayerName : MonoBehaviour
         editPlayerNameButton_main.clicked += ShowPopup;
         okayButton.clicked += OnOkayButtonClick;
         cancelButton.clicked += OnCancelButtonClick;
+
+        OnNameChanged += EditPlayerName_OnNameChanged;
     }
 
 
     private void ShowPopup()
     {
+
         UIHelper.ShowUI(editPlayerNamePopupUI, "EditPlayerNamePopup");
+        editPlayerNameInput.Focus();
     }
 
     private void OnCancelButtonClick()
     {
+        Debug.Log("edit click");
+
         // clear input field
         editPlayerNameInput.value = "";
         // hide popup
@@ -90,6 +97,8 @@ public class EditPlayerName : MonoBehaviour
 
     private void OnOkayButtonClick()
     {
+        Debug.Log("edit click");
+
         // Validate input
         if (editPlayerNameInput.value == "")
         {

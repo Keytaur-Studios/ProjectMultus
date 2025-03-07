@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2234627665568005803}
   - component: {fileID: 7738306069626688136}
+  - component: {fileID: 1480163964855475072}
   m_Layer: 5
   m_Name: LobbyMenuUI
   m_TagString: Untagged
@@ -51,3 +52,20 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &1480163964855475072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337710765442187619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cacd003c8bba5345a855f09be81a6d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSceneName: ThrowableObject
+  playerList: {fileID: 0}
+  playerSingleTemplate: {fileID: 0}
+  lobbyMenuUI: {fileID: 8337710765442187619}
+  mainMenuUI: {fileID: 0}

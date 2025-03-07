@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 // This class has methods to help manage UI Toolkit elements + methods
@@ -48,5 +49,11 @@ public static class UIHelper
 
         return gameObject.GetComponent<UIDocument>().rootVisualElement.Q<T>(name);
 
+    }
+
+    public static void resetEventSystemFocus(VisualElement element)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        element.Focus();
     }
 }

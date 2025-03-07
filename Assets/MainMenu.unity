@@ -279,17 +279,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsMenuUI
       objectReference: {fileID: 0}
-    - target: {fileID: 473026516256132857, guid: 6a3f6961a6f46f646abf99a9ae228771, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 473026516256132857, guid: 6a3f6961a6f46f646abf99a9ae228771, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1920695121}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a3f6961a6f46f646abf99a9ae228771, type: 3}
 --- !u!1 &274690299
 GameObject:
@@ -756,23 +749,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8337710765442187619, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
   m_PrefabInstance: {fileID: 1896998666883192067}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1032815074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1032815071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cacd003c8bba5345a855f09be81a6d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  newSceneName: ThrowableObject
-  playerList: {fileID: 2128241819}
-  playerSingleTemplate: {fileID: 1968037102}
-  lobbyMenuUI: {fileID: 1032815071}
-  mainMenuUI: {fileID: 711401672}
 --- !u!1 &1402609707
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,20 +822,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 473026516256132857, guid: 6a3f6961a6f46f646abf99a9ae228771, type: 3}
   m_PrefabInstance: {fileID: 135096793}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1920695121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1920695118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ffd028785ce02546bbe2eee8a560499, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settingsMenuUI: {fileID: 1920695118}
-  audioMixer: {fileID: 0}
 --- !u!1 &1968037101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,6 +1220,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1480163964855475072, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
+      propertyPath: mainMenuUI
+      value: 
+      objectReference: {fileID: 711401672}
+    - target: {fileID: 1480163964855475072, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
+      propertyPath: playerList
+      value: 
+      objectReference: {fileID: 2128241819}
+    - target: {fileID: 1480163964855475072, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
+      propertyPath: playerSingleTemplate
+      value: 
+      objectReference: {fileID: 1968037102}
     - target: {fileID: 2234627665568005803, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1302,17 +1276,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LobbyMenuUI
       objectReference: {fileID: 0}
-    - target: {fileID: 8337710765442187619, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8337710765442187619, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1032815074}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
 --- !u!1001 &2485070287214855462
 PrefabInstance:
@@ -1428,10 +1395,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuUI
       objectReference: {fileID: 0}
-    - target: {fileID: 8997688454308508985, guid: 347449a0570518f499c513aa7a0bdf41, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1506,11 +1469,11 @@ SceneRoots:
   - {fileID: 1978331671}
   - {fileID: 274690301}
   - {fileID: 85990266}
-  - {fileID: 3343527995436949772}
-  - {fileID: 1896998666883192067}
-  - {fileID: 135096793}
   - {fileID: 6728359169323424556}
   - {fileID: 2485070287214855462}
+  - {fileID: 135096793}
+  - {fileID: 1896998666883192067}
+  - {fileID: 3343527995436949772}
   - {fileID: 1402609710}
   - {fileID: 2132790503}
   - {fileID: 812545236}
