@@ -1,0 +1,7 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UI%20Toolkit/Stylesheets/InteractText.uss?fileID=7433441132597879392&amp;guid=2cfb7e8912597fd4da03c904883298ba&amp;type=3#InteractText" />
+    <engine:VisualElement name="InteractTextContainer" style="flex-grow: 1; flex-direction: row; justify-content: center; align-self: center; max-height: 85px; align-items: center; padding-top: 10px; padding-right: 15px; padding-bottom: 10px; padding-left: 10px; background-color: rgb(0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
+        <engine:Label text="E" name="InteractKey" class="interactKey" />
+        <engine:Label text="Object Name" name="InteractLabel" class="interactText" />
+    </engine:VisualElement>
+</engine:UXML>

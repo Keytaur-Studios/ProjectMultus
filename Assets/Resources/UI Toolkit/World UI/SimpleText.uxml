@@ -1,0 +1,3 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Label text="Label" name="SimpleText" style="-unity-font-definition: resource(&apos;UI Toolkit/Fonts/Changa-SemiBold&apos;); font-size: 60px; -unity-text-align: middle-left; color: rgb(255, 255, 255);" />
+</engine:UXML>

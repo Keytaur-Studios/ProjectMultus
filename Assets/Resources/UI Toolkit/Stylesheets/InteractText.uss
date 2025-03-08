@@ -1,0 +1,61 @@
+.interactKey {
+    -unity-text-align: middle-center;
+    -unity-font-definition: resource('UI Toolkit/Fonts/ChangaOne-Regular');
+    font-size: 50px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 0;
+    margin-right: 4px;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 11px;
+    padding-right: 11px;
+    padding-bottom: 13px;
+    padding-left: 11px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    min-width: 60px;
+    min-height: 60px;
+    max-height: 60px;
+}
+
+.interactText {
+    -unity-text-align: middle-left;
+    height: 50px;
+    min-height: 60px;
+    max-height: 60px;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: resource('UI Toolkit/Fonts/Changa-Regular');
+    font-size: 35px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.interactKey {
+    -unity-text-align: middle-center;
+    -unity-font-definition: resource('UI Toolkit/Fonts/ChangaOne-Regular');
+    font-size: 50px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 4px;
+    margin-right: 11px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    padding-top: 11px;
+    padding-right: 11px;
+    padding-bottom: 13px;
+    padding-left: 11px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    min-width: 60px;
+    min-height: 60px;
+    max-height: 60px;
+}

@@ -22,7 +22,6 @@ public static class UIHelper
 
     public static void HideUI(GameObject uiGameObject, string containerName)
     {
-        Debug.Log("3");
         if (uiGameObject == null)
         {
             Debug.LogError($"{uiGameObject.name} is null");
