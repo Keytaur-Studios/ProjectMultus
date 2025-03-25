@@ -1,0 +1,176 @@
+.playerContainer {
+    flex-grow: 1;
+    height: auto;
+    max-height: 120px;
+    padding-top: 25px;
+    min-height: auto;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-top-left-radius: 55px;
+    border-top-right-radius: 55px;
+    border-bottom-right-radius: 55px;
+    border-bottom-left-radius: 55px;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+}
+
+.playerNameText {
+    -unity-font-definition: resource('UI Toolkit/Fonts/Changa-Light');
+    color: rgb(255, 255, 255);
+    font-size: 50px;
+    -unity-text-align: middle-left;
+    width: 812px;
+    padding-left: 20px;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+}
+
+.playerIcon {
+    flex-grow: 1;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: resource('UI Toolkit/Graphics/monkeyIcon');
+    height: 60px;
+    max-width: 70px;
+    width: 70px;
+    margin-left: 10px;
+}
+
+#KickPlayerButton:hover {
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+}
+
+#KickPlayerButton:active {
+    -unity-background-image-tint-color: rgba(111, 0, 0, 0.84);
+}
+
+.button {
+    font-size: 34px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    width: 302px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    background-color: rgba(197, 176, 176, 0);
+    height: 85px;
+    -unity-background-scale-mode: scale-to-fit;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.button:hover {
+    transition-duration: 0.08s;
+    transition-timing-function: ease-in;
+    -unity-background-image-tint-color: rgb(200, 200, 200);
+    scale: 1 1;
+}
+
+.button:active {
+    transition-duration: 0.01s;
+    -unity-background-image-tint-color: rgb(161, 161, 161);
+    scale: 0.95 0.95;
+}
+
+.playerNamePlate {
+    flex-grow: 1;
+    background-image: resource('UI Toolkit/Graphics/playerNamePlate');
+    background-size: 100% 24.46%;
+}
+
+.button {
+    font-size: 34px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    width: 302px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    background-color: rgba(197, 176, 176, 0);
+    height: 85px;
+    -unity-background-scale-mode: scale-to-fit;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.playerNameContainer {
+    flex-grow: 1;
+    align-items: flex-end;
+    width: auto;
+    min-height: 83px;
+    max-height: 140px;
+}
+
+.playerNamePlateText {
+    align-self: center;
+    align-content: center;
+    top: 7%;
+    -unity-font-definition: resource('UI Toolkit/Fonts/Changa-SemiBold');
+    font-size: 42px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-text-align: middle-center;
+    width: 322px;
+}
+
+.editPlayerNameButton {
+    background-image: resource('UI Toolkit/Graphics/editPlayerNameButton');
+    width: 35px;
+    height: 35px;
+    right: 38px;
+    top: 4px;
+}
+
+#KickPlayerButton .button:hover {
+}
+
+.kickPlayerButton {
+    width: 50px;
+    height: 42px;
+    background-image: resource('UI Toolkit/Graphics/xButton');
+    max-width: 50px;
+    max-height: 42px;
+    min-height: 42px;
+}
+
+.pname {
+    padding-left: 20px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    font-size: 50px;
+    width: 812px;
+}
+
+.pcon {
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+}

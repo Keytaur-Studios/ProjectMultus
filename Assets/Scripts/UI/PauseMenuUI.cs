@@ -5,38 +5,44 @@ using UnityEngine.UIElements;
 
 public class PauseMenuUI : MonoBehaviour
 {
-    [SerializeField] GameObject pauseMenu; // PauseMenuUI object on Player
-    private UIDocument pauseMenuUIDocument; // UI Document component on PauseMenuUI
-    private VisualElement pauseMenuContainer; // Container in Visual Tree Asset
+    [SerializeField] GameObject pauseMenuUI; // PauseMenuUI object on Player
+    [SerializeField] GameObject settingsMenuUI;
     private SettingsMenuUI settings;
     private Button resumeButton;
     private Button settingsButton;
     private Button exitButton;
 
     public PlayerInput playerInput;
-    private InputAction pauseAction;
 
     public bool isGamePaused = false;
 
 
-    private void Awake()
+    private void Start()
     {
-        settings = GetComponent<SettingsMenuUI>();
+        settings = GetComponent<SettingsMenuUI>(); 
 
-        // initialize pause menu UI elements
-        pauseMenuUIDocument = pauseMenu.GetComponent<UIDocument>();
-        pauseMenuContainer = pauseMenuUIDocument.rootVisualElement.Q<VisualElement>("PauseMenu");
-        resumeButton = pauseMenuContainer.Q<Button>("ResumeButton");
-        settingsButton = pauseMenuContainer.Q<Button>("SettingsButton");
-        exitButton = pauseMenuContainer.Q<Button>("ExitButton");
+        InitializeUIElements();
+        SubscribeToEvents();
 
         // ensure Pause Menu is hidden by default
-        pauseMenuContainer.style.visibility = Visibility.Hidden; // must not setActive(false), this will break the UI
+        UIHelper.HideUI(pauseMenuUI, "PauseMenu");
+    }
 
-        // Register a callback on a pointer down event
+    private void InitializeUIElements()
+    {
+        resumeButton = UIHelper.GetUIElement<Button>(pauseMenuUI, "ResumeButton");
+        settingsButton = UIHelper.GetUIElement<Button>(pauseMenuUI, "SettingsButton");
+        exitButton = UIHelper.GetUIElement<Button>(pauseMenuUI, "ExitButton");
+    }
+
+    private void SubscribeToEvents()
+    {
         resumeButton.clicked += OnResumeButtonClick;
         settingsButton.clicked += OnSettingsButtonClick;
         exitButton.clicked += OnExitButtonClick;
+
+        // When exiting settings menu, return to pause menu
+        SettingsMenuUI.LeaveSettingsEvent += DisplayPauseMenu;
     }
 
     public void TogglePauseMenu()
@@ -56,21 +62,31 @@ public class PauseMenuUI : MonoBehaviour
         resumeButton.clicked -= OnResumeButtonClick;
         settingsButton.clicked -= OnSettingsButtonClick;
         exitButton.clicked -= OnExitButtonClick;
+
+        SettingsMenuUI.LeaveSettingsEvent -= DisplayPauseMenu;
     }
 
 
     // Displays Pause Menu UI
     public void DisplayPauseMenu()
     {
-        pauseMenuContainer.style.visibility = Visibility.Visible;
-        isGamePaused = true;
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        Debug.Log("2");
+        if (pauseMenuUI != null)
+        {
+            UIHelper.ShowUI(pauseMenuUI, "PauseMenu");
+            isGamePaused = true;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Debug.LogError("PauseMenuUI is null when trying to display it.");
+        }
     }
 
     // Hides Pause Menu UI
     public void Resume()
     {
-        pauseMenuContainer.style.visibility = Visibility.Hidden;
+        UIHelper.HideUI(pauseMenuUI, "PauseMenu");
         settings.CloseSettingsMenu();
         isGamePaused = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -79,7 +95,7 @@ public class PauseMenuUI : MonoBehaviour
     private void OnSettingsButtonClick()
     {
         settings.OpenSettingsMenu();
-        pauseMenuContainer.style.visibility = Visibility.Hidden;
+        UIHelper.HideUI(pauseMenuUI, "PauseMenu");
     }
 
     private void OnResumeButtonClick()

@@ -39,11 +39,6 @@ public class LobbyHandler : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        //OnGameStarted += DisableUI_OnStartGame;
-    }
-
     private void DisableUI_OnStartGame(object sender, EventArgs e)
     {
         GameObject.Find("Canvas").SetActive(false);
@@ -60,7 +55,10 @@ public class LobbyHandler : MonoBehaviour
         AuthenticationService.Instance.SignedIn += () => {
             // do nothing
             Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId + " " + playerName);
+            if (PlayerNameManager.Instance.thisPlayerId == null)
+                Debug.Log("here");
             PlayerNameManager.Instance.thisPlayerId = AuthenticationService.Instance.PlayerId;
+            Debug.Log("here?");
             //RefreshLobbyList();
         };
 
@@ -215,6 +213,22 @@ public class LobbyHandler : MonoBehaviour
         OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
     }
 
+    public async void KickPlayer(string playerId)
+    {
+        if (IsLobbyHost())
+        {
+            try
+            {
+                await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, playerId);
+
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
+    }
+
     public async void LeaveLobby()
     {
         if (joinedLobby != null)
@@ -295,7 +309,7 @@ public class LobbyHandler : MonoBehaviour
 
                 joinedLobby = lobby;
 
-                LobbyUI.Instance.UnsubscribeUI();
+                LobbyMenuUI.Instance.UnsubscribeUI();
 
                 SceneManager.Instance.
                     LoadScene(sceneName);

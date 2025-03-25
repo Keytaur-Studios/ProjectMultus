@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -8,17 +9,15 @@ using UnityEngine.UIElements;
 
 public class SettingsMenuUI : MonoBehaviour
 {
-    [SerializeField] GameObject settingsMenu; // SettingsMenuUI object on Player
+    [SerializeField] GameObject settingsMenuUI;
     [SerializeField] AudioMixer audioMixer;
-    private UIDocument settingsMenuUIDocument; // UI Document component on SettingsMenuUI
-    private VisualElement settingsMenuContainer; // Container in Visual Tree Asset
+
     private PlayerLook look; // For mouse sensitivity
-    private PauseMenuUI pauseMenuUI;
 
     // Tab elements
     private VisualElement graphicsTabContent, audioTabContent, controlsTabContent;
     private Button graphicsTabButton, audioTabButton, controlsTabButton;
-    private VisualElement currentTabContent; // 1 Graphics 2 Audio 3 Controls
+    private VisualElement currentTabContent; 
     private VisualElement currentTabButton;
 
 
@@ -29,126 +28,123 @@ public class SettingsMenuUI : MonoBehaviour
     private DropdownField resolutionDropdown, graphicsQualityDropdown;
     private Button applyButton, backButton, resetButton;
 
-    // Most recently applied values
-    private float savedMouseSensitivity;
-    private float savedMasterVolume;
-    private float savedMusicVolume;
-    private float savedSfxVolume;
-    private bool savedFullscreen;
-    private int savedResolution;
-    private int savedGraphicsQuality;
-
     // Default graphics (set when player loads into scene, used to reset changes back to default)
     private int graphicsQualityDefault, resolutionDefault;
 
-    private bool isApplied;
+    public static event Action LeaveSettingsEvent;
 
-    private void Awake()
+    private void Start()
     {
-        look = GetComponent<PlayerLook>();
-        pauseMenuUI = GetComponent<PauseMenuUI>();
+        look = GetComponent<PlayerLook>(); // NOTE: this will be NULL if settings menu is accessed from main menu
+
         // audioMixer = GetComponent<AudioMixer>(); // no audiomixer for now
 
         InitUIElements();
-        InitDisplayResolutions();
+        LoadSettings(); // Load settings
+        InitFullScreen();
+        InitDisplayResolutions(); 
         InitQualitySettings();
-        SaveSettings();
 
-        // Register Button Callbacks
-        backButton.clicked += OnBackToPause;
-        applyButton.clicked += OnApply;
-        resetButton.clicked += OnReset;
-        graphicsTabButton.clicked += openGraphicsTab;
-        audioTabButton.clicked += openAudioTab;
-        controlsTabButton.clicked += openControlsTab;
-       
+        ApplySettings(); // Apply loaded settings
+        SubscribeToEvents();
 
+        HideUIElements();
+
+        // ensure Settings Menu is hidden by default
+        UIHelper.HideUI(settingsMenuUI, "SettingsMenu");
+        UIHelper.HideUI(currentTabContent);
     }
 
     private void OnDisable()
     {
-        backButton.clicked -= OnBackToPause;
-        applyButton.clicked -= OnApply;
-        resetButton.clicked -= OnReset;
-        graphicsTabButton.clicked -= openGraphicsTab;
-        audioTabButton.clicked -= openAudioTab;
-        controlsTabButton.clicked -= openControlsTab;
+        UnsubscribeToEvents();
     }
+
 
     private void InitUIElements()
     {
-        settingsMenuUIDocument = settingsMenu.GetComponent<UIDocument>();
-        settingsMenuContainer = settingsMenuUIDocument.rootVisualElement.Q<VisualElement>("SettingsMenu");
+        // Tab buttons
+        graphicsTabButton = UIHelper.GetUIElement<Button>(settingsMenuUI, "GraphicsTabButton");
+        audioTabButton = UIHelper.GetUIElement<Button>(settingsMenuUI, "AudioTabButton");
+        controlsTabButton = UIHelper.GetUIElement<Button>(settingsMenuUI, "ControlsTabButton");
 
-        graphicsTabButton = settingsMenuContainer.Q<Button>("GraphicsTabButton");
-        audioTabButton = settingsMenuContainer.Q<Button>("AudioTabButton");
-        controlsTabButton = settingsMenuContainer.Q<Button>("ControlsTabButton");
+        // Tab Content Containers
+        graphicsTabContent = UIHelper.GetUIElement<VisualElement>(settingsMenuUI, "GraphicsTabContent");
+        audioTabContent = UIHelper.GetUIElement<VisualElement>(settingsMenuUI, "AudioTabContent");
+        controlsTabContent = UIHelper.GetUIElement<VisualElement>(settingsMenuUI, "ControlsTabContent");
 
-        graphicsTabContent = settingsMenuContainer.Q<VisualElement>("GraphicsTabContent");
-        audioTabContent = settingsMenuContainer.Q<VisualElement>("AudioTabContent");
-        controlsTabContent = settingsMenuContainer.Q<VisualElement>("ControlsTabContent");
+        // Audio Controls
+        mouseSensitivitySlider = UIHelper.GetUIElement<Slider>(settingsMenuUI, "MouseSensitivitySlider");
 
-        mouseSensitivitySlider = settingsMenuContainer.Q<Slider>("MouseSensitivitySlider");
+        masterVolumeSlider = UIHelper.GetUIElement<Slider>(settingsMenuUI, "MasterVolumeSlider");
+        musicVolumeSlider = UIHelper.GetUIElement<Slider>(settingsMenuUI, "MusicVolumeSlider");
+        sfxVolumeSlider = UIHelper.GetUIElement<Slider>(settingsMenuUI, "SFXVolumeSlider");
 
-        masterVolumeSlider = settingsMenuContainer.Q<Slider>("MasterVolumeSlider");
-        musicVolumeSlider = settingsMenuContainer.Q<Slider>("MusicVolumeSlider");
-        sfxVolumeSlider = settingsMenuContainer.Q<Slider>("SFXVolumeSlider");
+        // Graphics Controls
+        fullscreenToggle = UIHelper.GetUIElement<Toggle>(settingsMenuUI, "FullscreenToggle");
+        resolutionDropdown = UIHelper.GetUIElement<DropdownField>(settingsMenuUI, "DisplayResolutionDropdown");
+        graphicsQualityDropdown = UIHelper.GetUIElement<DropdownField>(settingsMenuUI, "GraphicsQualityDropdown");
 
-        fullscreenToggle = settingsMenuContainer.Q<Toggle>("FullscreenToggle");
-        resolutionDropdown = settingsMenuContainer.Q<DropdownField>("DisplayResolutionDropdown");
-        graphicsQualityDropdown = settingsMenuContainer.Q<DropdownField>("GraphicsQualityDropdown");
-        
-        applyButton = settingsMenuContainer.Q<Button>("ApplyButton");
-        backButton = settingsMenuContainer.Q<Button>("BackButton");
-        resetButton = settingsMenuContainer.Q<Button>("ResetButton");
+        // Apply, Reset, Back
+        applyButton = UIHelper.GetUIElement<Button>(settingsMenuUI, "ApplyButton");
+        backButton = UIHelper.GetUIElement<Button>(settingsMenuUI, "BackButton");
+        resetButton = UIHelper.GetUIElement<Button>(settingsMenuUI, "ResetButton");
 
-        // ensure Settings Menu is hidden by default
-        settingsMenuContainer.style.visibility = Visibility.Hidden;
-
-        // first tab is graphics, set up UI to display graphics tab opened
-        currentTabContent = graphicsTabContent;
+        // first tab is graphics, set up UI to display graphics tab Opened
         currentTabButton = graphicsTabButton;
-        currentTabButton.style.minWidth = 309;
-        currentTabButton.style.minHeight = 95;
-        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTabActive");
+        currentTabContent = graphicsTabContent;
+        OpenGraphicsTab();
 
         // hide all tabs other than graphics (ensure only one tab content is showing at a time)
-        audioTabContent.style.visibility = Visibility.Hidden;
-        controlsTabContent.style.visibility = Visibility.Hidden;
-
-    }
-    
-    public void OpenSettingsMenu()
-    {
-        settingsMenuContainer.style.visibility = Visibility.Visible;
-        currentTabContent.style.visibility = Visibility.Visible;
+        UIHelper.HideUI(audioTabContent);
+        UIHelper.HideUI(controlsTabContent);
 
     }
 
-    public void CloseSettingsMenu()
+
+    private void SubscribeToEvents()
     {
-        settingsMenuContainer.style.visibility = Visibility.Hidden;
+        // Register Button Callbacks
+        backButton.clicked += ExitSettings;
+        applyButton.clicked += ApplySettings;
+        resetButton.clicked += ResetToDefault;
+        graphicsTabButton.clicked += OpenGraphicsTab;
+        audioTabButton.clicked += OpenAudioTab;
+        controlsTabButton.clicked += OpenControlsTab;
 
-        // reset menu back to graphics tab
-        openGraphicsTab();
-        currentTabContent.style.visibility = Visibility.Hidden;
-
-        if (!IsChangesApplied())
+        if (MainMenuUI.Instance != null)
         {
-            DiscardChanges();
+            Debug.Log("mainmenu isnt null");
+            MainMenuUI.OnOpenSettingsFromMainMenu += OpenSettingsMenu;
         }
-        
-
     }
 
-    private void OnBackToPause()
+
+    private void UnsubscribeToEvents()
     {
+        backButton.clicked -= ExitSettings;
+        applyButton.clicked -= ApplySettings;
+        resetButton.clicked -= ResetToDefault;
+        graphicsTabButton.clicked -= OpenGraphicsTab;
+        audioTabButton.clicked -= OpenAudioTab;
+        controlsTabButton.clicked -= OpenControlsTab;
+
+        if (MainMenuUI.Instance != null)
+        {
+            MainMenuUI.OnOpenSettingsFromMainMenu -= OpenSettingsMenu;
+        }
+    }
+
+
+    private void ExitSettings()
+    {
+        LeaveSettingsEvent?.Invoke();
         CloseSettingsMenu();
-        pauseMenuUI.DisplayPauseMenu();
 
     }
 
-    private void OnApply()
+
+    private void ApplySettings()
     {
         QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true); // apply graphics quality
         ApplyResolution();
@@ -157,7 +153,8 @@ public class SettingsMenuUI : MonoBehaviour
         SaveSettings();
     }
 
-    private void OnReset()
+
+    private void ResetToDefault()
     {
         mouseSensitivitySlider.value = 30; // 30f is the value initialized in PlayerMotor.cs 
         masterVolumeSlider.value = 100; // full volumes are default
@@ -167,51 +164,128 @@ public class SettingsMenuUI : MonoBehaviour
         resolutionDropdown.index = resolutionDefault;
         graphicsQualityDropdown.index = graphicsQualityDefault; 
     }
-
-    private void switchTab(VisualElement newTabContent, VisualElement newTabButton, String imageUrl)
+    public void OpenSettingsMenu()
     {
-        currentTabContent.style.visibility = Visibility.Hidden;
-        currentTabButton.style.minWidth = 125;
-        currentTabButton.style.minHeight = 32;
-        currentTabButton.style.maxWidth = 205;
-        currentTabButton.style.maxHeight = 32;
-        newTabButton.style.backgroundImage = Resources.Load<Texture2D>(imageUrl);
-        newTabContent.style.visibility = Visibility.Visible;
-        newTabButton.style.minWidth = 309;
-        newTabButton.style.minHeight = 95;
-        currentTabContent = newTabContent;
-        currentTabButton = newTabButton;
+        UIHelper.ShowUI(settingsMenuUI, "SettingsMenu");
+        UIHelper.ShowUI(currentTabContent);
     }
 
-    private void openGraphicsTab()
-    {
-        switchTab(graphicsTabContent, graphicsTabButton, "UI Toolkit/Graphics/graphicsTabActive");
-        audioTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/audioTab");
-        controlsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/controlsTab");
 
+    public void CloseSettingsMenu()
+    {
+        Debug.Log("1");
+        if (settingsMenuUI == null)
+        {
+            Debug.LogError("settingsMenuUI is null");
+        }
+        UIHelper.HideUI(settingsMenuUI, "SettingsMenu");
+        OpenGraphicsTab();
+        UIHelper.HideUI(currentTabContent);
+
+        if (!IsChangesApplied())
+        {
+            DiscardChanges();
+        }
     }
 
-    private void openAudioTab()
+    private void HideUIElements()
     {
-        switchTab(audioTabContent, audioTabButton, "UI Toolkit/Graphics/audioTabActive");
-        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTab");
-        controlsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/controlsTab");
-
+        UIHelper.HideUI(settingsMenuUI, "SettingsMenu");
+        UIHelper.HideUI(currentTabContent);
     }
 
-    private void openControlsTab()
+    private void InitDisplayResolutions()
     {
-        switchTab(controlsTabContent, controlsTabButton, "UI Toolkit/Graphics/controlsTabActive");
-        graphicsTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/graphicsTab");
-        audioTabButton.style.backgroundImage = Resources.Load<Texture2D>("UI Toolkit/Graphics/audioTab");
+        // initialize the resolution drop down menu options
+        resolutionDropdown.choices = Screen.resolutions
+            .Select(resolution => $"{resolution.width}x{resolution.height}")
+            .ToList();
 
+        // Check if player already has a saved resolution preference
+        if (PlayerPrefs.GetInt("DisplayResolution", -1) == -1)
+        {
+            // Use current screen resolution as default if no saved preference
+            resolutionDropdown.index = Screen.resolutions
+                    .Select((resolution, index) => (resolution, index))
+                    .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height)
+                    .index;
+
+            // save this as the default setting
+            resolutionDefault = resolutionDropdown.index;
+        }
+        else
+        {
+            // Load player's saved resolution
+            resolutionDropdown.index = PlayerPrefs.GetInt("DisplayResolution");
+
+            // Set the default to the player's current screen resolution in case of reset
+            resolutionDefault = Screen.resolutions
+                    .Select((resolution, index) => (resolution, index))
+                    .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height)
+                    .index;
+        }
+
+        ApplyResolution();
+        
+    }
+
+    private void InitFullScreen()
+    {
+        if (PlayerPrefs.GetInt("FullscreenMode", -1) == -1)
+        {
+            // do nothing if no save preference
+        }
+        else
+        {
+            // use player preference
+            Screen.fullScreenMode = PlayerPrefs.GetInt("FullscreenMode") == 1 ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed;
+        }
+
+        // set value in menu
+        fullscreenToggle.value = (Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen);
+    }
+
+
+    private void InitQualitySettings()
+    {
+        // initialize the graphics dropdown options with UnityEngine presets (Performant, Balanced, High Fidelity) 
+        graphicsQualityDropdown.choices = QualitySettings.names.ToList();
+
+        // Check if player already has a saved quality preference
+        if (PlayerPrefs.GetInt("GraphicsQuality", -1) != -1)
+            // Initialize with saved quality
+            graphicsQualityDropdown.index = PlayerPrefs.GetInt("GraphicsQuality", -1); 
+        else
+        {
+            // Initialized with default quality if no preference
+            graphicsQualityDropdown.index = QualitySettings.GetQualityLevel();
+        }
+
+        graphicsQualityDefault = graphicsQualityDropdown.index;
+    }
+
+
+    private void ApplyResolution()
+    {
+        var newResolution = Screen.resolutions[resolutionDropdown.index];
+        Screen.SetResolution(newResolution.width, newResolution.height, true);
     }
 
     private void SetLookSensitivity()
     {
-        look.xSensitivity = mouseSensitivitySlider.value;
-        look.ySensitivity = mouseSensitivitySlider.value;
+        if (look != null)
+        {
+            look.xSensitivity = mouseSensitivitySlider.value;
+            look.ySensitivity = mouseSensitivitySlider.value;
+        }
+        else
+        {
+            // if look is null, player is inside the main menu
+            // in this case do nothing, look sensitivity will be applied when player loads into a game
+        }
+
     }
+
 
     private void ToggleFullscreen()
     {
@@ -225,80 +299,94 @@ public class SettingsMenuUI : MonoBehaviour
         }
     }
 
-    private void ApplyResolution()
-    {
-        var newResolution = Screen.resolutions[resolutionDropdown.index];
-        Screen.SetResolution(newResolution.width, newResolution.height, true);
-    }
-
-    private void InitDisplayResolutions()
-    {
-        // initialize the resolution drop down menu options
-        resolutionDropdown.choices = Screen.resolutions.Select(resolution => $"{resolution.width}x{resolution.height}").ToList();
-        
-        // display the player's default resolution as the selected value
-        resolutionDropdown.index = Screen.resolutions
-                .Select((resolution, index) => (resolution, index))
-                .First((value) => value.resolution.width == Screen.currentResolution.width && value.resolution.height == Screen.currentResolution.height) 
-                .index; 
-        
-        // save this as the default setting
-        resolutionDefault = resolutionDropdown.index;
-        
-    }
-
-    private void InitQualitySettings()
-    {
-        // initialize the graphics dropdown options with UnityEngine presets (Performant, Balanced, High Fidelity) 
-        graphicsQualityDropdown.choices = QualitySettings.names.ToList();
-        
-        // display the player's saved quality level as the selected value
-        graphicsQualityDropdown.index = QualitySettings.GetQualityLevel();
-        
-        // save this as the default setting
-        graphicsQualityDefault = graphicsQualityDropdown.index;
-    }
 
     // Reverts settings to "saved" settings
     private void DiscardChanges()
     {
-        mouseSensitivitySlider.value = savedMouseSensitivity;
-        masterVolumeSlider.value = savedMasterVolume;
-        musicVolumeSlider.value = savedMusicVolume;
-        sfxVolumeSlider.value = savedSfxVolume;
-        fullscreenToggle.value = savedFullscreen;
+        LoadSettings();
 
-        resolutionDropdown.index = savedResolution;
         ApplyResolution();
-
-        graphicsQualityDropdown.index = savedGraphicsQuality;
         QualitySettings.SetQualityLevel(graphicsQualityDropdown.index, true);
     }
+
 
     // Saves all current settings values
     private void SaveSettings()
     {
-        savedMouseSensitivity = mouseSensitivitySlider.value;
-        savedMasterVolume = masterVolumeSlider.value;
-        savedMusicVolume = musicVolumeSlider.value;
-        savedSfxVolume = sfxVolumeSlider.value;
-        savedFullscreen = fullscreenToggle.value;
-        savedResolution = resolutionDropdown.index;
-        savedGraphicsQuality = graphicsQualityDropdown.index;
+        PlayerPrefs.SetFloat("MouseSensitivity", mouseSensitivitySlider.value);
+
+        PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
+        PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
+
+        PlayerPrefs.SetInt("FullscreenMode", (fullscreenToggle.value ? 1 : 0)); // 1 if fullscreen enabled : 0  if disabled (i.e., windowed mode)
+        PlayerPrefs.SetInt("DisplayResolution", resolutionDropdown.index);
+        PlayerPrefs.SetInt("GraphicsQuality", graphicsQualityDropdown.index);
     }
+
+
+    private void LoadSettings()
+    {
+        mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
+        
+        masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+        sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+
+        fullscreenToggle.value = (PlayerPrefs.GetInt("FullscreenMode") == 1) ? true : false; // 1 if fullscreen enabled : 0  if disabled (i.e., windowed mode)
+        resolutionDropdown.index = PlayerPrefs.GetInt("DisplayResolution");
+        graphicsQualityDropdown.index = PlayerPrefs.GetInt("GraphicsQuality");
+
+
+    }
+
 
     // returns true if any settings have been modified without applying
     private bool IsChangesApplied()
     {
-        if (savedMouseSensitivity != mouseSensitivitySlider.value ||
-            savedMasterVolume != masterVolumeSlider.value ||
-            savedMusicVolume != musicVolumeSlider.value ||
-            savedSfxVolume != sfxVolumeSlider.value ||
-            savedFullscreen != fullscreenToggle.value ||
-            savedResolution != resolutionDropdown.index ||
-            savedGraphicsQuality != graphicsQualityDropdown.index)
+        if (PlayerPrefs.GetFloat("MouseSensitivity") != mouseSensitivitySlider.value ||
+            PlayerPrefs.GetFloat("MasterVolume") != masterVolumeSlider.value ||
+            PlayerPrefs.GetFloat("MusicVolume") != musicVolumeSlider.value ||
+            PlayerPrefs.GetFloat("SFXVolume") != sfxVolumeSlider.value ||
+            PlayerPrefs.GetInt("FullscreenMode") == 1 ? true : false != fullscreenToggle.value ||
+            PlayerPrefs.GetInt("DisplayResolution") != resolutionDropdown.index ||
+            PlayerPrefs.GetInt("GraphicsQuality") != graphicsQualityDropdown.index)
             return false;
         else
             return true;
+    }
+
+
+    private void SwitchTab(VisualElement newTabContent, Button newTabButton, string activeImage, Button inactiveButton1, string inactiveImage1, Button inactiveButton2, string inactiveImage2)
+    {
+        currentTabContent.style.visibility = Visibility.Hidden;
+        currentTabButton.style.minWidth = 125;
+        currentTabButton.style.minHeight = 32;
+
+        newTabButton.style.backgroundImage = Resources.Load<Texture2D>(activeImage);
+        newTabButton.style.minWidth = 309;
+        newTabButton.style.minHeight = 95;
+        newTabContent.style.visibility = Visibility.Visible;
+
+        inactiveButton1.style.backgroundImage = Resources.Load<Texture2D>(inactiveImage1);
+        inactiveButton2.style.backgroundImage = Resources.Load<Texture2D>(inactiveImage2);
+
+        currentTabContent = newTabContent;
+        currentTabButton = newTabButton;
+    }
+
+    private void OpenGraphicsTab()
+    {
+        SwitchTab(graphicsTabContent, graphicsTabButton, "UI Toolkit/Graphics/graphicsTabActive", audioTabButton, "UI Toolkit/Graphics/audioTab", controlsTabButton, "UI Toolkit/Graphics/controlsTab");
+    }
+
+    private void OpenAudioTab()
+    {
+        SwitchTab(audioTabContent, audioTabButton, "UI Toolkit/Graphics/audioTabActive", graphicsTabButton, "UI Toolkit/Graphics/graphicsTab", controlsTabButton, "UI Toolkit/Graphics/controlsTab");
+    }
+
+    private void OpenControlsTab()
+    {
+        SwitchTab(controlsTabContent, controlsTabButton, "UI Toolkit/Graphics/controlsTabActive", graphicsTabButton, "UI Toolkit/Graphics/graphicsTab", audioTabButton, "UI Toolkit/Graphics/audioTab");
     }
 }

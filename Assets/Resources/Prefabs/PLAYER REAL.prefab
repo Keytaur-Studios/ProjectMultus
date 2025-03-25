@@ -767,7 +767,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ada88acacc1224ca8e1ea261d7d931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 6758130916481314891}
+  pauseMenuUI: {fileID: 6758130916481314891}
+  settingsMenuUI: {fileID: 4931869162932432441}
   isGamePaused: 0
 --- !u!114 &3104725269615691416
 MonoBehaviour:
@@ -781,7 +782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffd028785ce02546bbe2eee8a560499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsMenu: {fileID: 4931869162932432441}
+  settingsMenuUI: {fileID: 4931869162932432441}
   audioMixer: {fileID: 0}
 --- !u!1 &6468448134106812343
 GameObject:

@@ -15,9 +15,10 @@ public class PlayerNameManager : MonoBehaviour
 
     //public NetworkList<ulong, string> playerNamesByClientNetwork = 
 
-    private void Start()
+    
+    private void Awake()
     {
-        Instance = this;
+        Instance = this; //must load before Authenticate() in LobbyHandler.cs
     }
 
     public void UpdateNames(Lobby lobby)
