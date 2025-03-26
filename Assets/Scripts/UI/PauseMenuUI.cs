@@ -70,7 +70,6 @@ public class PauseMenuUI : MonoBehaviour
     // Displays Pause Menu UI
     public void DisplayPauseMenu()
     {
-        Debug.Log("2");
         if (pauseMenuUI != null)
         {
             UIHelper.ShowUI(pauseMenuUI, "PauseMenu");

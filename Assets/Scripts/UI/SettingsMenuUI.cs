@@ -173,7 +173,6 @@ public class SettingsMenuUI : MonoBehaviour
 
     public void CloseSettingsMenu()
     {
-        Debug.Log("1");
         if (settingsMenuUI == null)
         {
             Debug.LogError("settingsMenuUI is null");
