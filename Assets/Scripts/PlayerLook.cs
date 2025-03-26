@@ -26,6 +26,8 @@ public class PlayerLook : NetworkBehaviour
     public GameObject lastInteracted;
     public LayerMask targetMask;
     public string interactableHoverText;
+    public bool holding = false;
+    public GameObject heldObj;
 
     public GameObject hand;
     
@@ -49,12 +51,6 @@ public class PlayerLook : NetworkBehaviour
         }
     }
 
-    //void FixedUpdate()
-    //{
-    //    if (target != lastInteracted && lastInteracted != null)
-    //        lastInteracted.GetComponent<StopInteract();
-    //}
-
     public void ProcessLook(Vector2 input)
     {
         float mouseX = input.x;
@@ -74,7 +70,7 @@ public class PlayerLook : NetworkBehaviour
         transform.localRotation = Quaternion.Euler(0, rotation.x, 0);
 
         // Check if looking at Interactable Object
-        if (lastInteracted == null)
+        if (!holding)
             CheckForTarget();
         else
         {
@@ -112,77 +108,56 @@ public class PlayerLook : NetworkBehaviour
 
         if (hitInfo.transform.gameObject.CompareTag("Throwable Object"))
             interactableHoverText = hitInfo.transform.gameObject.GetComponent<ThrowableObject>().GetText();
-        //interactableHoverText = hitInfo.transform.gameObject.GetComponent<InteractableObjectInfo>().GetText();
 
         // If player is hovering over an Interactable Object, then trigger event
         OnInteractableHoverEnter?.Invoke(interactableHoverText);
 
         target = hitInfo.transform.gameObject;
-        //target.EnableText();
-
-        //if (target != lastInteracted && lastInteracted != null)
-            //lastInteracted.StopInteract();
     }
 
     public void SecondaryInteractHandler()
     {
         if (!IsOwner) return;
 
-        if (lastInteracted == null) return;
+        if (!holding) return;
 
-        if (lastInteracted.CompareTag("Throwable Object"))
-            lastInteracted.GetComponent<ThrowableObject>().Throw();
+        if (heldObj.CompareTag("Throwable Object"))
+            heldObj.GetComponent<ThrowableObject>().Throw();
 
-
-        lastInteracted = null;
+        holding = false;
+        heldObj = null;
     }
    
     public void InteractHandler()
     {
         if (!IsOwner) return;
 
-        if (lastInteracted != null)
+        if (holding)
         {
             StopInteract();
-            //return;
+            return;
         }
 
         if (target == null) return;
 
-        if (target.CompareTag("Interactable Object"))
-            Interact();
+        Interact();
 
-        else if (target.CompareTag("Throwable Object"))
-        {
-            if (!target.GetComponent<ThrowableObject>().GetOwned())
-                Interact();
-            else
-                StopInteract();
-        }
     }
 
     public void Interact()
     {
-        if (target == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
-            return;
-
         if (target.CompareTag("Interactable Object"))
             target.GetComponent<InteractableObject>().Interact(gameObject);
-
-        if (target.CompareTag("Throwable Object"))
+        else if (target.CompareTag("Throwable Object"))
             target.GetComponent<ThrowableObject>().PickUp(gameObject);
-
-        lastInteracted = target;
     }
 
     public void StopInteract()
     {
-        if (lastInteracted == null || (!IsOwner && motor.online == PlayerMotor.OnlineState.online))
-            return;
+        if (heldObj.CompareTag("Throwable Object"))
+            heldObj.GetComponent<ThrowableObject>().Drop();
 
-        if (lastInteracted.CompareTag("Throwable Object"))
-            lastInteracted.GetComponent<ThrowableObject>().Drop();
-
-        lastInteracted = null;
+        holding = false;
+        heldObj = null;
     }
 }

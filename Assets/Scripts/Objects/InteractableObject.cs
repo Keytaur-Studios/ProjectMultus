@@ -2,7 +2,7 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
-abstract public class InteractableObject : NetworkBehaviour
+abstract public class InteractableObject : MonoBehaviour
 {
     public bool isPressed;
     [SerializeField]
