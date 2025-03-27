@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ThrowableObject.unity
     guid: 1931687f1a77dc94fb4122aa761a73e9
+  - enabled: 1
+    path: Assets/Room1.unity
+    guid: 88ca1e9bb3c28074aa4c4d5dc3b277a1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   m_UseUCBPForAssetBundles: 0

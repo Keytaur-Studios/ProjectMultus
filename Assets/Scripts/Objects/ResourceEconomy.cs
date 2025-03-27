@@ -10,7 +10,7 @@ public class ResourceEconomy : NetworkBehaviour
 {
     public static ResourceEconomy Instance { get; private set; }
 
-    private Dictionary<int, int> resources = new Dictionary<int, int>();
+    private Dictionary<int, int> resources = new();
     [SerializeField]
     private ResourceDictionary resDict;
 
@@ -26,6 +26,12 @@ public class ResourceEconomy : NetworkBehaviour
         // Testing with banana
         resources[0] = 3;
         OnResourceCountChange?.Invoke(0, resources[0]);
+        resources[1] = 3;
+        OnResourceCountChange?.Invoke(1, resources[1]);
+        resources[2] = 3;
+        OnResourceCountChange?.Invoke(2, resources[2]);
+        resources[3] = 3;
+        OnResourceCountChange?.Invoke(3, resources[3]);
     }
 
     public int ResourceCount(int id)

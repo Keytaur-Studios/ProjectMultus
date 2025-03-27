@@ -34,8 +34,8 @@ public class InputManager : MonoBehaviour
 
         EnablePlayerControls();
 
-        MinigameBase.EnterMiniGame += MinigameEnter;
-        MinigameBase.ExitMiniGame += MinigameExit;
+        //MinigameBase.EnterMiniGame += MinigameEnter;
+        //MinigameBase.ExitMiniGame += MinigameExit;
     }
 
     private GameObject currentMinigame;
@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour
         DisableAllControls();
         EnableMinigameControls();
         currentMinigame = minigame;
-        mini.Leave.performed += ctx => minigame.GetComponent<MinigameBase>().Leave();
+        //mini.Leave.performed += ctx => minigame.GetComponent<MinigameBase>().Leave();
     }
 
     void MinigameExit()

@@ -81,12 +81,12 @@ public class PlayerLook : NetworkBehaviour
 
     public void CheckForTarget()
     {
-        bool isHit = Physics.Raycast(cam.transform.position, cam.transform.rotation * Vector3.forward, out RaycastHit hitInfo, 5f, targetMask);
+        bool isHit = Physics.Raycast(cam.transform.position, cam.transform.rotation * Vector3.forward, out RaycastHit hitInfo, 10f, targetMask);
 
         if (isHit)
             Debug.DrawLine(cam.transform.position, hitInfo.point, Color.red);
         else
-            Debug.DrawLine(cam.transform.position, cam.transform.position + (cam.transform.rotation * Vector3.forward * 5f), Color.red);
+            Debug.DrawLine(cam.transform.position, cam.transform.position + (cam.transform.rotation * Vector3.forward * 10f), Color.red);
 
         if (!isHit)
         {
