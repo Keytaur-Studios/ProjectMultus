@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class MinigameEconomy : MonoBehaviour
+public class MinigameEconomy : NetworkBehaviour
 {
     public static MinigameEconomy Instance { get; private set; }
 
@@ -20,6 +21,12 @@ public class MinigameEconomy : MonoBehaviour
     }
 
     public void DebugPrintComplete(int mID)
+    {
+        DebugPrintCompleteClientRpc(mID);
+    }
+
+    [ClientRpc]
+    public void DebugPrintCompleteClientRpc(int mID)
     {
         Debug.Log($"Minigame Complete {mID}");
     }
