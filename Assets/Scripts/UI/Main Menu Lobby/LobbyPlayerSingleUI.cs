@@ -55,7 +55,7 @@ public class LobbyPlayerSingleUI : MonoBehaviour {
 
     public void UpdatePlayer(Player player) {
         this.player = player;
-        playerNameText = player.Data[LobbyManager.KEY_PLAYER_NAME].Value;
+        playerNameText = player.Data[LobbyHandler.KEY_PLAYER_NAME].Value;
     }
 
     public string GetPlayerName() {  return playerNameText; }

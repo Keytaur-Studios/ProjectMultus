@@ -21,9 +21,17 @@ public class FuelMixing : NetworkBehaviour
     private int[] validChosenResources = { 0, 1, 2, 3 };
 
     public bool gameActive = false;
+    public bool allowItems = false;
 
     public static event Action OnFuelMixFail;
+    public static event Action OnFuelMixComplete;
+    public static event Action OnFuelMixItemCorrect;
     public static event Action<int[]> OnFuelMixStart;
+
+    private void Start()
+    {
+        FuelMixingDisplay.OnAllImagesDisplayed += AllowItemsServerRpc;
+    }
 
     public void StartGame()
     {
@@ -34,7 +42,6 @@ public class FuelMixing : NetworkBehaviour
     public void StartGameServerRpc()
     {
         Debug.Log("GameStarted");
-        gameActive = true;
         for (int i = 0; i < difficulty; i++)
         {
             int n = UnityEngine.Random.Range(0, validChosenResources.Length);
@@ -45,9 +52,29 @@ public class FuelMixing : NetworkBehaviour
         OnFuelMixStart?.Invoke(comboAsArray);
     }
 
-    private void GenerateList()
+    [ServerRpc(RequireOwnership = false)]
+    public void AllowItemsServerRpc()
     {
+        allowItems = true;
+    }
 
+    private void ItemCorrect()
+    {
+        correctResources++;
+        OnFuelMixItemCorrect?.Invoke();
+        if (correctResources == difficulty)
+        {
+            GetComponent<MinigameBase>().SetPercent(100);
+            OnFuelMixComplete?.Invoke();
+        }
+    }
+
+    private void Fail()
+    {
+        correctResources = 0;
+        gameActive = false;
+        resourceRecipeIDs.Clear();
+        OnFuelMixFail?.Invoke();
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -56,26 +83,17 @@ public class FuelMixing : NetworkBehaviour
 
         if (!collision.gameObject.CompareTag("Throwable Object")) return;
 
-        if (!gameActive)
+        if (!allowItems)
         {
             collision.gameObject.GetComponent<NetworkObject>().Despawn();
             return;
         }
 
         if (collision.gameObject.GetComponent<Resource>().GetResourceID()
-            == resourceRecipeIDs[correctResources])
-        {
-            correctResources++;
-            if (correctResources == difficulty)
-                GetComponent<MinigameBase>().SetPercent(100);
-        }
+                == resourceRecipeIDs[correctResources])
+            ItemCorrect();
         else
-        {
-            correctResources = 0;
-            gameActive = false;
-            resourceRecipeIDs.Clear();
-            OnFuelMixFail?.Invoke();
-        }
+            Fail();
 
         collision.gameObject.GetComponent<NetworkObject>().Despawn();
     }

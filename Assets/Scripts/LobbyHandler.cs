@@ -6,7 +6,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using static LobbyManager;
 using NUnit.Framework.Internal;
 using Unity.Netcode;
 
@@ -15,6 +14,7 @@ public class LobbyHandler : MonoBehaviour
     public static LobbyHandler Instance { get; private set; }
 
     public const string KEY_START_GAME = "Start";
+    public const string KEY_PLAYER_NAME = "PlayerName";
     public event EventHandler<EventArgs> OnGameStarted;
 
     public event EventHandler<LobbyEventArgs> OnJoinedLobby;
