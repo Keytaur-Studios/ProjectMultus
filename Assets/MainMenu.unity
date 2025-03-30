@@ -1229,6 +1229,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2128241819}
     - target: {fileID: 1480163964855475072, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
+      propertyPath: newSceneName
+      value: Room1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1480163964855475072, guid: 3d4664ba3ab58134bbb6dd3728bce07c, type: 3}
       propertyPath: playerSingleTemplate
       value: 
       objectReference: {fileID: 1968037102}

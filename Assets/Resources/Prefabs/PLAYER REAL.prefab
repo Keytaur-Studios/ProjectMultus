@@ -434,7 +434,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1722780388914552220}
@@ -589,7 +589,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   isGrounded: 0
-  walkspeed: 7
+  walkspeed: 15
   sprintSpeed: 0
   groundDrag: 10
   sprintSpeedPercent: 0.5
@@ -754,6 +754,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   interactableHoverText: 
+  holding: 0
+  heldObj: {fileID: 0}
   hand: {fileID: 3246823285197887958}
 --- !u!114 &2667126348159762002
 MonoBehaviour:

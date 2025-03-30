@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d382308b9bbf9bd48a53670b20e6eed0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d382308b9bbf9bd48a53670b20e6eed0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d382308b9bbf9bd48a53670b20e6eed0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d382308b9bbf9bd48a53670b20e6eed0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.394749
       objectReference: {fileID: 0}
@@ -48,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d382308b9bbf9bd48a53670b20e6eed0, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d382308b9bbf9bd48a53670b20e6eed0, type: 3}
       propertyPath: m_Name
       value: banana
@@ -86,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3108555383
+  GlobalObjectIdHash: 1983787184
   InScenePlacedSourceGlobalObjectIdHash: 1983787184
   DeferredDespawnTick: 0
   Ownership: 1
