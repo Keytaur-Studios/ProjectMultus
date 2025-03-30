@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using TMPro;
 
 public class StorageShelf : InteractableObject
 {
@@ -7,6 +8,8 @@ public class StorageShelf : InteractableObject
     private int resourceId;
     [SerializeField]
     private GameObject resourcePrefab;
+    [SerializeField]
+    private TextMeshProUGUI countText;
 
     public int c;
     private GameObject playerObj;
@@ -48,6 +51,7 @@ public class StorageShelf : InteractableObject
         if (!(id == resourceId)) return;
 
         c = count;
+        countText.text = count.ToString();
     }
 
 }

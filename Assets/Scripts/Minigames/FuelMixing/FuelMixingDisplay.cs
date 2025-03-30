@@ -36,14 +36,15 @@ public class FuelMixingDisplay : NetworkBehaviour
 
     IEnumerator DisplayComboImages(int[] combo)
     {
-        yield return new WaitForSeconds(2);
-
-        displayedImage.enabled = true;
+        yield return new WaitForSeconds(1);
 
         for (int i = 0; i < combo.Length; i++)
         {
+            displayedImage.enabled = true;
             displayedImage.sprite = resourceSprites[combo[i]];
             yield return new WaitForSeconds(1);
+            displayedImage.enabled = false;
+            yield return new WaitForSeconds(.2f);
         }
 
         displayedImage.sprite = null;
