@@ -16,7 +16,7 @@ public class ResourceEconomy : NetworkBehaviour
 
     public static event Action<int, int> OnResourceCountChange;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
 

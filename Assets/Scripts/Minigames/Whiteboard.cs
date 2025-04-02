@@ -21,7 +21,7 @@ public class Whiteboard : MonoBehaviour
 
     private int numItems = 0;
 
-    private void Start()
+    private void Awake()
     {
         MinigameEconomy.OnMinigameAdded += WriteMinigame;
         MinigameBase.OnMinigameComplete += CompleteMinigame;
@@ -29,6 +29,7 @@ public class Whiteboard : MonoBehaviour
 
     private void WriteMinigame(int id)
     {
+        Debug.Log("writing");
         boxes[numItems].gameObject.SetActive(true);
         minigameStrings[numItems].text = miniDict.GetResource(id);
         idMapping.Add(id, numItems);
@@ -37,7 +38,7 @@ public class Whiteboard : MonoBehaviour
 
     private void CompleteMinigame(int id)
     {
-        checks[idMapping[id]].enabled = true;
+        checks[idMapping[id]].gameObject.SetActive(true);
     }
 
 
