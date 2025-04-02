@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class MinigameEconomy : NetworkBehaviour
 
     public Dictionary<int, int> minigames = new();
 
+    public static event Action<int> OnMinigameAdded;
+
     private void Start()
     {
         Instance = this;
@@ -15,7 +18,7 @@ public class MinigameEconomy : NetworkBehaviour
         // For now, fuel minigame will be considered minigame_0
         // Dictionary key is minigamenumber, and value is % done (for now either 100 or 0)
 
-        minigames.Add(0, 0);
+        MinigameAdd(0);
 
         MinigameBase.OnMinigameComplete += DebugPrintComplete;
     }
@@ -23,6 +26,13 @@ public class MinigameEconomy : NetworkBehaviour
     public void DebugPrintComplete(int mID)
     {
         DebugPrintCompleteClientRpc(mID);
+    }
+
+    private void MinigameAdd(int id)
+    {
+        minigames.Add(id, 0);
+        OnMinigameAdded?.Invoke(id);
+        Debug.Log("Add minigame");
     }
 
     [ClientRpc]
