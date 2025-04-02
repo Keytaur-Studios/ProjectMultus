@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2951802189
+  GlobalObjectIdHash: 2805965943
   InScenePlacedSourceGlobalObjectIdHash: 2805965943
   DeferredDespawnTick: 0
   Ownership: 1
@@ -594,10 +594,11 @@ MonoBehaviour:
   groundDrag: 10
   sprintSpeedPercent: 0.5
   acceleration: 10
+  airSpeed: 15
   airDrag: 1
   airMultiplier: 0.25
-  jumpHeight: 0.75
-  gravity: -9.8
+  jumpHeight: 1.5
+  gravity: -20
   airAccel: 10
 --- !u!136 &3232217955417357532
 CapsuleCollider:

@@ -58,7 +58,7 @@ public class PlayerMotor : NetworkBehaviour
     private float speed; // Also acts as the max speed for the player
 
     [Header("Air Control")]
-    //public float airSpeed = 15f; // Acts as the max speed when the player is in the air
+    public float airSpeed = 15f; // Acts as the max speed when the player is in the air
     public float airDrag = 1; // Drag applied to the player when in the air
     public float airMultiplier = 0.25f; // Affects how strong the player's control is in the air (lower means less control)
     public float jumpHeight = 0.75f; // How powerful or high the player's jumps are
@@ -83,7 +83,8 @@ public class PlayerMotor : NetworkBehaviour
     {
         // Grounded Check
         //isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.1f, whatIsGround);
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f, whatIsGround);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.3f, whatIsGround);
+        Debug.DrawLine(transform.position, transform.position + (Vector3.down* .3f), color: Color.red);
 
         // Modulate gravity
         if (playerRigidbody.useGravity)
@@ -249,9 +250,9 @@ public class PlayerMotor : NetworkBehaviour
             Vector3 flatVel = new Vector3(playerRigidbody.linearVelocity.x, 0f, playerRigidbody.linearVelocity.z);
 
             // Limit velocity
-            if (flatVel.magnitude > speed) /*|| (flatVel.magnitude > airSpeed) && !isGrounded*/
+            if (flatVel.magnitude > speed || ((flatVel.magnitude > airSpeed) && !isGrounded))
             {
-                Vector3 limitedVel = flatVel.normalized * speed; /*(isGrounded ? speed : airSpeed)*/
+                Vector3 limitedVel = flatVel.normalized * (isGrounded ? speed : airSpeed);
                 playerRigidbody.linearVelocity = new Vector3(limitedVel.x, playerRigidbody.linearVelocity.y, limitedVel.z);
             }
         }
