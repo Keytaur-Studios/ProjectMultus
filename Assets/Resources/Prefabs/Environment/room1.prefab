@@ -2096,7 +2096,7 @@ GameObject:
   - component: {fileID: 2558994621377715311}
   m_Layer: 0
   m_Name: shelfTier_left
-  m_TagString: Untagged
+  m_TagString: Interactable Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5708,7 +5708,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 758
+  m_VersionIndex: 761
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -10367,9 +10367,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8701149708292222420}
   - component: {fileID: 7698040325606883452}
+  - component: {fileID: 5023200984372828381}
   m_Layer: 0
   m_Name: shelfTier_right
-  m_TagString: Untagged
+  m_TagString: Interactable Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10413,6 +10414,27 @@ MonoBehaviour:
   resourcePrefab: {fileID: 6512420679244514635, guid: f3a61a057d5fd124fa4d0a3865097a51, type: 3}
   countText: {fileID: 5525075054285754689}
   c: 0
+--- !u!65 &5023200984372828381
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5309320350649939018}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 304.85934, y: 216.76064, z: 259.3788}
+  m_Center: {x: 155.67245, y: 125.70352, z: 117.640686}
 --- !u!1 &5340250740181550106
 GameObject:
   m_ObjectHideFlags: 0
@@ -10460,7 +10482,7 @@ GameObject:
   - component: {fileID: 205857868689045311}
   m_Layer: 0
   m_Name: shelfTier_right
-  m_TagString: Untagged
+  m_TagString: Interactable Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13614,7 +13636,7 @@ GameObject:
   - component: {fileID: 6174730132134897797}
   m_Layer: 0
   m_Name: shelfTier_left
-  m_TagString: Untagged
+  m_TagString: Interactable Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

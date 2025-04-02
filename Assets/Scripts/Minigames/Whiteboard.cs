@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Whiteboard : MonoBehaviour
+public class Whiteboard : NetworkBehaviour
 {
     public MinigameDict miniDict;
 
@@ -24,7 +25,7 @@ public class Whiteboard : MonoBehaviour
     private void Awake()
     {
         MinigameEconomy.OnMinigameAdded += WriteMinigame;
-        MinigameBase.OnMinigameComplete += CompleteMinigame;
+        MinigameBase.OnMinigameComplete += CompleteMinigameClientRpc;
     }
 
     private void WriteMinigame(int id)
@@ -36,7 +37,8 @@ public class Whiteboard : MonoBehaviour
         numItems++;
     }
 
-    private void CompleteMinigame(int id)
+    [ClientRpc]
+    private void CompleteMinigameClientRpc(int id)
     {
         checks[idMapping[id]].gameObject.SetActive(true);
     }
