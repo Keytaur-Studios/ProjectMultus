@@ -458,8 +458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2805965943
-  InScenePlacedSourceGlobalObjectIdHash: 1158979462
+  GlobalObjectIdHash: 2951802189
+  InScenePlacedSourceGlobalObjectIdHash: 2805965943
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -587,7 +587,7 @@ MonoBehaviour:
   maxSlopeAngle: 60
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   isGrounded: 0
   walkspeed: 15
   sprintSpeed: 0

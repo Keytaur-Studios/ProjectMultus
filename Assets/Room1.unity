@@ -127,9 +127,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 747520971693874452, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
-      propertyPath: m_TagString
-      value: Interactable Object
+    - target: {fileID: 724227846753775139, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644724236092775503, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2786283154634203139, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -141,7 +145,15 @@ PrefabInstance:
       objectReference: {fileID: 519950369}
     - target: {fileID: 3115747191132157126, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
       propertyPath: m_VersionIndex
-      value: 764
+      value: 767
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258976598988949281, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168359613308203285, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4444275057121996892, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
       propertyPath: m_Mesh
@@ -151,17 +163,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: room1_NEW
       objectReference: {fileID: 0}
-    - target: {fileID: 5309320350649939018, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
-      propertyPath: m_TagString
-      value: Interactable Object
+    - target: {fileID: 5949118718730076904, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 5368943364193494242, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
-      propertyPath: m_TagString
-      value: Interactable Object
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658055184544874210, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
-      propertyPath: m_TagString
-      value: Interactable Object
+    - target: {fileID: 7207610640870729985, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7218470952619499942, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -203,10 +211,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8602677031831184564, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8797333183284094822, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 519950369}
+    - target: {fileID: 8952444310712940046, guid: b91adb460c77f3f41b44cb5bad2aa43b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -478,6 +494,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: mainroom
       objectReference: {fileID: 0}
+    - target: {fileID: 2924322084978562721, guid: fa0810f9ead358e4fa7a91803d179120, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3205610265779706836, guid: fa0810f9ead358e4fa7a91803d179120, type: 3}
       propertyPath: m_LocalPosition.x
       value: 38.22
@@ -615,5 +635,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 977027044}
   - {fileID: 1528700437}
-  - {fileID: 159426431}
   - {fileID: 1431055856}
+  - {fileID: 159426431}
