@@ -14,7 +14,7 @@ public class StorageShelf : InteractableObject
     public int c;
     private GameObject playerObj;
 
-    private void Start()
+    private void Awake()
     {
         ResourceEconomy.OnResourceCountChange += UpdateSignCount;
     }
