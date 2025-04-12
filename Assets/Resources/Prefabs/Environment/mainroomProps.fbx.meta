@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: b2e3a45b05902a2438d64f7d15b49eca
+guid: 230fe95aa594c0442ad2f496775180ba
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bannerMAT
+    second: {fileID: 2100000, guid: 5c7f8333feddd3e47bade1fa08ff3d6f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -37,8 +42,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: speakerMAT
+    second: {fileID: 2100000, guid: 9aabacceda4d9024b91ff6cef8551478, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: standardSurface1
-    second: {fileID: 2100000, guid: 9e337a7434eca84408110efac8cb8bd4, type: 2}
+    second: {fileID: 2100000, guid: d14f03c466950b74599a9a3da2359e90, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
